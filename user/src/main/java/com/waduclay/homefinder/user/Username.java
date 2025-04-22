@@ -1,7 +1,7 @@
-package com.waduclay.properties.user;
+package com.waduclay.homefinder.user;
 
 
-import static com.waduclay.properties.shared.InputGuard.againstEmptiness;
+import static com.waduclay.homefinder.shared.InputGuard.againstEmptiness;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>

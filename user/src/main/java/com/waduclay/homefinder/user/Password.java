@@ -1,6 +1,6 @@
-package com.waduclay.properties.user;
+package com.waduclay.homefinder.user;
 
-import com.waduclay.properties.shared.InputGuard;
+import com.waduclay.homefinder.shared.InputGuard;
 
 import java.util.regex.Pattern;
 

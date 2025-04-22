@@ -1,4 +1,4 @@
-package com.waduclay.properties.shared;
+package com.waduclay.homefinder.shared;
 
 
 import java.util.Objects;
