@@ -1,4 +1,4 @@
-package com.waduclay.properties;
+package com.waduclay.properties.shared;
 
 
 import java.util.Objects;
