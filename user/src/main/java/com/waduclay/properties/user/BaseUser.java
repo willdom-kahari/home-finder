@@ -1,7 +1,7 @@
 package com.waduclay.properties.user;
 
 
-import com.waduclay.properties.Entity;
+import com.waduclay.properties.shared.Entity;
 
 import java.util.UUID;
 
