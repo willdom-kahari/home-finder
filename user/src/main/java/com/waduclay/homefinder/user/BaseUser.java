@@ -47,14 +47,14 @@ public class BaseUser extends Entity<UUID> {
     }
 
     public void recordFailedLoginAttempt() {
-        this.failedLoginAttempts++;
+
         if (this.failedLoginAttempts >= 3) {
             this.userAccountStatus = new UserAccountStatus(
                     userAccountStatus.credentialsExpired(),
                     true,  // Lock account
                     userAccountStatus.accountActive()
             );
-        }
+        } else this.failedLoginAttempts++;
     }
 
     public void resetLoginAttempt() {
@@ -92,5 +92,9 @@ public class BaseUser extends Entity<UUID> {
 
     public boolean isAccountActive() {
         return userAccountStatus.accountActive();
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
     }
 }
