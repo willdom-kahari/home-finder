@@ -1,14 +1,14 @@
 package com.waduclay.homefinder.user;
 
 
-import static com.waduclay.homefinder.shared.InputGuard.againstEmptiness;
-
-
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import static com.waduclay.homefinder.shared.InputGuard.againstEmptiness;
+
 /**
  * Represents a validated username following business rules
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 class Username {
@@ -27,6 +27,7 @@ class Username {
 
     /**
      * Creates a Username instance after validating against business rules
+     *
      * @param value The raw username input
      * @return Validated Username object
      * @throws IllegalArgumentException if validation fails

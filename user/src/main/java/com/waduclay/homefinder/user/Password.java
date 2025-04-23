@@ -47,6 +47,21 @@ public class Password {
             buildPattern();
         }
 
+        public static PasswordValidator defaultValidator() {
+            return new Builder()
+                    .minLength(8)
+                    .maxLength(30)
+                    .requireUppercase()
+                    .requireLowercase()
+                    .requireDigit()
+                    .requireSpecialChar()
+                    .build();
+        }
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
         private void buildPattern() {
             StringBuilder patternBuilder = new StringBuilder("^");
 
@@ -86,21 +101,6 @@ public class Password {
                 error.setLength(error.length() - 1);
                 throw new IllegalArgumentException(error.toString());
             }
-        }
-
-        public static PasswordValidator defaultValidator() {
-            return new Builder()
-                    .minLength(8)
-                    .maxLength(30)
-                    .requireUppercase()
-                    .requireLowercase()
-                    .requireDigit()
-                    .requireSpecialChar()
-                    .build();
-        }
-
-        public static Builder builder() {
-            return new Builder();
         }
 
         public static class Builder {

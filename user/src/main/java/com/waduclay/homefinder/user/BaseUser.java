@@ -25,7 +25,7 @@ public class BaseUser extends Entity<UUID> {
         this.failedLoginAttempts = 0;
     }
 
-    public static BaseUser of(String username, Role role, String password, UserAccountStatus userAccountStatus){
+    public static BaseUser of(String username, Role role, String password, UserAccountStatus userAccountStatus) {
 
         Objects.requireNonNull(role, "Role cannot be null");
         Objects.requireNonNull(userAccountStatus, "User account status cannot be null");
@@ -37,7 +37,8 @@ public class BaseUser extends Entity<UUID> {
                 userAccountStatus
         );
     }
-    public static BaseUser of(String username, String password){
+
+    public static BaseUser of(String username, String password) {
         return of(
                 username,
                 Role.USER,
@@ -62,7 +63,7 @@ public class BaseUser extends Entity<UUID> {
     }
 
 
-    public void updatePassword(String newPassword){
+    public void updatePassword(String newPassword) {
         this.password = Password.from(newPassword);  // Update in-place
         this.userAccountStatus = new UserAccountStatus(
                 false,  // Reset credentialsExpired
@@ -70,6 +71,7 @@ public class BaseUser extends Entity<UUID> {
                 this.userAccountStatus.accountActive()
         );
     }
+
     public String getUsername() {
         return username.getValue();
     }
