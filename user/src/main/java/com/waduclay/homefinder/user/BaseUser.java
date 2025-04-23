@@ -48,7 +48,7 @@ public class BaseUser extends Entity<UUID> {
 
     public void recordFailedLoginAttempt() {
 
-        if (this.failedLoginAttempts >= 3) {
+        if (this.failedLoginAttempts >= 2) {
             this.userAccountStatus = new UserAccountStatus(
                     userAccountStatus.credentialsExpired(),
                     true,  // Lock account
