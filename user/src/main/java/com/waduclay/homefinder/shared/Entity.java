@@ -8,7 +8,11 @@ import java.util.Objects;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public abstract class Entity<T> {
-    protected T id;
+    private final T id;
+
+    protected Entity(T id) {
+        this.id = id;
+    }
 
     // Common entity methods
     public T getId() {
