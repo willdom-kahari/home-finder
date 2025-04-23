@@ -66,7 +66,8 @@ class Username {
     private static void validateNotOffensive(String value) {
         // In a real implementation, this would check against a database or list of offensive terms
         // This is just a placeholder implementation
-        if (value.contains("fuck") || value.contains("shit")) {
+
+        if (value.toLowerCase().contains("fuck") || value.toLowerCase().contains("shit")) {
             throw new IllegalArgumentException("Username contains offensive language");
         }
     }
