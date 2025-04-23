@@ -62,6 +62,14 @@ public class BaseUser extends Entity<UUID> {
     }
 
 
+    public void updatePassword(String newPassword){
+        this.password = Password.from(newPassword);  // Update in-place
+        this.userAccountStatus = new UserAccountStatus(
+                false,  // Reset credentialsExpired
+                this.userAccountStatus.accountLocked(),
+                this.userAccountStatus.accountActive()
+        );
+    }
     public String getUsername() {
         return username.getValue();
     }
