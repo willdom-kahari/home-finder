@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class BaseUser extends Entity<UUID> {
+class BaseUser extends Entity<UUID> {
     private final Username username;
     private final Role role;
     private Password password;
@@ -25,20 +25,20 @@ public class BaseUser extends Entity<UUID> {
         this.failedLoginAttempts = 0;
     }
 
-    public static BaseUser of(String username, Role role, String password, UserAccountStatus userAccountStatus) {
+    static BaseUser of(Username username, Role role, String password, UserAccountStatus userAccountStatus) {
 
         Objects.requireNonNull(role, "Role cannot be null");
         Objects.requireNonNull(userAccountStatus, "User account status cannot be null");
 
         return new BaseUser(
-                Username.from(username),
+                username,
                 role,
                 Password.from(password),
                 userAccountStatus
         );
     }
 
-    public static BaseUser of(String username, String password) {
+    static BaseUser of(Username username, String password) {
         return of(
                 username,
                 Role.USER,
@@ -47,7 +47,7 @@ public class BaseUser extends Entity<UUID> {
         );
     }
 
-    public void recordFailedLoginAttempt() {
+    void recordFailedLoginAttempt() {
 
         if (this.failedLoginAttempts >= 2) {
             this.userAccountStatus = new UserAccountStatus(
@@ -58,12 +58,12 @@ public class BaseUser extends Entity<UUID> {
         } else this.failedLoginAttempts++;
     }
 
-    public void resetLoginAttempt() {
+    void resetLoginAttempt() {
         this.failedLoginAttempts = 0;
     }
 
 
-    public void updatePassword(String newPassword) {
+    void updatePassword(String newPassword) {
         this.password = Password.from(newPassword);  // Update in-place
         this.userAccountStatus = new UserAccountStatus(
                 false,  // Reset credentialsExpired
@@ -72,31 +72,31 @@ public class BaseUser extends Entity<UUID> {
         );
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username.getValue();
     }
 
-    public String getRole() {
+    String getRole() {
         return role.name();
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password.getValue();
     }
 
-    public boolean isCredentialsExpired() {
+    boolean isCredentialsExpired() {
         return userAccountStatus.credentialsExpired();
     }
 
-    public boolean isAccountLocked() {
+    boolean isAccountLocked() {
         return userAccountStatus.accountLocked();
     }
 
-    public boolean isAccountActive() {
+    boolean isAccountActive() {
         return userAccountStatus.accountActive();
     }
 
-    public int getFailedLoginAttempts() {
+    int getFailedLoginAttempts() {
         return failedLoginAttempts;
     }
 }
