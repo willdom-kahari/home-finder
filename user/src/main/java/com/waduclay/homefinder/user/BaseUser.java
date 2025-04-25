@@ -3,7 +3,6 @@ package com.waduclay.homefinder.user;
 
 import com.waduclay.homefinder.shared.Entity;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -31,28 +30,14 @@ public class BaseUser extends Entity<UUID> {
         return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active());
     }
 
-    static BaseUser of(Username username, Role role, String password, UserAccountStatus userAccountStatus, PasswordEncoderPort passwordEncoderPort) {
-
-        Objects.requireNonNull(role, "Role cannot be null");
-        Objects.requireNonNull(userAccountStatus, "User account status cannot be null");
-
-        return new BaseUser(
-                username,
-                role,
-                Password.from(password, passwordEncoderPort),
-                userAccountStatus
-        );
+    static BaseUser createUser(Username username, Password password) {
+        return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive());
     }
 
-    static BaseUser of(Username username, String password, PasswordEncoderPort passwordEncoderPort) {
-        return of(
-                username,
-                Role.USER,
-                password,
-                UserAccountStatus.inactive(),
-                passwordEncoderPort
-        );
+    static BaseUser createAdmin(Username username, Password password) {
+        return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active());
     }
+
 
     void recordFailedLoginAttempt() {
 
@@ -66,8 +51,8 @@ public class BaseUser extends Entity<UUID> {
     }
 
 
-    void updatePassword(String newPassword, PasswordEncoderPort passwordEncoderPort) {
-        this.password = Password.from(newPassword, passwordEncoderPort);  // Update in-place
+    public void changePassword(Password newPassword) {
+        this.password = newPassword;
         this.userAccountStatus = UserAccountStatus.active();
     }
 
