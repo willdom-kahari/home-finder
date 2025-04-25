@@ -18,7 +18,7 @@ public class InitialiseDefaultUserService {
         Password defaultUserPassword = Password.from(password);
         if (!repository.existsByRole(Role.DEFAULT)) {
             String encryptedPassword = passwordEncoder.encrypt(defaultUserPassword.getValue());
-            UserAccountStatus status = new UserAccountStatus(false, false, true);
+            UserAccountStatus status = UserAccountStatus.active();
             BaseUser user = BaseUser.of(defaultUsername, Role.DEFAULT, encryptedPassword, status);
             repository.save(user);
         }

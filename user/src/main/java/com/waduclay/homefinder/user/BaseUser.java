@@ -43,18 +43,14 @@ public class BaseUser extends Entity<UUID> {
                 username,
                 Role.USER,
                 password,
-                new UserAccountStatus(false, false, false)
+                UserAccountStatus.inactive()
         );
     }
 
     void recordFailedLoginAttempt() {
 
         if (this.failedLoginAttempts >= 2) {
-            this.userAccountStatus = new UserAccountStatus(
-                    userAccountStatus.credentialsExpired(),
-                    true,  // Lock account
-                    userAccountStatus.accountActive()
-            );
+            this.userAccountStatus = UserAccountStatus.locked();
         } else this.failedLoginAttempts++;
     }
 
@@ -65,11 +61,7 @@ public class BaseUser extends Entity<UUID> {
 
     void updatePassword(String newPassword) {
         this.password = Password.from(newPassword);  // Update in-place
-        this.userAccountStatus = new UserAccountStatus(
-                false,  // Reset credentialsExpired
-                this.userAccountStatus.accountLocked(),
-                this.userAccountStatus.accountActive()
-        );
+        this.userAccountStatus = UserAccountStatus.active();
     }
 
     String getUsername() {
@@ -85,15 +77,15 @@ public class BaseUser extends Entity<UUID> {
     }
 
     boolean isCredentialsExpired() {
-        return userAccountStatus.credentialsExpired();
+        return userAccountStatus.isCredentialsExpired();
     }
 
     boolean isAccountLocked() {
-        return userAccountStatus.accountLocked();
+        return userAccountStatus.isAccountLocked();
     }
 
     boolean isAccountActive() {
-        return userAccountStatus.accountActive();
+        return userAccountStatus.isAccountActive();
     }
 
     int getFailedLoginAttempts() {
