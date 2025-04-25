@@ -8,5 +8,6 @@ import java.util.Optional;
  */
 public interface BaseUserQueryPort {
     boolean existsByRole(Role role);
+
     Optional<BaseUser> findByUsername(String username);
 }

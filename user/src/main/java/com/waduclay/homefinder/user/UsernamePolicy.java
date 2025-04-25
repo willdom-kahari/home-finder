@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Encapsulates username validation rules
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public interface UsernamePolicy {

@@ -1,8 +1,6 @@
 package com.waduclay.homefinder.user;
 
 
-import java.util.Optional;
-
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */

@@ -23,6 +23,7 @@ public final class UserAccountStatus {
     public static UserAccountStatus inactive() {
         return new UserAccountStatus(false, false, false);
     }
+
     public static UserAccountStatus locked() {
         return new UserAccountStatus(false, true, false);
     }
