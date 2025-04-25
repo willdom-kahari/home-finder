@@ -6,19 +6,21 @@ package com.waduclay.homefinder.user;
  */
 public class DefaultUserSetup {
     private final PasswordEncoderPort passwordEncoder;
-    private final BaseUserRepositoryPort repository;
+    private final BaseUserRepositoryPort repositoryPort;
+    private final BaseUserQueryPort queryPort;
 
-    public DefaultUserSetup(PasswordEncoderPort passwordEncoder, BaseUserRepositoryPort repository) {
+    public DefaultUserSetup(PasswordEncoderPort passwordEncoder, BaseUserRepositoryPort repositoryPort, BaseUserQueryPort queryPort) {
         this.passwordEncoder = passwordEncoder;
-        this.repository = repository;
+        this.repositoryPort = repositoryPort;
+        this.queryPort = queryPort;
     }
 
     public void ensureDefaultUserExists(String username, String password) {
         Username defaultUsername = Username.from(username);
         Password defaultUserPassword = Password.from(password);
-        if (!repository.existsByRole(Role.DEFAULT)) {
+        if (!queryPort.existsByRole(Role.DEFAULT)) {
             BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword, passwordEncoder);
-            repository.save(defaultUser);
+            repositoryPort.save(defaultUser);
         }
 
     }
