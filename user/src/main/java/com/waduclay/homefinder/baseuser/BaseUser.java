@@ -14,9 +14,10 @@ public class BaseUser extends Entity<UUID> {
     private Password password;
     private UserAccountStatus userAccountStatus;
     private int failedLoginAttempts;
+    private AuthenticationProvider authenticationProvider;
 
-    private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus) {
-        super(UUID.randomUUID());
+    private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus, AuthenticationProvider authenticationProvider, UUID id) {
+        super(id);
         this.username = username;
         this.role = role;
         this.password = password;
@@ -26,15 +27,15 @@ public class BaseUser extends Entity<UUID> {
 
     // In BaseUser:
     static BaseUser createDefaultUser(Username username, Password password) {
-        return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active());
+        return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP, UUID.randomUUID());
     }
 
-    static BaseUser createUser(Username username, Password password) {
-        return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive());
+    static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider, UUID id) {
+        return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive(), authenticationProvider, id);
     }
 
-    static BaseUser createAdmin(Username username, Password password) {
-        return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active());
+    static BaseUser createAdmin(Username username, Password password, UUID id) {
+        return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP, id);
     }
 
 
