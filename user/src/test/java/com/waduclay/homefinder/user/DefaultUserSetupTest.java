@@ -25,12 +25,14 @@ class DefaultUserSetupTest {
 
     @Mock
     private BaseUserRepositoryPort repository;
+    @Mock
+    private BaseUserQueryPort query;
 
     private DefaultUserSetup service;
 
     @BeforeEach
     void setUp() {
-        service = new DefaultUserSetup(passwordEncoder, repository);
+        service = new DefaultUserSetup(passwordEncoder, repository, query);
     }
 
     @Test
@@ -40,14 +42,14 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
         String encryptedPassword = "encryptedSecurePass123!";
 
-        when(repository.existsByRole(Role.DEFAULT)).thenReturn(false);
+        when(query.existsByRole(Role.DEFAULT)).thenReturn(false);
         when(passwordEncoder.encrypt(password)).thenReturn(encryptedPassword);
 
         // Act
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Assert
-        verify(repository).existsByRole(Role.DEFAULT);
+        verify(query).existsByRole(Role.DEFAULT);
         verify(passwordEncoder).encrypt(password);
 
         ArgumentCaptor<BaseUser> userCaptor = ArgumentCaptor.forClass(BaseUser.class);
@@ -68,13 +70,13 @@ class DefaultUserSetupTest {
         String username = "defaultAdmin";
         String password = "SecurePass123!";
 
-        when(repository.existsByRole(Role.DEFAULT)).thenReturn(true);
+        when(query.existsByRole(Role.DEFAULT)).thenReturn(true);
 
         // Act
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Assert
-        verify(repository).existsByRole(Role.DEFAULT);
+        verify(query).existsByRole(Role.DEFAULT);
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -86,9 +88,9 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -100,9 +102,9 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -114,9 +116,9 @@ class DefaultUserSetupTest {
         String password = "";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -128,9 +130,9 @@ class DefaultUserSetupTest {
         String password = null;
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -142,9 +144,9 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -156,9 +158,9 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -170,9 +172,9 @@ class DefaultUserSetupTest {
         String password = "weak"; // Doesn't meet complexity requirements
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> service.execute(username, password));
+        assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(repository, never()).existsByRole(any());
+        verify(query, never()).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -184,11 +186,11 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
         String encryptedPassword = "encryptedSecurePass123!";
 
-        when(repository.existsByRole(Role.DEFAULT)).thenReturn(false);
+        when(query.existsByRole(Role.DEFAULT)).thenReturn(false);
         when(passwordEncoder.encrypt(password)).thenReturn(encryptedPassword);
 
         // Act
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Assert
         ArgumentCaptor<BaseUser> userCaptor = ArgumentCaptor.forClass(BaseUser.class);
@@ -205,11 +207,11 @@ class DefaultUserSetupTest {
         String password = "SecurePass123!";
         String encryptedPassword = "encryptedSecurePass123!";
 
-        when(repository.existsByRole(Role.DEFAULT)).thenReturn(false);
+        when(query.existsByRole(Role.DEFAULT)).thenReturn(false);
         when(passwordEncoder.encrypt(password)).thenReturn(encryptedPassword);
 
         // Act
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Assert
         ArgumentCaptor<BaseUser> userCaptor = ArgumentCaptor.forClass(BaseUser.class);
