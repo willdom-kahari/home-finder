@@ -9,6 +9,36 @@ import java.util.regex.Pattern;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public interface UsernamePolicy {
+    // Shared validation methods
+    static void validateLength(String username, int minLength, int maxLength) {
+        if (username.length() < minLength || username.length() > maxLength) {
+            throw new IllegalArgumentException(
+                    String.format("Username must be between %d and %d characters", minLength, maxLength)
+            );
+        }
+    }
+
+    static void validateCharacters(String username, Pattern allowedChars) {
+        if (!allowedChars.matcher(username).matches()) {
+            throw new IllegalArgumentException(
+                    "Username can only contain letters, numbers, underscores, periods, and hyphens"
+            );
+        }
+    }
+
+    static void validateNotReserved(String username, Set<String> reservedNames) {
+        if (reservedNames.contains(username.toLowerCase())) {
+            throw new IllegalArgumentException("This username is reserved and cannot be used");
+        }
+    }
+
+    static void validateNotOffensive(String username, Set<String> offensiveTerms) {
+        String lowerUsername = username.toLowerCase();
+        if (offensiveTerms.stream().anyMatch(lowerUsername::contains)) {
+            throw new IllegalArgumentException("Username contains offensive language");
+        }
+    }
+
     void validate(String username);
 
     /**
@@ -54,36 +84,6 @@ public interface UsernamePolicy {
             validateCharacters(username, allowedChars);
             validateNotReserved(username, reservedNames);
             validateNotOffensive(username, offensiveTerms);
-        }
-    }
-
-    // Shared validation methods
-    static void validateLength(String username, int minLength, int maxLength) {
-        if (username.length() < minLength || username.length() > maxLength) {
-            throw new IllegalArgumentException(
-                    String.format("Username must be between %d and %d characters", minLength, maxLength)
-            );
-        }
-    }
-
-    static void validateCharacters(String username, Pattern allowedChars) {
-        if (!allowedChars.matcher(username).matches()) {
-            throw new IllegalArgumentException(
-                    "Username can only contain letters, numbers, underscores, periods, and hyphens"
-            );
-        }
-    }
-
-    static void validateNotReserved(String username, Set<String> reservedNames) {
-        if (reservedNames.contains(username.toLowerCase())) {
-            throw new IllegalArgumentException("This username is reserved and cannot be used");
-        }
-    }
-
-    static void validateNotOffensive(String username, Set<String> offensiveTerms) {
-        String lowerUsername = username.toLowerCase();
-        if (offensiveTerms.stream().anyMatch(lowerUsername::contains)) {
-            throw new IllegalArgumentException("Username contains offensive language");
         }
     }
 }

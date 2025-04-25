@@ -12,7 +12,7 @@ public class Password {
         this.value = value;
     }
 
-    public static Password from(String value, PasswordEncoderPort encoder ) {
+    public static Password from(String value, PasswordEncoderPort encoder) {
         return from(value, PasswordValidator.defaultValidator(), encoder);
     }
 
