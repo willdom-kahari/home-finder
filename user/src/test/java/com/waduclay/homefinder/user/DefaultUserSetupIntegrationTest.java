@@ -17,12 +17,14 @@ class DefaultUserSetupIntegrationTest {
     private BaseUserRepositoryPort mapRepository;
     private PasswordEncoderPort base64Encoder;
     private DefaultUserSetup service;
+    private BaseUserQueryPort queryPort;
 
     @BeforeEach
     void setUp() {
         mapRepository = new InMemoryMapUserRepository(userMap);
         base64Encoder = new Base64PasswordEncoder();
-        service = new DefaultUserSetup(base64Encoder, mapRepository);
+        queryPort = new InMemoryMapUserQuery(userMap);
+        service = new DefaultUserSetup(base64Encoder, mapRepository, queryPort);
     }
 
     @Test
@@ -32,10 +34,10 @@ class DefaultUserSetupIntegrationTest {
         String password = "P@55w0rd";
 
         // When
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Then
-        Optional<BaseUser> savedUser = mapRepository.findByUsername(username.toLowerCase());
+        Optional<BaseUser> savedUser = queryPort.findByUsername(username.toLowerCase());
         assertTrue(savedUser.isPresent(), "User should be saved in repository");
 
         BaseUser user = savedUser.get();
@@ -56,10 +58,10 @@ class DefaultUserSetupIntegrationTest {
     void shouldNotCreateDefaultUserWhenOneAlreadyExists() {
         // Given - an existing default user
         BaseUser existingDefaultUser = BaseUser.of(
-                Username.from("existingDefault"),
+                Username.from("existingDefault", new UsernamePolicy.DefaultUsernamePolicy()),
                 Role.DEFAULT,
                 "P@55w0rd",
-                new UserAccountStatus(false, false, true)
+                UserAccountStatus.active()
         );
         userMap.put("existingDefault", existingDefaultUser);
 
@@ -67,10 +69,10 @@ class DefaultUserSetupIntegrationTest {
         String password = "P@55w0rd";
 
         // When
-        service.execute(username, password);
+        service.ensureDefaultUserExists(username, password);
 
         // Then - no new user should be created
-        Optional<BaseUser> newUser = mapRepository.findByUsername(username);
+        Optional<BaseUser> newUser = queryPort.findByUsername(username);
         assertFalse(newUser.isPresent(), "No new default user should be created");
 
         // Verify existing user is unchanged
@@ -95,10 +97,10 @@ class DefaultUserSetupIntegrationTest {
     void shouldSaveUserInMapRepository() {
         // Given
         BaseUser user = BaseUser.of(
-                Username.from("testUser"),
+                Username.from("testUser", new UsernamePolicy.DefaultUsernamePolicy()),
                 Role.ADMIN,
                 "P@55w0rd",
-                new UserAccountStatus(false, false, true)
+                UserAccountStatus.active()
         );
 
         // When
@@ -124,6 +126,20 @@ class DefaultUserSetupIntegrationTest {
         public InMemoryMapUserRepository(Map<String, BaseUser> userMap) {
             this.userMap = userMap;
         }
+        
+
+        @Override
+        public void save(BaseUser user) {
+            userMap.put(user.getUsername(), user);
+        }
+    }
+
+    static class InMemoryMapUserQuery implements BaseUserQueryPort {
+        private final Map<String, BaseUser> userMap;
+
+        public InMemoryMapUserQuery(Map<String, BaseUser> userMap) {
+            this.userMap = userMap;
+        }
 
         @Override
         public boolean existsByRole(Role role) {
@@ -134,11 +150,6 @@ class DefaultUserSetupIntegrationTest {
         @Override
         public Optional<BaseUser> findByUsername(String username) {
             return Optional.ofNullable(userMap.get(username));
-        }
-
-        @Override
-        public void save(BaseUser user) {
-            userMap.put(user.getUsername(), user);
         }
     }
 }
