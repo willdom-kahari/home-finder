@@ -12,7 +12,7 @@ class BaseUserTest {
     @Test
     void of_WithValidArguments_CreatesUserWithCorrectState() {
         UserAccountStatus status = new UserAccountStatus(true, false, true);
-        BaseUser user = BaseUser.of("testUser", Role.ADMIN, "P@55w0rd", status);
+        BaseUser user = BaseUser.of(Username.from("testUser"), Role.ADMIN, "P@55w0rd", status);
 
         assertEquals("testuser", user.getUsername());
         assertEquals("ADMIN", user.getRole());
@@ -25,18 +25,18 @@ class BaseUserTest {
     @Test
     void of_WithNullRole_ThrowsException() {
         assertThrows(NullPointerException.class,
-                () -> BaseUser.of("test", null, "pass", new UserAccountStatus(false, false, false)));
+                () -> BaseUser.of(Username.from("test"), null, "pass", new UserAccountStatus(false, false, false)));
     }
 
     @Test
     void of_WithNullStatus_ThrowsException() {
         assertThrows(NullPointerException.class,
-                () -> BaseUser.of("test", Role.USER, "pass", null));
+                () -> BaseUser.of(Username.from("test"), Role.USER, "pass", null));
     }
 
     @Test
     void of_WithDefaultArguments_SetsUserRoleAndActiveStatus() {
-        BaseUser user = BaseUser.of("testUser", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("testUser"), "P@55w0rd");
 
         assertEquals("USER", user.getRole());
         assertFalse(user.isCredentialsExpired());
@@ -46,7 +46,7 @@ class BaseUserTest {
 
     @Test
     void recordFailedLoginAttempt_UnderThreshold_DoesNotLockAccount() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.recordFailedLoginAttempt(); // 1
         user.recordFailedLoginAttempt(); // 2
 
@@ -56,7 +56,7 @@ class BaseUserTest {
 
     @Test
     void recordFailedLoginAttempt_ReachesThreshold_LocksAccount() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.recordFailedLoginAttempt(); // 1
         user.recordFailedLoginAttempt(); // 2
         user.recordFailedLoginAttempt(); // 3
@@ -66,7 +66,7 @@ class BaseUserTest {
 
     @Test
     void recordFailedLoginAttempt_OnLockedAccount_DoesNothing() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.recordFailedLoginAttempt(); // 1
         user.recordFailedLoginAttempt(); // 2
         user.recordFailedLoginAttempt(); // 3 (locked)
@@ -79,7 +79,7 @@ class BaseUserTest {
 
     @Test
     void resetLoginAttempt_ClearsCounter() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.recordFailedLoginAttempt();
         user.resetLoginAttempt();
 
@@ -88,7 +88,7 @@ class BaseUserTest {
 
     @Test
     void updatePassword_ChangesPasswordAndResetsCredentialsExpired() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.updatePassword("newPass^04356");
 
         assertNotEquals("oldPass", user.getPassword());
@@ -97,7 +97,7 @@ class BaseUserTest {
 
     @Test
     void updatePassword_OnLockedAccount_StillUpdates() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
         user.recordFailedLoginAttempt(); // 1
         user.recordFailedLoginAttempt(); // 2
         user.recordFailedLoginAttempt(); // 3 (locked)
@@ -109,7 +109,7 @@ class BaseUserTest {
 
     @Test
     void isAccountActive_WhenInactive_OverridesLockedStatus() {
-        BaseUser user = BaseUser.of("test", Role.USER, "P@55w0rd",
+        BaseUser user = BaseUser.of(Username.from("test"), Role.USER, "P@55w0rd",
                 new UserAccountStatus(false, true, false)); // Locked but inactive
 
         assertFalse(user.isAccountActive());
@@ -118,7 +118,7 @@ class BaseUserTest {
 
     @Test
     void isAccountLocked_WhenInactive_ReturnsTrueButCannotLogin() {
-        BaseUser user = BaseUser.of("test", Role.USER, "P@55w0rd",
+        BaseUser user = BaseUser.of(Username.from("test"), Role.USER, "P@55w0rd",
                 new UserAccountStatus(false, true, false));
 
         assertTrue(user.isAccountLocked()); // Technically locked
@@ -127,14 +127,14 @@ class BaseUserTest {
 
     @Test
     void updatePassword_WithEmptyPassword_ThrowsException() {
-        BaseUser user = BaseUser.of("test", "validPass@123");
+        BaseUser user = BaseUser.of(Username.from("test"), "validPass@123");
         assertThrows(IllegalArgumentException.class,
                 () -> user.updatePassword(""));
     }
 
     @Test
     void getUsername_ReturnsImmutableValue() {
-        BaseUser user = BaseUser.of("original", "pass12$S");
+        BaseUser user = BaseUser.of(Username.from("original"), "pass12$S");
         // Simulate reflection attack (shouldn't modify username)
         // This test assumes Username is immutable
         assertDoesNotThrow(() -> user.getUsername().replace("original", "hacked"));
@@ -143,7 +143,7 @@ class BaseUserTest {
 
     @Test
     void fullLoginScenario_SuccessThenFailure() {
-        BaseUser user = BaseUser.of("test", "P@55w0rd");
+        BaseUser user = BaseUser.of(Username.from("test"), "P@55w0rd");
 
         // Failed attempts (2)
         user.recordFailedLoginAttempt();
