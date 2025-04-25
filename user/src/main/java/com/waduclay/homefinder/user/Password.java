@@ -14,14 +14,15 @@ public class Password {
         this.value = value;
     }
 
-    public static Password from(String value) {
-        return from(value, PasswordValidator.defaultValidator());
+    public static Password from(String value, PasswordEncoderPort encoder ) {
+        return from(value, PasswordValidator.defaultValidator(), encoder);
     }
 
-    public static Password from(String value, PasswordValidator validator) {
+    public static Password from(String value, PasswordValidator validator, PasswordEncoderPort encoder) {
         InputGuard.againstEmptiness(value, "password");
         validator.validate(value);
-        return new Password(value);
+        String encryptedPassword = encoder.encrypt(value);
+        return new Password(encryptedPassword);
     }
 
     public String getValue() {

@@ -17,9 +17,9 @@ public class DefaultUserSetup {
 
     public void ensureDefaultUserExists(String username, String password) {
         Username defaultUsername = Username.from(username, new UsernamePolicy.DefaultUsernamePolicy());
-        Password defaultUserPassword = Password.from(password);
+        Password defaultUserPassword = Password.from(password, passwordEncoder);
         if (!queryPort.existsByRole(Role.DEFAULT)) {
-            BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword, passwordEncoder);
+            BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword);
             repositoryPort.save(defaultUser);
         }
 

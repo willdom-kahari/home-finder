@@ -26,12 +26,12 @@ public class BaseUser extends Entity<UUID> {
     }
 
     // In BaseUser:
-    static BaseUser createDefaultUser(Username username, Password password, PasswordEncoderPort encoder) {
-        String encryptedPassword = encoder.encrypt(password.getValue());
-        return new BaseUser(username, Role.DEFAULT, Password.from(encryptedPassword), UserAccountStatus.active());
+    static BaseUser createDefaultUser(Username username, Password password) {
+
+        return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active());
     }
 
-    static BaseUser of(Username username, Role role, String password, UserAccountStatus userAccountStatus) {
+    static BaseUser of(Username username, Role role, String password, UserAccountStatus userAccountStatus, PasswordEncoderPort passwordEncoderPort) {
 
         Objects.requireNonNull(role, "Role cannot be null");
         Objects.requireNonNull(userAccountStatus, "User account status cannot be null");
@@ -39,17 +39,18 @@ public class BaseUser extends Entity<UUID> {
         return new BaseUser(
                 username,
                 role,
-                Password.from(password),
+                Password.from(password, passwordEncoderPort),
                 userAccountStatus
         );
     }
 
-    static BaseUser of(Username username, String password) {
+    static BaseUser of(Username username, String password, PasswordEncoderPort passwordEncoderPort) {
         return of(
                 username,
                 Role.USER,
                 password,
-                UserAccountStatus.inactive()
+                UserAccountStatus.inactive(),
+                passwordEncoderPort
         );
     }
 
@@ -65,8 +66,8 @@ public class BaseUser extends Entity<UUID> {
     }
 
 
-    void updatePassword(String newPassword) {
-        this.password = Password.from(newPassword);  // Update in-place
+    void updatePassword(String newPassword, PasswordEncoderPort passwordEncoderPort) {
+        this.password = Password.from(newPassword, passwordEncoderPort);  // Update in-place
         this.userAccountStatus = UserAccountStatus.active();
     }
 
