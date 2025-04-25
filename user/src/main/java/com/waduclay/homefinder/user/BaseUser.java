@@ -25,6 +25,12 @@ public class BaseUser extends Entity<UUID> {
         this.failedLoginAttempts = 0;
     }
 
+    // In BaseUser:
+    static BaseUser createDefaultUser(Username username, Password password, PasswordEncoderPort encoder) {
+        String encryptedPassword = encoder.encrypt(password.getValue());
+        return new BaseUser(username, Role.DEFAULT, Password.from(encryptedPassword), UserAccountStatus.active());
+    }
+
     static BaseUser of(Username username, Role role, String password, UserAccountStatus userAccountStatus) {
 
         Objects.requireNonNull(role, "Role cannot be null");

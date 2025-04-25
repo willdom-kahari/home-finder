@@ -13,14 +13,12 @@ public class DefaultUserSetup {
         this.repository = repository;
     }
 
-    public void execute(String username, String password) {
+    public void ensureDefaultUserExists(String username, String password) {
         Username defaultUsername = Username.from(username);
         Password defaultUserPassword = Password.from(password);
         if (!repository.existsByRole(Role.DEFAULT)) {
-            String encryptedPassword = passwordEncoder.encrypt(defaultUserPassword.getValue());
-            UserAccountStatus status = UserAccountStatus.active();
-            BaseUser user = BaseUser.of(defaultUsername, Role.DEFAULT, encryptedPassword, status);
-            repository.save(user);
+            BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword, passwordEncoder);
+            repository.save(defaultUser);
         }
 
     }
