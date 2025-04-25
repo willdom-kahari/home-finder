@@ -8,8 +8,6 @@ import java.util.Optional;
  */
 public interface BaseUserRepositoryPort {
     boolean existsByRole(Role role);
-
     Optional<BaseUser> findByUsername(String username);
-
     void save(BaseUser user);
 }

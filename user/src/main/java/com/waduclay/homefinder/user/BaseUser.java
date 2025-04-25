@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-class BaseUser extends Entity<UUID> {
+public class BaseUser extends Entity<UUID> {
     private final Username username;
     private final Role role;
     private Password password;
