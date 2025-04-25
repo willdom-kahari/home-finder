@@ -1,6 +1,4 @@
-package com.waduclay.homefinder.user;
-
-import com.waduclay.homefinder.shared.InputGuard;
+package com.waduclay.homefinder.shared;
 
 import java.util.regex.Pattern;
 

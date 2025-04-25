@@ -1,7 +1,7 @@
-package com.waduclay.homefinder.user;
+package com.waduclay.homefinder.baseuser;
 
 
-import com.waduclay.homefinder.shared.Entity;
+import com.waduclay.homefinder.shared.*;
 
 import java.util.UUID;
 
@@ -26,7 +26,6 @@ public class BaseUser extends Entity<UUID> {
 
     // In BaseUser:
     static BaseUser createDefaultUser(Username username, Password password) {
-
         return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active());
     }
 

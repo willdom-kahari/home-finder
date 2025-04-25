@@ -1,5 +1,7 @@
-package com.waduclay.homefinder.user;
+package com.waduclay.homefinder.baseuser;
 
+
+import com.waduclay.homefinder.shared.*;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>

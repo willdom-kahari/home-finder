@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.user;
+package com.waduclay.homefinder.baseuser;
 
 
 /**

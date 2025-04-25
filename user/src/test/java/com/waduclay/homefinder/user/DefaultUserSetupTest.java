@@ -3,7 +3,9 @@ package com.waduclay.homefinder.user;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-
+import com.waduclay.homefinder.baseuser.*;
+import com.waduclay.homefinder.shared.PasswordEncoderPort;
+import com.waduclay.homefinder.shared.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
