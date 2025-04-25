@@ -4,11 +4,11 @@ package com.waduclay.homefinder.user;
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class InitialiseDefaultUserService {
+public class DefaultUserSetup {
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort repository;
 
-    public InitialiseDefaultUserService(PasswordEncoderPort passwordEncoder, BaseUserRepositoryPort repository) {
+    public DefaultUserSetup(PasswordEncoderPort passwordEncoder, BaseUserRepositoryPort repository) {
         this.passwordEncoder = passwordEncoder;
         this.repository = repository;
     }

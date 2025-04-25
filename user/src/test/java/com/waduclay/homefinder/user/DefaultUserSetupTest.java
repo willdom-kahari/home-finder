@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
  */
 
 @ExtendWith(MockitoExtension.class)
-class InitialiseDefaultUserServiceTest {
+class DefaultUserSetupTest {
 
     @Mock
     private PasswordEncoderPort passwordEncoder;
@@ -26,11 +26,11 @@ class InitialiseDefaultUserServiceTest {
     @Mock
     private BaseUserRepositoryPort repository;
 
-    private InitialiseDefaultUserService service;
+    private DefaultUserSetup service;
 
     @BeforeEach
     void setUp() {
-        service = new InitialiseDefaultUserService(passwordEncoder, repository);
+        service = new DefaultUserSetup(passwordEncoder, repository);
     }
 
     @Test

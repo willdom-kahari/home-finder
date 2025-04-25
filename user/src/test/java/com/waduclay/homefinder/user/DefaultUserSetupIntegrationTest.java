@@ -11,18 +11,18 @@ import java.util.*;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 
-class InitialiseDefaultUserServiceIntegrationTest {
+class DefaultUserSetupIntegrationTest {
 
     private final Map<String, BaseUser> userMap = new HashMap<>();
     private BaseUserRepositoryPort mapRepository;
     private PasswordEncoderPort base64Encoder;
-    private InitialiseDefaultUserService service;
+    private DefaultUserSetup service;
 
     @BeforeEach
     void setUp() {
         mapRepository = new InMemoryMapUserRepository(userMap);
         base64Encoder = new Base64PasswordEncoder();
-        service = new InitialiseDefaultUserService(base64Encoder, mapRepository);
+        service = new DefaultUserSetup(base64Encoder, mapRepository);
     }
 
     @Test
