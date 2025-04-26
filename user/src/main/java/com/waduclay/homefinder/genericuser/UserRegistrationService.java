@@ -56,7 +56,7 @@ public class UserRegistrationService {
 
     private void validateUsernameNotExists(String username) {
         if (baseUserQueryPort.existsByUsername(username)) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalStateException("Username already exists");
         }
     }
 
