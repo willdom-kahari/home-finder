@@ -12,4 +12,6 @@ public interface BaseUserQueryPort {
     boolean existsByRole(Role role);
 
     Optional<BaseUser> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }
