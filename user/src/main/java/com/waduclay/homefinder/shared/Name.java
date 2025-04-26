@@ -8,8 +8,11 @@ package com.waduclay.homefinder.shared;
 public final class Name {
     private final String value;
 
-    public Name(String value) {
+    private Name(String value) {
         this.value = CapitaliseEachWord.from(value);
+    }
+    public static Name from(String value){
+        return new Name(value);
     }
 
     public String getValue() {

@@ -7,12 +7,16 @@ package com.waduclay.homefinder.shared;
 public final class Url {
     private final String value;
 
-    public Url(String value) {
+    private Url(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("URL cannot be null or empty");
         }
         // Add URL format validation
         this.value = value;
+    }
+
+    public static Url from(String value){
+        return new Url(value);
     }
 
     public String getValue() {

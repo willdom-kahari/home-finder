@@ -5,18 +5,18 @@ import java.util.regex.Pattern;
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class Password {
+public final class Password {
     private final String value;
 
     private Password(String value) {
         this.value = value;
     }
 
-    public static Password from(String value, PasswordEncoderPort encoder) {
-        return from(value, PasswordValidator.defaultValidator(), encoder);
+    public static Password of(String value, PasswordEncoderPort encoder) {
+        return of(value, PasswordValidator.defaultValidator(), encoder);
     }
 
-    public static Password from(String value, PasswordValidator validator, PasswordEncoderPort encoder) {
+    public static Password of(String value, PasswordValidator validator, PasswordEncoderPort encoder) {
         InputGuard.againstEmptiness(value, "password");
         validator.validate(value);
         String encryptedPassword = encoder.encrypt(value);

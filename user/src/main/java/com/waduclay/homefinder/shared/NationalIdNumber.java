@@ -20,7 +20,7 @@ public final class NationalIdNumber {
      * @return validated NationalIdNumber instance
      * @throws IllegalArgumentException if the input is invalid
      */
-    public static NationalIdNumber create(String nationalId) {
+    public static NationalIdNumber from(String nationalId) {
         InputGuard.againstEmptiness(nationalId, "national id");
         String normalized = normalize(nationalId);
         validate(normalized);

@@ -1,6 +1,8 @@
 package com.waduclay.homefinder.shared;
 
 
+import java.util.Objects;
+
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
@@ -42,5 +44,20 @@ public final class UserAccountStatus {
 
     public boolean isAccountActive() {
         return accountActive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserAccountStatus that = (UserAccountStatus) o;
+        return credentialsExpired == that.credentialsExpired &&
+                accountLocked == that.accountLocked &&
+                accountActive == that.accountActive;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(credentialsExpired, accountLocked, accountActive);
     }
 }

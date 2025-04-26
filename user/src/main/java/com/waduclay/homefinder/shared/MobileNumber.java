@@ -22,7 +22,7 @@ public final class MobileNumber {
      * @return validated MobileNumber instance
      * @throws IllegalArgumentException if the input is invalid
      */
-    public static MobileNumber create(String rawNumber) {
+    public static MobileNumber from(String rawNumber) {
         InputGuard.againstEmptiness(rawNumber, "mobile number");
         String normalized = normalize(rawNumber);
         validate(normalized);
