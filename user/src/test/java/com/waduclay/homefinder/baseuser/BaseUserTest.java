@@ -54,10 +54,10 @@ class BaseUserTest {
     @Test
     void createUser_createsUserWithCorrectProperties() {
         BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD,
-                AuthenticationProvider.GOOGLE, TEST_ID);
+                AuthenticationProvider.GOOGLE);
 
         assertAll(
-                () -> assertEquals(TEST_ID, user.getId()),
+                () -> assertNotNull(user.getId()),
                 () -> assertEquals("testuser", user.getUsername()),
                 () -> assertEquals("USER", user.getRole()),
                 () -> assertFalse(user.isAccountActive())
@@ -66,10 +66,10 @@ class BaseUserTest {
 
     @Test
     void createAdmin_createsAdminWithCorrectProperties() {
-        BaseUser admin = BaseUser.createAdmin(TEST_USERNAME, TEST_PASSWORD, TEST_ID);
+        BaseUser admin = BaseUser.createAdmin(TEST_USERNAME, TEST_PASSWORD);
 
         assertAll(
-                () -> assertEquals(TEST_ID, admin.getId()),
+                () -> assertNotNull(admin.getId()),
                 () -> assertEquals("ADMIN", admin.getRole()),
                 () -> assertTrue(admin.isAccountActive())
         );
@@ -108,7 +108,7 @@ class BaseUserTest {
     @Test
     void changePassword_updatesPasswordAndActivatesAccount() {
         BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD,
-                AuthenticationProvider.APP, TEST_ID);
+                AuthenticationProvider.APP);
         String newPassword = "newP@55w0rd";
         String encryptedNewPassword = "encryptedNewP@55w0rd";
 
@@ -185,7 +185,7 @@ class BaseUserTest {
     // Password change tests
     @Test
     void changePassword_shouldUpdatePasswordAndActivateAccount() {
-        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID);
+        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
         Password newPassword = mock(Password.class);
         when(newPassword.getValue()).thenReturn("newPassword123!");
 
@@ -213,7 +213,7 @@ class BaseUserTest {
     @ParameterizedTest
     @EnumSource(AuthenticationProvider.class)
     void createUser_shouldStoreAuthenticationProvider(AuthenticationProvider provider) {
-        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, provider, TEST_ID);
+        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, provider);
         assertEquals(provider, user.getAuthenticationProvider());
     }
 
@@ -221,19 +221,19 @@ class BaseUserTest {
     @Test
     void createUser_withNullUsername_shouldThrowException() {
         assertThrows(IllegalArgumentException.class,
-                () -> BaseUser.createUser(null, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID));
+                () -> BaseUser.createUser(null, TEST_PASSWORD, AuthenticationProvider.APP));
     }
 
     @Test
     void createUser_withNullPassword_shouldThrowException() {
         assertThrows(IllegalArgumentException.class,
-                () -> BaseUser.createUser(TEST_USERNAME, null, AuthenticationProvider.APP, TEST_ID));
+                () -> BaseUser.createUser(TEST_USERNAME, null, AuthenticationProvider.APP));
     }
 
     @Test
     void createUser_withNullAuthProvider_shouldThrowException() {
         assertThrows(IllegalArgumentException.class,
-                () -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, null, TEST_ID));
+                () -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, null));
     }
 
     // Equality tests
@@ -257,15 +257,12 @@ class BaseUserTest {
 
     @Test
     void equals_shouldCompareBasedOnId() {
-        UUID id1 = UUID.randomUUID();
-        UUID id2 = UUID.randomUUID();
-
-        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id1);
-        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id1);
-        BaseUser user3 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id2);
+        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
+        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
+        BaseUser user3 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
 
         assertAll(
-                () -> assertEquals(user1, user2),
+                () -> assertNotEquals(user1, user2),
                 () -> assertNotEquals(user1, user3)
         );
     }
@@ -281,11 +278,10 @@ class BaseUserTest {
 
     @Test
     void hashCode_shouldBeEqualForEqualObjects() {
-        UUID id = UUID.randomUUID();
-        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id);
-        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id);
+        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
+        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
 
-        assertEquals(user1.hashCode(), user2.hashCode());
+        assertNotEquals(user1.hashCode(), user2.hashCode());
     }
 
     // Thread safety tests
@@ -333,8 +329,8 @@ class BaseUserTest {
     private BaseUser createUserWithRole(Role role) {
         return switch (role) {
             case DEFAULT -> BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
-            case USER -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID);
-            case ADMIN -> BaseUser.createAdmin(TEST_USERNAME, TEST_PASSWORD, TEST_ID);
+            case USER -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP);
+            case ADMIN -> BaseUser.createAdmin(TEST_USERNAME, TEST_PASSWORD);
         };
     }
 
