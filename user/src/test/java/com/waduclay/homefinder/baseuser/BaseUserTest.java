@@ -17,14 +17,14 @@ class BaseUserTest {
     @Mock
     private PasswordEncoderPort passwordEncoder;
     private final UUID TEST_ID = UUID.randomUUID();
-    private final Username TEST_USERNAME = Username.of("testuser", UsernamePolicy.defaultUsernamePolicy());
+    private Username TEST_USERNAME;
     private Password TEST_PASSWORD;
     @BeforeEach
     void setup(){
         String password = "P@55w0rd";
         String encryptedPassword = "encryptedP@55w0rd";
         when(passwordEncoder.encrypt(password)).thenReturn(encryptedPassword);
-
+        TEST_USERNAME = Username.of("testuser", UsernamePolicy.defaultUsernamePolicy());
         TEST_PASSWORD = Password.of(password, passwordEncoder);
     }
 
