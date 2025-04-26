@@ -11,10 +11,10 @@ import java.util.UUID;
 public class BaseUser extends Entity<UUID> {
     private final Username username;
     private final Role role;
+    private final AuthenticationProvider authenticationProvider;
     private Password password;
     private UserAccountStatus userAccountStatus;
     private int failedLoginAttempts;
-    private final AuthenticationProvider authenticationProvider;
 
     private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus, AuthenticationProvider authenticationProvider) {
         super(UUID.randomUUID());

@@ -53,7 +53,7 @@ public class User extends Entity<UUID> {
             Name lastName,
             MobileNumber mobileNumber,
             Email email
-    ){
+    ) {
         this.nationalIdNumber = nationalIdNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,15 +61,15 @@ public class User extends Entity<UUID> {
         this.email = email;
     }
 
-    public void addNationalIdUrl(Url nationalIdUrl){
-        if (this.nationalIdUrl != null){
+    public void addNationalIdUrl(Url nationalIdUrl) {
+        if (this.nationalIdUrl != null) {
             throw new IllegalStateException("Cannot add national id. Already exists!");
         }
-        this. nationalIdUrl = nationalIdUrl;
+        this.nationalIdUrl = nationalIdUrl;
     }
 
-    public void addPayslipUrl(Url payslipUrl) throws IllegalStateException{
-        if (this.currentPayslipUrl != null){
+    public void addPayslipUrl(Url payslipUrl) throws IllegalStateException {
+        if (this.currentPayslipUrl != null) {
             throw new IllegalStateException("Cannot add payslip. Already exists!");
         }
         this.currentPayslipUrl = payslipUrl;
