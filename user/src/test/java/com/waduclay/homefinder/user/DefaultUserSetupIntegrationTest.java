@@ -101,8 +101,7 @@ class DefaultUserSetupIntegrationTest {
         // Given
         BaseUser user = BaseUser.createAdmin(
                 Username.of("testUser", new UsernamePolicy.DefaultUsernamePolicy()),
-                Password.of("P@55w0rd", base64Encoder),
-                UUID.randomUUID()
+                Password.of("P@55w0rd", base64Encoder)
         );
 
         // When
@@ -152,6 +151,11 @@ class DefaultUserSetupIntegrationTest {
         @Override
         public Optional<BaseUser> findByUsername(String username) {
             return Optional.ofNullable(userMap.get(username));
+        }
+
+        @Override
+        public boolean existsByUsername(String username) {
+            return Optional.ofNullable(userMap.get(username)).isPresent();
         }
     }
 }
