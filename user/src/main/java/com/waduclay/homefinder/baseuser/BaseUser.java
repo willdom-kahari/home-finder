@@ -26,61 +26,65 @@ public class BaseUser extends Entity<UUID> {
     }
 
     // In BaseUser:
-    static BaseUser createDefaultUser(Username username, Password password) {
+    public static BaseUser createDefaultUser(Username username, Password password) {
         return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP, UUID.randomUUID());
     }
 
-    static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider, UUID id) {
+    public static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider, UUID id) {
         return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive(), authenticationProvider, id);
     }
 
-    static BaseUser createAdmin(Username username, Password password, UUID id) {
+    public static BaseUser createAdmin(Username username, Password password, UUID id) {
         return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP, id);
     }
 
 
-    void recordFailedLoginAttempt() {
+    public void recordFailedLoginAttempt() {
 
         if (this.failedLoginAttempts >= 2) {
             this.userAccountStatus = UserAccountStatus.locked();
         } else this.failedLoginAttempts++;
     }
 
-    void resetLoginAttempt() {
+    public void resetLoginAttempt() {
         this.failedLoginAttempts = 0;
     }
 
+    public void unlockAccount() {
+        this.userAccountStatus = UserAccountStatus.active();
+        this.failedLoginAttempts = 0;
+    }
 
     public void changePassword(Password newPassword) {
         this.password = newPassword;
         this.userAccountStatus = UserAccountStatus.active();
     }
 
-    String getUsername() {
+    public String getUsername() {
         return username.getValue();
     }
 
-    String getRole() {
+    public String getRole() {
         return role.name();
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password.getValue();
     }
 
-    boolean isCredentialsExpired() {
+    public boolean isCredentialsExpired() {
         return userAccountStatus.isCredentialsExpired();
     }
 
-    boolean isAccountLocked() {
+    public boolean isAccountLocked() {
         return userAccountStatus.isAccountLocked();
     }
 
-    boolean isAccountActive() {
+    public boolean isAccountActive() {
         return userAccountStatus.isAccountActive();
     }
 
-    int getFailedLoginAttempts() {
+    public int getFailedLoginAttempts() {
         return failedLoginAttempts;
     }
 }
