@@ -51,6 +51,15 @@ public final class NationalIdNumber {
         return value;
     }
 
+    public static boolean isValid(String nationalId) {
+        try {
+            from(nationalId);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
