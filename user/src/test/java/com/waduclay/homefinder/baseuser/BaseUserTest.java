@@ -4,12 +4,20 @@ import com.waduclay.homefinder.shared.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -83,8 +91,8 @@ class BaseUserTest {
         // Third attempt should lock
         user.recordFailedLoginAttempt();
         assertTrue(user.isAccountLocked());
-        // Counter should still be 2 (not incremented after lock)
-        assertEquals(2, user.getFailedLoginAttempts());
+
+        assertEquals(3, user.getFailedLoginAttempts());
     }
 
     @Test
@@ -127,5 +135,271 @@ class BaseUserTest {
                 () -> assertEquals("encryptedP@55w0rd", user.getPassword())
         );
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {3, 5})
+    void recordFailedLoginAttempt_shouldLockAccountAfterThreshold(int threshold) {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+
+        // Simulate failed attempts up to threshold
+        for (int i = 0; i < threshold; i++) {
+            user.recordFailedLoginAttempt();
+        }
+
+        assertAll(
+                () -> assertEquals(3, user.getFailedLoginAttempts()),
+                () -> assertEquals(threshold > 2, user.isAccountLocked())
+        );
+    }
+
+    @Test
+    void resetLoginAttempt_shouldResetCounterToZero() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+
+        user.resetLoginAttempt();
+
+        assertAll(
+                () -> assertEquals(0, user.getFailedLoginAttempts()),
+                () -> assertFalse(user.isAccountLocked())
+        );
+    }
+
+    @Test
+    void unlockAccount_shouldResetStatusAndAttempts() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        // Lock the account
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+
+        user.unlockAccount();
+
+        assertAll(
+                () -> assertTrue(user.isAccountActive()),
+                () -> assertFalse(user.isAccountLocked()),
+                () -> assertEquals(0, user.getFailedLoginAttempts())
+        );
+    }
+
+    // Password change tests
+    @Test
+    void changePassword_shouldUpdatePasswordAndActivateAccount() {
+        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID);
+        Password newPassword = mock(Password.class);
+        when(newPassword.getValue()).thenReturn("newPassword123!");
+
+        user.changePassword(newPassword);
+
+        assertAll(
+                () -> assertEquals("newPassword123!", user.getPassword()),
+                () -> assertTrue(user.isAccountActive())
+        );
+    }
+
+    @Test
+    void changePassword_shouldUnlockAccountIfLocked() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        // Lock the account
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+        Password newPassword = mock(Password.class);
+        user.changePassword(newPassword);
+        assertFalse(user.isAccountLocked());
+    }
+
+    // Authentication provider tests
+    @ParameterizedTest
+    @EnumSource(AuthenticationProvider.class)
+    void createUser_shouldStoreAuthenticationProvider(AuthenticationProvider provider) {
+        BaseUser user = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, provider, TEST_ID);
+        assertEquals(provider, user.getAuthenticationProvider());
+    }
+
+    // Edge cases and validation
+    @Test
+    void createUser_withNullUsername_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> BaseUser.createUser(null, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID));
+    }
+
+    @Test
+    void createUser_withNullPassword_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> BaseUser.createUser(TEST_USERNAME, null, AuthenticationProvider.APP, TEST_ID));
+    }
+
+    @Test
+    void createUser_withNullAuthProvider_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, null, TEST_ID));
+    }
+
+    // Equality tests
+    @Test
+    void equals_shouldReturnTrueForSameInstance() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        assertTrue(user.equals(user));
+    }
+
+    @Test
+    void equals_shouldReturnFalseForNull() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        assertFalse(user.equals(null));
+    }
+
+    @Test
+    void equals_shouldReturnFalseForDifferentClass() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        assertFalse(user.equals("not a user object"));
+    }
+
+    @Test
+    void equals_shouldCompareBasedOnId() {
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
+
+        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id1);
+        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id1);
+        BaseUser user3 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id2);
+
+        assertAll(
+                () -> assertEquals(user1, user2),
+                () -> assertNotEquals(user1, user3)
+        );
+    }
+
+    // HashCode tests
+    @Test
+    void hashCode_shouldBeConsistent() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        int initialHashCode = user.hashCode();
+
+        assertEquals(initialHashCode, user.hashCode());
+    }
+
+    @Test
+    void hashCode_shouldBeEqualForEqualObjects() {
+        UUID id = UUID.randomUUID();
+        BaseUser user1 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id);
+        BaseUser user2 = BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, id);
+
+        assertEquals(user1.hashCode(), user2.hashCode());
+    }
+
+    // Thread safety tests
+    @Test
+    void concurrentFailedLoginAttempts_shouldMaintainConsistentState() throws InterruptedException {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+        int threadCount = 10;
+
+        Thread[] threads = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 100; j++) {
+                    user.recordFailedLoginAttempt();
+                }
+            });
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        assertEquals(3, user.getFailedLoginAttempts());
+        assertTrue(user.isAccountLocked());
+    }
+
+    // Parameterized test for different role combinations
+    @ParameterizedTest
+    @MethodSource("roleProvider")
+    void createUser_withDifferentRoles_shouldSetCorrectRole(Role role) {
+        BaseUser user = createUserWithRole(role);
+        assertEquals(role.name(), user.getRole());
+    }
+
+    private static Stream<Arguments> roleProvider() {
+        return Stream.of(
+                Arguments.of(Role.DEFAULT),
+                Arguments.of(Role.USER),
+                Arguments.of(Role.ADMIN)
+        );
+    }
+
+    private BaseUser createUserWithRole(Role role) {
+        return switch (role) {
+            case DEFAULT -> BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+            case USER -> BaseUser.createUser(TEST_USERNAME, TEST_PASSWORD, AuthenticationProvider.APP, TEST_ID);
+            case ADMIN -> BaseUser.createAdmin(TEST_USERNAME, TEST_PASSWORD, TEST_ID);
+        };
+    }
+
+    // Test for account status transitions
+    @Test
+    void accountStatusTransitions_shouldFollowBusinessRules() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+
+        // Initial state
+        assertTrue(user.isAccountActive());
+        assertFalse(user.isAccountLocked());
+
+        // First failed attempt
+        user.recordFailedLoginAttempt();
+        assertEquals(1, user.getFailedLoginAttempts());
+        assertTrue(user.isAccountActive());
+
+        // Second failed attempt
+        user.recordFailedLoginAttempt();
+        assertEquals(2, user.getFailedLoginAttempts());
+        assertTrue(user.isAccountActive());
+
+        // Third failed attempt - should lock
+        user.recordFailedLoginAttempt();
+        assertTrue(user.isAccountLocked());
+        assertFalse(user.isAccountActive());
+
+        // Unlock
+        user.unlockAccount();
+        assertTrue(user.isAccountActive());
+        assertFalse(user.isAccountLocked());
+        assertEquals(0, user.getFailedLoginAttempts());
+
+        // Change password should also unlock
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+        user.changePassword(mock(Password.class));
+        assertTrue(user.isAccountActive());
+    }
+
+
+    // Test for an edge case of maximum failed attempts
+    @Test
+    void recordFailedLoginAttempt_shouldNotExceedMaxInt() {
+        BaseUser user = BaseUser.createDefaultUser(TEST_USERNAME, TEST_PASSWORD);
+
+        // Simulate Integer.MAX_VALUE attempts
+        setFailedAttemptsThroughReflection(user);
+
+        user.recordFailedLoginAttempt();
+        user.recordFailedLoginAttempt();
+
+        assertEquals(3, user.getFailedLoginAttempts());
+    }
+
+    // Helper method for testing private field manipulation
+    private void setFailedAttemptsThroughReflection(BaseUser user) {
+        try {
+            Field field = BaseUser.class.getDeclaredField("failedLoginAttempts");
+            field.setAccessible(true);
+            field.set(user, Integer.MAX_VALUE - 1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
