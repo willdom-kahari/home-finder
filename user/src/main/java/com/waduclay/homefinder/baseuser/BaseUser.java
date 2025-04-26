@@ -16,8 +16,8 @@ public class BaseUser extends Entity<UUID> {
     private int failedLoginAttempts;
     private final AuthenticationProvider authenticationProvider;
 
-    private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus, AuthenticationProvider authenticationProvider, UUID id) {
-        super(id);
+    private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus, AuthenticationProvider authenticationProvider) {
+        super(UUID.randomUUID());
         this.username = username;
         this.role = role;
         this.password = password;
@@ -30,22 +30,20 @@ public class BaseUser extends Entity<UUID> {
     public static BaseUser createDefaultUser(Username username, Password password) {
         InputGuard.againstNull(username, "username");
         InputGuard.againstNull(password, "password");
-        return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP, UUID.randomUUID());
+        return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP);
     }
 
-    public static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider, UUID id) {
+    public static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider) {
         InputGuard.againstNull(username, "username");
         InputGuard.againstNull(password, "password");
         InputGuard.againstNull(authenticationProvider, "authentication provider");
-        InputGuard.againstNull(id, "id");
-        return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive(), authenticationProvider, id);
+        return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive(), authenticationProvider);
     }
 
-    public static BaseUser createAdmin(Username username, Password password, UUID id) {
+    public static BaseUser createAdmin(Username username, Password password) {
         InputGuard.againstNull(username, "username");
         InputGuard.againstNull(password, "password");
-        InputGuard.againstNull(id, "id");
-        return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP, id);
+        return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP);
     }
 
 
