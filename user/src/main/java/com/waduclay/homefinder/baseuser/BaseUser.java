@@ -50,9 +50,17 @@ public class BaseUser extends Entity<UUID> {
 
 
     public void recordFailedLoginAttempt() {
-        this.failedLoginAttempts++;
-        if (this.failedLoginAttempts == 3) {
-            this.userAccountStatus = UserAccountStatus.locked();
+        final int MAX_FAILED_ATTEMPTS = 3;
+
+        if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS) {
+            failedLoginAttempts = 3;
+            return;  // Already at or above max attempts, no further action needed
+        }
+
+        failedLoginAttempts++;
+
+        if (failedLoginAttempts == MAX_FAILED_ATTEMPTS) {
+            userAccountStatus = UserAccountStatus.locked();
         }
     }
 
