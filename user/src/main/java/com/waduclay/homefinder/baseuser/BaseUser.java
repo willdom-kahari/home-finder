@@ -23,27 +23,37 @@ public class BaseUser extends Entity<UUID> {
         this.password = password;
         this.userAccountStatus = userAccountStatus;
         this.failedLoginAttempts = 0;
+        this.authenticationProvider = authenticationProvider;
     }
 
     // In BaseUser:
     public static BaseUser createDefaultUser(Username username, Password password) {
+        InputGuard.againstNull(username, "username");
+        InputGuard.againstNull(password, "password");
         return new BaseUser(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP, UUID.randomUUID());
     }
 
     public static BaseUser createUser(Username username, Password password, AuthenticationProvider authenticationProvider, UUID id) {
+        InputGuard.againstNull(username, "username");
+        InputGuard.againstNull(password, "password");
+        InputGuard.againstNull(authenticationProvider, "authentication provider");
+        InputGuard.againstNull(id, "id");
         return new BaseUser(username, Role.USER, password, UserAccountStatus.inactive(), authenticationProvider, id);
     }
 
     public static BaseUser createAdmin(Username username, Password password, UUID id) {
+        InputGuard.againstNull(username, "username");
+        InputGuard.againstNull(password, "password");
+        InputGuard.againstNull(id, "id");
         return new BaseUser(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP, id);
     }
 
 
     public void recordFailedLoginAttempt() {
-
-        if (this.failedLoginAttempts >= 2) {
+        this.failedLoginAttempts++;
+        if (this.failedLoginAttempts == 3) {
             this.userAccountStatus = UserAccountStatus.locked();
-        } else this.failedLoginAttempts++;
+        }
     }
 
     public void resetLoginAttempt() {
@@ -86,5 +96,9 @@ public class BaseUser extends Entity<UUID> {
 
     public int getFailedLoginAttempts() {
         return failedLoginAttempts;
+    }
+
+    public AuthenticationProvider getAuthenticationProvider() {
+        return this.authenticationProvider;
     }
 }
