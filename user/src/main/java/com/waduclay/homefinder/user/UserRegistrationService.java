@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.genericuser;
+package com.waduclay.homefinder.user;
 
 import com.waduclay.homefinder.baseuser.AuthenticationProvider;
 import com.waduclay.homefinder.baseuser.BaseUser;
