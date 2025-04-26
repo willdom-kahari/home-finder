@@ -14,4 +14,9 @@ public final class InputGuard {
         }
     }
 
+    public static void againstNull(Object object, String name) {
+        if (object == null) {
+            throw new IllegalArgumentException("%s must not be null".formatted(name));
+        }
+    }
 }
