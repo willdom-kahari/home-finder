@@ -4,7 +4,7 @@ package com.waduclay.homefinder.shared;
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class InputGuard {
+public final class InputGuard {
     private InputGuard() {
     }
 
