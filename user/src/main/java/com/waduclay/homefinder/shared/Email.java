@@ -16,7 +16,8 @@ public final class Email {
         }
         this.value = value;
     }
-    public static Email from(String value){
+
+    public static Email from(String value) {
         return new Email(value);
     }
 

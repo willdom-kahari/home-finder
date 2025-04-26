@@ -39,11 +39,16 @@ public interface UsernamePolicy {
         }
     }
 
-    void validate(String username);
-
-    static UsernamePolicy defaultUsernamePolicy(){
+    static UsernamePolicy defaultUsernamePolicy() {
         return new DefaultUsernamePolicy();
     }
+
+    static ConfigurableUsernamePolicy.Builder configurableUsernamePolicy() {
+        return ConfigurableUsernamePolicy.builder();
+    }
+
+    void validate(String username);
+
     /**
      * Default implementation with standard rules
      */
@@ -63,10 +68,6 @@ public interface UsernamePolicy {
             validateNotReserved(username, RESERVED_NAMES);
             validateNotOffensive(username, OFFENSIVE_TERMS);
         }
-    }
-
-    static ConfigurableUsernamePolicy.Builder configurableUsernamePolicy(){
-        return ConfigurableUsernamePolicy.builder();
     }
 
     final class ConfigurableUsernamePolicy implements UsernamePolicy {

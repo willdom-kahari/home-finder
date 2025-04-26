@@ -16,8 +16,13 @@ public final class MobileNumber {
 
     private final String value;
 
+    private MobileNumber(String normalizedNumber) {
+        this.value = normalizedNumber;
+    }
+
     /**
      * Factory method for creating a validated MobileNumber
+     *
      * @param rawNumber the raw mobile number string
      * @return validated MobileNumber instance
      * @throws IllegalArgumentException if the input is invalid
@@ -27,10 +32,6 @@ public final class MobileNumber {
         String normalized = normalize(rawNumber);
         validate(normalized);
         return new MobileNumber(normalized);
-    }
-
-    private MobileNumber(String normalizedNumber) {
-        this.value = normalizedNumber;
     }
 
     private static String normalize(String rawNumber) {

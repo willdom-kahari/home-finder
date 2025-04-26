@@ -30,7 +30,7 @@ public class User extends Entity<UUID> {
             Name lastName,
             MobileNumber mobileNumber,
             Email email
-            ){
+    ) {
         return new User(UUID.randomUUID());
     }
 }

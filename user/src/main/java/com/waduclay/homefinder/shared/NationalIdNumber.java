@@ -1,8 +1,8 @@
 package com.waduclay.homefinder.shared;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A domain value object representing a National Identification Number.
@@ -14,8 +14,13 @@ public final class NationalIdNumber {
     private static final String NATIONAL_ID_REGEX = "^\\d{8}\\d?[a-zA-Z]\\d{2}$";
     private final String value;
 
+    private NationalIdNumber(String normalizedNationalId) {
+        this.value = normalizedNationalId;
+    }
+
     /**
      * Factory method for creating a validated NationalIdNumber
+     *
      * @param nationalId the raw national ID string
      * @return validated NationalIdNumber instance
      * @throws IllegalArgumentException if the input is invalid
@@ -25,10 +30,6 @@ public final class NationalIdNumber {
         String normalized = normalize(nationalId);
         validate(normalized);
         return new NationalIdNumber(normalized);
-    }
-
-    private NationalIdNumber(String normalizedNationalId) {
-        this.value = normalizedNationalId;
     }
 
     private static String normalize(String nationalId) {
@@ -47,10 +48,6 @@ public final class NationalIdNumber {
         }
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static boolean isValid(String nationalId) {
         try {
             from(nationalId);
@@ -58,6 +55,10 @@ public final class NationalIdNumber {
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

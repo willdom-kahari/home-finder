@@ -15,7 +15,7 @@ public final class Url {
         this.value = value;
     }
 
-    public static Url from(String value){
+    public static Url from(String value) {
         return new Url(value);
     }
 

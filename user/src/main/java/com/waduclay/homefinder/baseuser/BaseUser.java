@@ -14,7 +14,7 @@ public class BaseUser extends Entity<UUID> {
     private Password password;
     private UserAccountStatus userAccountStatus;
     private int failedLoginAttempts;
-    private AuthenticationProvider authenticationProvider;
+    private final AuthenticationProvider authenticationProvider;
 
     private BaseUser(final Username username, final Role role, Password password, UserAccountStatus userAccountStatus, AuthenticationProvider authenticationProvider, UUID id) {
         super(id);
