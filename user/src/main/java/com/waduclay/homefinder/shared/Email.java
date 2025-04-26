@@ -7,7 +7,7 @@ package com.waduclay.homefinder.shared;
 public final class Email {
     private final String value;
 
-    public Email(String value) {
+    private Email(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
         }
@@ -15,6 +15,9 @@ public final class Email {
             throw new IllegalArgumentException("Invalid email format");
         }
         this.value = value;
+    }
+    public static Email from(String value){
+        return new Email(value);
     }
 
     public String getValue() {

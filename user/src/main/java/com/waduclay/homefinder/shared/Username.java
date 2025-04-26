@@ -15,7 +15,7 @@ public final class Username {
     /**
      * Factory method with injected policy
      */
-    public static Username from(String value, UsernamePolicy policy) {
+    public static Username of(String value, UsernamePolicy policy) {
         Objects.requireNonNull(policy, "UsernamePolicy cannot be null");
         InputGuard.againstEmptiness(value, "username");
 

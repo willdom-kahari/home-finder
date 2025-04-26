@@ -41,6 +41,9 @@ public interface UsernamePolicy {
 
     void validate(String username);
 
+    static UsernamePolicy defaultUsernamePolicy(){
+        return new DefaultUsernamePolicy();
+    }
     /**
      * Default implementation with standard rules
      */
@@ -62,28 +65,80 @@ public interface UsernamePolicy {
         }
     }
 
-    class ConfigurableUsernamePolicy implements UsernamePolicy {
+    static ConfigurableUsernamePolicy.Builder configurableUsernamePolicy(){
+        return ConfigurableUsernamePolicy.builder();
+    }
+
+    final class ConfigurableUsernamePolicy implements UsernamePolicy {
         private final int minLength;
         private final int maxLength;
-        private final Pattern allowedChars = Pattern.compile("^[a-zA-Z0-9_.-]+$");
+        private final Pattern allowedChars;
         private final Set<String> reservedNames;
         private final Set<String> offensiveTerms;
 
-        public ConfigurableUsernamePolicy(int minLength, int maxLength,
-                                          Set<String> reservedNames,
-                                          Set<String> offensiveTerms) {
-            this.minLength = minLength;
-            this.maxLength = maxLength;
-            this.reservedNames = Set.copyOf(reservedNames);
-            this.offensiveTerms = Set.copyOf(offensiveTerms);
+        private ConfigurableUsernamePolicy(Builder builder) {
+            this.minLength = builder.minLength;
+            this.maxLength = builder.maxLength;
+            this.allowedChars = builder.allowedChars;
+            this.reservedNames = Set.copyOf(builder.reservedNames);
+            this.offensiveTerms = Set.copyOf(builder.offensiveTerms);
+        }
+
+        public static Builder builder() {
+            return new Builder();
         }
 
         @Override
         public void validate(String username) {
-            validateLength(username, minLength, maxLength);
-            validateCharacters(username, allowedChars);
-            validateNotReserved(username, reservedNames);
-            validateNotOffensive(username, offensiveTerms);
+            UsernamePolicy.validateLength(username, minLength, maxLength);
+            UsernamePolicy.validateCharacters(username, allowedChars);
+            UsernamePolicy.validateNotReserved(username, reservedNames);
+            UsernamePolicy.validateNotOffensive(username, offensiveTerms);
+        }
+
+        public static final class Builder {
+            private int minLength = 4;
+            private int maxLength = 20;
+            private Pattern allowedChars = Pattern.compile("^[a-zA-Z0-9_.-]+$");
+            private Set<String> reservedNames = Set.of();
+            private Set<String> offensiveTerms = Set.of();
+
+            public Builder withLengthRange(int minLength, int maxLength) {
+                this.minLength = minLength;
+                this.maxLength = maxLength;
+                return this;
+            }
+
+            public Builder withAllowedCharacters(Pattern pattern) {
+                this.allowedChars = pattern;
+                return this;
+            }
+
+            public Builder withAllowedCharacters(String regex) {
+                return withAllowedCharacters(Pattern.compile(regex));
+            }
+
+            public Builder withReservedNames(Set<String> reservedNames) {
+                this.reservedNames = reservedNames;
+                return this;
+            }
+
+            public Builder withReservedNames(String... reservedNames) {
+                return withReservedNames(Set.of(reservedNames));
+            }
+
+            public Builder withOffensiveTerms(Set<String> offensiveTerms) {
+                this.offensiveTerms = offensiveTerms;
+                return this;
+            }
+
+            public Builder withOffensiveTerms(String... offensiveTerms) {
+                return withOffensiveTerms(Set.of(offensiveTerms));
+            }
+
+            public UsernamePolicy build() {
+                return new ConfigurableUsernamePolicy(this);
+            }
         }
     }
 }

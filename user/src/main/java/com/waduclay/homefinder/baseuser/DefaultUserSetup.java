@@ -18,8 +18,13 @@ public class DefaultUserSetup {
     }
 
     public void ensureDefaultUserExists(String username, String password) {
-        Username defaultUsername = Username.from(username, new UsernamePolicy.DefaultUsernamePolicy());
-        Password defaultUserPassword = Password.from(password, passwordEncoder);
+        UsernamePolicy usernamePolicy = UsernamePolicy.configurableUsernamePolicy()
+                .withAllowedCharacters("^[a-zA-Z0-9_.-]+$")
+                .withLengthRange(4, 10)
+                .build();
+
+        Username defaultUsername = Username.of(username, usernamePolicy);
+        Password defaultUserPassword = Password.of(password, passwordEncoder);
         if (!queryPort.existsByRole(Role.DEFAULT)) {
             BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword);
             repositoryPort.save(defaultUser);
