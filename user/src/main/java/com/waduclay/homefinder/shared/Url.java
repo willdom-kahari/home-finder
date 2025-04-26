@@ -7,7 +7,7 @@ package com.waduclay.homefinder.shared;
 public final class Url {
     private final String value;
 
-    private Url(String value) {
+    public Url(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("URL cannot be null or empty");
         }

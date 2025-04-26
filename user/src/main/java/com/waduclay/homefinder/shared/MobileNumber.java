@@ -16,7 +16,7 @@ public final class MobileNumber {
 
     private final String value;
 
-    private MobileNumber(String normalizedNumber) {
+    public MobileNumber(String normalizedNumber) {
         this.value = normalizedNumber;
     }
 

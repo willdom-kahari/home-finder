@@ -14,7 +14,7 @@ public final class NationalIdNumber {
     private static final String NATIONAL_ID_REGEX = "^\\d{8}\\d?[a-zA-Z]\\d{2}$";
     private final String value;
 
-    private NationalIdNumber(String normalizedNationalId) {
+    public NationalIdNumber(String normalizedNationalId) {
         this.value = normalizedNationalId;
     }
 
