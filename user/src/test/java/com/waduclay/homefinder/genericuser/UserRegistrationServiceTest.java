@@ -2,10 +2,10 @@ package com.waduclay.homefinder.genericuser;
 
 import com.waduclay.homefinder.baseuser.*;
 import com.waduclay.homefinder.shared.*;
-import com.waduclay.homefinder.user.PasswordGeneratorPort;
-import com.waduclay.homefinder.user.User;
-import com.waduclay.homefinder.user.UserRegistrationService;
-import com.waduclay.homefinder.user.UserRepositoryPort;
+import com.waduclay.homefinder.users.PasswordGeneratorPort;
+import com.waduclay.homefinder.users.User;
+import com.waduclay.homefinder.users.UserRegistrationService;
+import com.waduclay.homefinder.users.UserRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
