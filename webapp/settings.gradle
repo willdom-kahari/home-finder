@@ -1,0 +1,3 @@
+rootProject.name = 'webapp'
+include 'user'
+project(':user').projectDir = new File(settingsDir, '../user')
