@@ -4,11 +4,10 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/user" />
-        <option name="gradleHome" value="/usr/local/Cellar/gradle/8.10.2/libexec" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/domain/user" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/domain/user" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -16,7 +15,7 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$/webapp" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/domain/user" />
             <option value="$PROJECT_DIR$/webapp" />
           </set>
         </option>
