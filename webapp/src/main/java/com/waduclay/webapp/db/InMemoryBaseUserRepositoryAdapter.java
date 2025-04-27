@@ -1,8 +1,10 @@
 package com.waduclay.webapp.db;
 
 
-import com.waduclay.homefinder.baseuser.BaseUser;
-import com.waduclay.homefinder.baseuser.BaseUserRepositoryPort;
+
+
+import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
+import com.waduclay.homefinder.users.BaseUser;
 
 import java.util.Map;
 

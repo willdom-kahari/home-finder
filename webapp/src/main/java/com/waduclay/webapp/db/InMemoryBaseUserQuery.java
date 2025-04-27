@@ -1,9 +1,9 @@
 package com.waduclay.webapp.db;
 
 
-import com.waduclay.homefinder.baseuser.BaseUser;
-import com.waduclay.homefinder.baseuser.BaseUserQueryPort;
-import com.waduclay.homefinder.shared.Role;
+import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.ports.BaseUserQueryPort;
+import com.waduclay.homefinder.users.BaseUser;
 
 import java.util.Collection;
 import java.util.Map;

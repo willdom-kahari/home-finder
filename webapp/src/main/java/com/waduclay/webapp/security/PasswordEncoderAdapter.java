@@ -1,7 +1,8 @@
 package com.waduclay.webapp.security;
 
 
-import com.waduclay.homefinder.shared.PasswordEncoderPort;
+
+import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

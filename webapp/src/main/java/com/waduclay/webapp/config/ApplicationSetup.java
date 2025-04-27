@@ -1,8 +1,8 @@
 package com.waduclay.webapp.config;
 
 
-import com.waduclay.homefinder.baseuser.BaseUser;
-import com.waduclay.homefinder.baseuser.DefaultUserSetup;
+import com.waduclay.homefinder.users.BaseUser;
+import com.waduclay.homefinder.users.DefaultUserSetup;
 import com.waduclay.webapp.db.InMemoryBaseUserQuery;
 import com.waduclay.webapp.db.InMemoryBaseUserRepositoryAdapter;
 import com.waduclay.webapp.security.PasswordEncoderAdapter;
@@ -38,8 +38,6 @@ public class ApplicationSetup implements ApplicationRunner {
                 passwordEncoderAdapter, baseUserRepository, baseUserQuery
         );
         defaultUserSetup.ensureDefaultUserExists(username, password);
-        defaultUserSetup.ensureDefaultUserExists(username, password);
 
-        log.info(userMap.toString());
     }
 }
