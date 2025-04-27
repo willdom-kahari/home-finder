@@ -7,10 +7,15 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="webapp.main" />
+        <module name="application.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="com.waduclay.webapp.user" target="17" />
+      <module name="com.waduclay.webapp.user.main" target="17" />
+      <module name="com.waduclay.webapp.user.test" target="17" />
+      <module name="webapp.main" target="17" />
+      <module name="webapp.test" target="17" />
       <module name="webapp.user.main" target="17" />
       <module name="webapp.user.test" target="17" />
     </bytecodeTargetLevel>
