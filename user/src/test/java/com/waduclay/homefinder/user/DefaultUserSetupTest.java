@@ -1,12 +1,9 @@
 package com.waduclay.homefinder.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-
+import com.waduclay.homefinder.enums.Role;
 import com.waduclay.homefinder.ports.BaseUserQueryPort;
 import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
 import com.waduclay.homefinder.ports.PasswordEncoderPort;
-import com.waduclay.homefinder.enums.Role;
 import com.waduclay.homefinder.users.BaseUser;
 import com.waduclay.homefinder.users.DefaultUserSetup;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**

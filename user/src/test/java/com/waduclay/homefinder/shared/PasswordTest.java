@@ -2,15 +2,16 @@ package com.waduclay.homefinder.shared;
 
 import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PasswordTest {
@@ -59,7 +60,6 @@ class PasswordTest {
         assertThrows(IllegalArgumentException.class,
                 () -> Password.of("short", strictValidator, mockEncoder));
     }
-
 
 
     @ParameterizedTest

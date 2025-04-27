@@ -2,12 +2,13 @@ package com.waduclay.homefinder.genericuser;
 
 import com.waduclay.homefinder.shared.*;
 import com.waduclay.homefinder.users.User;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
     private UUID testId;
@@ -98,12 +99,12 @@ class UserTest {
     @Test
     @DisplayName("Get national ID URL when not set returns null")
     void getNationalIdUrl_WhenNotSet_ReturnsNull() {
-        assertThrows(NullPointerException.class, ()-> user.getNationalIdUrl());
+        assertThrows(NullPointerException.class, () -> user.getNationalIdUrl());
     }
 
     @Test
     @DisplayName("Get payslip URL when not set returns null")
     void getCurrentPayslipUrl_WhenNotSet_ReturnsNull() {
-        assertThrows(NullPointerException.class, ()-> user.getCurrentPayslipUrl());
+        assertThrows(NullPointerException.class, () -> user.getCurrentPayslipUrl());
     }
 }

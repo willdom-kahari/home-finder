@@ -6,7 +6,8 @@ import com.waduclay.homefinder.ports.BaseUserQueryPort;
 import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
 import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import com.waduclay.homefinder.ports.UsernamePolicy;
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.Password;
+import com.waduclay.homefinder.shared.Username;
 
 import java.util.logging.Logger;
 

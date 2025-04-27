@@ -1,8 +1,8 @@
 package com.waduclay.homefinder.ports;
 
 
-import com.waduclay.homefinder.users.BaseUser;
 import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.users.BaseUser;
 
 import java.util.Optional;
 

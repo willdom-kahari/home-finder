@@ -1,8 +1,6 @@
 package com.waduclay.webapp.db;
 
 
-
-
 import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
 import com.waduclay.homefinder.users.BaseUser;
 

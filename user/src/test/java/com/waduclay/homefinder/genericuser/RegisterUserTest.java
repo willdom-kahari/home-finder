@@ -2,28 +2,29 @@ package com.waduclay.homefinder.genericuser;
 
 import com.waduclay.homefinder.enums.AuthenticationProvider;
 import com.waduclay.homefinder.enums.Role;
-import com.waduclay.homefinder.ports.BaseUserQueryPort;
-import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
-import com.waduclay.homefinder.ports.PasswordEncoderPort;
-import com.waduclay.homefinder.ports.UsernamePolicy;
-import com.waduclay.homefinder.ports.PasswordGeneratorPort;
+import com.waduclay.homefinder.ports.*;
 import com.waduclay.homefinder.users.BaseUser;
-import com.waduclay.homefinder.users.User;
 import com.waduclay.homefinder.users.RegisterUser;
-import com.waduclay.homefinder.ports.UserRepositoryPort;
+import com.waduclay.homefinder.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RegisterUserTest {
 
+    private final String TEST_USERNAME = "testuser";
+    private final String TEST_NAME = "John";
+    private final String TEST_SURNAME = "Doe";
+    private final String TEST_NATIONAL_ID = "12345678A90";
+    private final String TEST_MOBILE = "263745678908";
+    private final String TEST_EMAIL = "john.doe@example.com";
+    private final String TEST_PASSWORD = "P@55w0rd";
     @Mock
     private PasswordEncoderPort passwordEncoder;
     @Mock
@@ -36,16 +37,7 @@ class RegisterUserTest {
     private UserRepositoryPort userRepository;
     @Mock
     private UsernamePolicy usernamePolicy;
-
     private RegisterUser service;
-
-    private final String TEST_USERNAME = "testuser";
-    private final String TEST_NAME = "John";
-    private final String TEST_SURNAME = "Doe";
-    private final String TEST_NATIONAL_ID = "12345678A90";
-    private final String TEST_MOBILE = "263745678908";
-    private final String TEST_EMAIL = "john.doe@example.com";
-    private final String TEST_PASSWORD = "P@55w0rd";
 
     @BeforeEach
     void setUp() {

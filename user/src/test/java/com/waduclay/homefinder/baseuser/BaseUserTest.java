@@ -4,7 +4,8 @@ import com.waduclay.homefinder.enums.AuthenticationProvider;
 import com.waduclay.homefinder.enums.Role;
 import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import com.waduclay.homefinder.ports.UsernamePolicy;
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.Password;
+import com.waduclay.homefinder.shared.Username;
 import com.waduclay.homefinder.users.BaseUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,22 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class BaseUserTest {
+    private final UUID TEST_ID = UUID.randomUUID();
     @Mock
     private PasswordEncoderPort passwordEncoder;
-    private final UUID TEST_ID = UUID.randomUUID();
     private Username TEST_USERNAME;
     private Password TEST_PASSWORD;
+
+    private static Stream<Arguments> roleProvider() {
+        return Stream.of(
+                Arguments.of(Role.DEFAULT),
+                Arguments.of(Role.USER),
+                Arguments.of(Role.ADMIN)
+        );
+    }
+
     @BeforeEach
-    void setup(){
+    void setup() {
         String password = "P@55w0rd";
         String encryptedPassword = "encryptedP@55w0rd";
         when(passwordEncoder.encrypt(password)).thenReturn(encryptedPassword);
@@ -128,7 +138,6 @@ class BaseUserTest {
                 () -> assertFalse(user.isAccountLocked())
         );
     }
-
 
     @Test
     void getters_returnCorrectValues() {
@@ -321,14 +330,6 @@ class BaseUserTest {
     void createUser_withDifferentRoles_shouldSetCorrectRole(Role role) {
         BaseUser user = createUserWithRole(role);
         assertEquals(role.name(), user.getRole());
-    }
-
-    private static Stream<Arguments> roleProvider() {
-        return Stream.of(
-                Arguments.of(Role.DEFAULT),
-                Arguments.of(Role.USER),
-                Arguments.of(Role.ADMIN)
-        );
     }
 
     private BaseUser createUserWithRole(Role role) {

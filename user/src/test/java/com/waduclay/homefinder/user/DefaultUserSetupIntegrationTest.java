@@ -1,19 +1,20 @@
 package com.waduclay.homefinder.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.waduclay.homefinder.enums.Role;
-import com.waduclay.homefinder.users.BaseUser;
 import com.waduclay.homefinder.ports.BaseUserQueryPort;
 import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
-import com.waduclay.homefinder.users.DefaultUserSetup;
 import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import com.waduclay.homefinder.ports.UsernamePolicy;
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.Password;
+import com.waduclay.homefinder.shared.Username;
+import com.waduclay.homefinder.users.BaseUser;
+import com.waduclay.homefinder.users.DefaultUserSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>

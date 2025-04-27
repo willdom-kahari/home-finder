@@ -9,8 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -72,7 +70,7 @@ class UsernameTest {
     void configurablePolicy_respectsCustomRules() {
 
         UsernamePolicy policy = UsernamePolicy.configurableUsernamePolicy()
-                .withLengthRange(3,10)
+                .withLengthRange(3, 10)
                 .withReservedNames("custom")
                 .withOffensiveTerms("badword")
                 .build();
