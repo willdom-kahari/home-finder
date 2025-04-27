@@ -1,5 +1,7 @@
 package com.waduclay.homefinder.shared;
 
+import com.waduclay.homefinder.ports.UsernamePolicy;
+
 import java.util.Objects;
 
 /**

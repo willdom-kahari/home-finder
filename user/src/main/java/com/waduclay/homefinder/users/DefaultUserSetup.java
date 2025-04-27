@@ -1,6 +1,11 @@
-package com.waduclay.homefinder.baseuser;
+package com.waduclay.homefinder.users;
 
 
+import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.ports.BaseUserQueryPort;
+import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
+import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.UsernamePolicy;
 import com.waduclay.homefinder.shared.*;
 
 import java.util.logging.Logger;

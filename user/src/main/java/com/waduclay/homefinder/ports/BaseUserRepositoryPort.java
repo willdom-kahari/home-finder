@@ -1,5 +1,7 @@
-package com.waduclay.homefinder.baseuser;
+package com.waduclay.homefinder.ports;
 
+
+import com.waduclay.homefinder.users.BaseUser;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>

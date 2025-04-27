@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.baseuser;
+package com.waduclay.homefinder.enums;
 
 
 /**

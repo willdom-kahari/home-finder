@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.shared;
+package com.waduclay.homefinder.ports;
 
 
 /**

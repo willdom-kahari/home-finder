@@ -1,5 +1,7 @@
 package com.waduclay.homefinder.shared;
 
+import com.waduclay.homefinder.ports.PasswordEncoderPort;
+
 import java.util.regex.Pattern;
 
 /**

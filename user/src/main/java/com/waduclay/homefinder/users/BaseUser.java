@@ -1,6 +1,8 @@
-package com.waduclay.homefinder.baseuser;
+package com.waduclay.homefinder.users;
 
 
+import com.waduclay.homefinder.enums.AuthenticationProvider;
+import com.waduclay.homefinder.enums.Role;
 import com.waduclay.homefinder.shared.*;
 
 import java.util.UUID;

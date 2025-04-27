@@ -1,11 +1,16 @@
 package com.waduclay.homefinder.genericuser;
 
-import com.waduclay.homefinder.baseuser.*;
-import com.waduclay.homefinder.shared.*;
-import com.waduclay.homefinder.users.PasswordGeneratorPort;
+import com.waduclay.homefinder.enums.AuthenticationProvider;
+import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.ports.BaseUserQueryPort;
+import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
+import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.UsernamePolicy;
+import com.waduclay.homefinder.ports.PasswordGeneratorPort;
+import com.waduclay.homefinder.users.BaseUser;
 import com.waduclay.homefinder.users.User;
-import com.waduclay.homefinder.users.UserRegistrationService;
-import com.waduclay.homefinder.users.UserRepositoryPort;
+import com.waduclay.homefinder.users.RegisterUser;
+import com.waduclay.homefinder.ports.UserRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserRegistrationServiceTest {
+class RegisterUserTest {
 
     @Mock
     private PasswordEncoderPort passwordEncoder;
@@ -32,7 +37,7 @@ class UserRegistrationServiceTest {
     @Mock
     private UsernamePolicy usernamePolicy;
 
-    private UserRegistrationService service;
+    private RegisterUser service;
 
     private final String TEST_USERNAME = "testuser";
     private final String TEST_NAME = "John";
@@ -44,7 +49,7 @@ class UserRegistrationServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new UserRegistrationService(
+        service = new RegisterUser(
                 passwordEncoder,
                 baseUserRepository,
                 baseUserQueryPort,
@@ -55,14 +60,14 @@ class UserRegistrationServiceTest {
     }
 
     @Test
-    void register_WithNewUsername_CreatesAndSavesUser() {
+    void execute_WithNewUsername_CreatesAndSavesUser() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(TEST_PASSWORD);
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.register(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                 Role.USER, AuthenticationProvider.APP);
 
@@ -75,40 +80,40 @@ class UserRegistrationServiceTest {
     }
 
     @Test
-    void register_WithExistingUsername_ThrowsException() {
+    void execute_WithExistingUsername_ThrowsException() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(true);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () ->
-                service.register(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+                service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                         TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                         Role.USER, AuthenticationProvider.GOOGLE)
         );
     }
 
     @Test
-    void register_WithDefaultRole_ThrowsException() {
+    void execute_WithDefaultRole_ThrowsException() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(true);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () ->
-                service.register(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+                service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                         TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                         Role.DEFAULT, AuthenticationProvider.APP)
         );
     }
 
     @Test
-    void register_WithNullEmail_CreatesUserWithoutEmail() {
+    void execute_WithNullEmail_CreatesUserWithoutEmail() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(TEST_PASSWORD);
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.register(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, null,
                 Role.USER, AuthenticationProvider.GITHUB);
 
@@ -123,7 +128,7 @@ class UserRegistrationServiceTest {
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.register(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, null,
                 Role.ADMIN, AuthenticationProvider.GITHUB);
 

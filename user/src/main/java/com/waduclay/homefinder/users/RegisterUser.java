@@ -1,9 +1,8 @@
 package com.waduclay.homefinder.users;
 
-import com.waduclay.homefinder.baseuser.AuthenticationProvider;
-import com.waduclay.homefinder.baseuser.BaseUser;
-import com.waduclay.homefinder.baseuser.BaseUserQueryPort;
-import com.waduclay.homefinder.baseuser.BaseUserRepositoryPort;
+import com.waduclay.homefinder.enums.AuthenticationProvider;
+import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.ports.*;
 import com.waduclay.homefinder.shared.*;
 
 import java.util.UUID;
@@ -13,7 +12,7 @@ import java.util.UUID;
  *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class UserRegistrationService {
+public class RegisterUser {
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort baseUserRepository;
     private final BaseUserQueryPort baseUserQueryPort;
@@ -21,22 +20,22 @@ public class UserRegistrationService {
     private final UserRepositoryPort userRepository;
     private final UsernamePolicy usernamePolicy;
 
-    public UserRegistrationService(PasswordEncoderPort passwordEncoder,
-                                   BaseUserRepositoryPort baseUserRepository,
-                                   BaseUserQueryPort baseUserQueryPort,
-                                   PasswordGeneratorPort passwordGenerator,
-                                   UserRepositoryPort userRepository) {
+    public RegisterUser(PasswordEncoderPort passwordEncoder,
+                        BaseUserRepositoryPort baseUserRepository,
+                        BaseUserQueryPort baseUserQueryPort,
+                        PasswordGeneratorPort passwordGenerator,
+                        UserRepositoryPort userRepository) {
         this(passwordEncoder, baseUserRepository, baseUserQueryPort,
                 passwordGenerator, userRepository, UsernamePolicy.defaultUsernamePolicy());
     }
 
     // Additional constructor for testability (allows injecting custom username policy)
-    public UserRegistrationService(PasswordEncoderPort passwordEncoder,
-                                   BaseUserRepositoryPort baseUserRepository,
-                                   BaseUserQueryPort baseUserQueryPort,
-                                   PasswordGeneratorPort passwordGenerator,
-                                   UserRepositoryPort userRepository,
-                                   UsernamePolicy usernamePolicy) {
+    public RegisterUser(PasswordEncoderPort passwordEncoder,
+                        BaseUserRepositoryPort baseUserRepository,
+                        BaseUserQueryPort baseUserQueryPort,
+                        PasswordGeneratorPort passwordGenerator,
+                        UserRepositoryPort userRepository,
+                        UsernamePolicy usernamePolicy) {
         this.passwordEncoder = passwordEncoder;
         this.baseUserRepository = baseUserRepository;
         this.baseUserQueryPort = baseUserQueryPort;
@@ -45,9 +44,9 @@ public class UserRegistrationService {
         this.usernamePolicy = usernamePolicy;
     }
 
-    public void register(String username, String name, String surname,
-                         String nationalId, String mobileNumber, String email,
-                         Role role, AuthenticationProvider authenticationProvider) {
+    public void execute(String username, String name, String surname,
+                        String nationalId, String mobileNumber, String email,
+                        Role role, AuthenticationProvider authenticationProvider) {
         validateUsernameNotExists(username);
         BaseUser baseUser = createBaseUser(username, role, authenticationProvider);
         User userDetails = createUserDetails(baseUser.getId(), name, surname, nationalId, mobileNumber, email);

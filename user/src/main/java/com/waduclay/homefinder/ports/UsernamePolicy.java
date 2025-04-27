@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.shared;
+package com.waduclay.homefinder.ports;
 
 import java.util.Set;
 import java.util.regex.Pattern;

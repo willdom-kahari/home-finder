@@ -2,10 +2,13 @@ package com.waduclay.homefinder.user;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.waduclay.homefinder.baseuser.BaseUser;
-import com.waduclay.homefinder.baseuser.BaseUserQueryPort;
-import com.waduclay.homefinder.baseuser.BaseUserRepositoryPort;
-import com.waduclay.homefinder.baseuser.DefaultUserSetup;
+import com.waduclay.homefinder.enums.Role;
+import com.waduclay.homefinder.users.BaseUser;
+import com.waduclay.homefinder.ports.BaseUserQueryPort;
+import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
+import com.waduclay.homefinder.users.DefaultUserSetup;
+import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.UsernamePolicy;
 import com.waduclay.homefinder.shared.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
