@@ -7,6 +7,7 @@
 **Home Finder** is a comprehensive property search system designed to help users find their ideal homes or investment properties. Whether you're looking for residential or commercial stands, houses to buy, or rental properties, **Home Finder** simplifies the search process with an intuitive and user-friendly platform.
 
 Built with **Domain-Driven Design (DDD)** and **Clean Architecture**, the system ensures:
+
 ✔ Maintainability  
 
 ✔ Scalability  
