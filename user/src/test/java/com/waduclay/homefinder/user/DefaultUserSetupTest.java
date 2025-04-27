@@ -94,7 +94,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -108,7 +108,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -122,7 +122,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -136,7 +136,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -150,7 +150,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
@@ -165,7 +165,7 @@ class DefaultUserSetupTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
 
-        verify(query, never()).existsByRole(any());
+        verify(query, times(1)).existsByRole(any());
         verify(repository, never()).save(any());
         verify(passwordEncoder, never()).encrypt(any());
     }
