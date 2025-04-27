@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.waduclay.homefinder.genericuser.RegisterUserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-04-27T11:15:44.121Z" hostname="ABCZWMACWK1" time="0.138">
+  <properties/>
+  <testcase name="execute_WithNewUsername_CreatesAndSavesUser()" classname="com.waduclay.homefinder.genericuser.RegisterUserTest" time="0.115"/>
+  <testcase name="execute_WithExistingUsername_ThrowsException()" classname="com.waduclay.homefinder.genericuser.RegisterUserTest" time="0.004"/>
+  <testcase name="execute_WithNullEmail_CreatesUserWithoutEmail()" classname="com.waduclay.homefinder.genericuser.RegisterUserTest" time="0.006"/>
+  <testcase name="execute_WithDefaultRole_ThrowsException()" classname="com.waduclay.homefinder.genericuser.RegisterUserTest" time="0.004"/>
+  <testcase name="createBaseUser_ForAdminRole_CreatesAdminUser()" classname="com.waduclay.homefinder.genericuser.RegisterUserTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

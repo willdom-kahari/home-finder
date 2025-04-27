@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.waduclay.homefinder.shared.MobileNumberTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2025-04-27T11:15:44.285Z" hostname="ABCZWMACWK1" time="0.057">
+  <properties/>
+  <testcase name="isImmutable()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[1] 263771234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.002"/>
+  <testcase name="[2] +263771234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[3] 0771234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[4] 771234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="toString_returnsValue()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="toInternationalFormat_returnsCorrectValue()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="from_normalizesShortFormat()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="equalsAndHashCode_consistentForSameNumber()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="equals_returnsFalseForDifferentClass()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="from_normalizesLocalFormat()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="equalsAndHashCode_differentForDifferentNumbers()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[1] 123456789" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[2] 26377123456" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[3] 2637712345678" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.0"/>
+  <testcase name="[4] 26377a234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[5] 263-771-234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[6] 00263771234567" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="equals_returnsFalseForNull()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="from_preservesInternationalFormat()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.0"/>
+  <testcase name="from_normalizesInternationalFormatWithPlus()" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.0"/>
+  <testcase name="[1] null" classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[2] " classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[3] " classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[4]  " classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.001"/>
+  <testcase name="[5]    " classname="com.waduclay.homefinder.shared.MobileNumberTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

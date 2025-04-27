@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.waduclay.homefinder.shared.UsernameTest" tests="30" skipped="0" failures="0" errors="0" timestamp="2025-04-27T11:15:44.494Z" hostname="ABCZWMACWK1" time="0.101">
+  <properties/>
+  <testcase name="of_throwsWhenPolicyIsNull()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="configurablePolicy_respectsCustomRules()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.004"/>
+  <testcase name="hashCode_isCaseInsensitive()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="of_delegatesValidationToPolicy()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[1] user@name" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[2] user#name" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[3] user name" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[4] user/name" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="of_throwsWhenPolicyValidationFails()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.006"/>
+  <testcase name="equals_ignoresCase()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="of_createsUsernameWithLowerCaseValue()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[1] null" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.004"/>
+  <testcase name="[2] " classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="defaultPolicy_acceptsValidUsername()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[1] adm" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[2] x" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[3] a" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[4] 123" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[1] fuckyou" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[2] holySHIT" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[3] user_fuck" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.004"/>
+  <testcase name="[4] shit.user" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[1] admin" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.003"/>
+  <testcase name="[2] ADMIN" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[3] root" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <testcase name="[4] Root" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.003"/>
+  <testcase name="[5] SYSTEM" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="username_isImmutable()" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[1] thisusernameistoolongforthepolicy" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.002"/>
+  <testcase name="[2] abcdefghijklmnopqrstuvwxyz" classname="com.waduclay.homefinder.shared.UsernameTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

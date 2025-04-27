@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.waduclay.homefinder.user.DefaultUserSetupTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2025-04-27T11:15:42.747Z" hostname="ABCZWMACWK1" time="1.066">
+  <properties/>
+  <testcase name="execute_shouldHandleInvalidUsernameFormat()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.977"/>
+  <testcase name="execute_shouldHandleNullPassword()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.006"/>
+  <testcase name="execute_shouldNotCreateUserWhenDefaultUserAlreadyExists()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.026"/>
+  <testcase name="execute_shouldStoreUsernameInLowerCase()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.013"/>
+  <testcase name="execute_shouldHandleInvalidPasswordFormat()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.005"/>
+  <testcase name="execute_shouldHandleEmptyUsername()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.006"/>
+  <testcase name="execute_shouldCreateDefaultUserWhenNotExists()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.007"/>
+  <testcase name="execute_shouldSetCorrectAccountStatusForDefaultUser()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.005"/>
+  <testcase name="execute_shouldHandleNullUsername()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.005"/>
+  <testcase name="execute_shouldHandleEmptyPassword()" classname="com.waduclay.homefinder.user.DefaultUserSetupTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Apr 27, 2025 1:15:43 PM com.waduclay.homefinder.users.DefaultUserSetup ensureDefaultUserExists
+INFO: Default user already exists
+]]></system-err>
+</testsuite>
