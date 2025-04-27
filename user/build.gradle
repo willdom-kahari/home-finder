@@ -5,11 +5,18 @@ plugins {
 group = 'com.waduclay'
 version = '1.0-SNAPSHOT'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+
     testImplementation 'org.mockito:mockito-junit-jupiter:5.17.0'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -17,4 +24,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    archiveFileName = "user.jar"
 }
