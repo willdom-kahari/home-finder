@@ -3,10 +3,13 @@ package com.waduclay.homefinder.baseuser;
 
 import com.waduclay.homefinder.shared.*;
 
+import java.util.logging.Logger;
+
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class DefaultUserSetup {
+    private final static Logger log = Logger.getLogger(DefaultUserSetup.class.getName());
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort repositoryPort;
     private final BaseUserQueryPort queryPort;
@@ -18,6 +21,10 @@ public class DefaultUserSetup {
     }
 
     public void ensureDefaultUserExists(String username, String password) {
+        if (queryPort.existsByRole(Role.DEFAULT)) {
+            log.info("Default user already exists");
+            return;
+        }
         UsernamePolicy usernamePolicy = UsernamePolicy.configurableUsernamePolicy()
                 .withAllowedCharacters("^[a-zA-Z0-9_.-]+$")
                 .withLengthRange(4, 10)
@@ -25,10 +32,10 @@ public class DefaultUserSetup {
 
         Username defaultUsername = Username.of(username, usernamePolicy);
         Password defaultUserPassword = Password.of(password, passwordEncoder);
-        if (!queryPort.existsByRole(Role.DEFAULT)) {
-            BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword);
-            repositoryPort.save(defaultUser);
-        }
+
+        BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword);
+        repositoryPort.save(defaultUser);
+
 
     }
 }
