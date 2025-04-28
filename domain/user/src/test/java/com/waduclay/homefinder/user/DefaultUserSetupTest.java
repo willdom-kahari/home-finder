@@ -1,14 +1,14 @@
 package com.waduclay.homefinder.user;
 
 import com.waduclay.homefinder.enums.Role;
-import com.waduclay.homefinder.ports.BaseUserQueryPort;
-import com.waduclay.homefinder.ports.BaseUserRepositoryPort;
-import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.*;
 import com.waduclay.homefinder.users.BaseUser;
-import com.waduclay.homefinder.users.DefaultUserSetup;
+import com.waduclay.homefinder.users.RegisterUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,12 +30,16 @@ class DefaultUserSetupTest {
     private BaseUserRepositoryPort repository;
     @Mock
     private BaseUserQueryPort query;
+    @Mock
+    private PasswordGeneratorPort passwordGenerator;
+    @Mock
+    private UserRepositoryPort userRepository;
 
-    private DefaultUserSetup service;
+    private RegisterUser service;
 
     @BeforeEach
     void setUp() {
-        service = new DefaultUserSetup(passwordEncoder, repository, query);
+        service = new RegisterUser(passwordEncoder, repository, query,passwordGenerator, userRepository);
     }
 
     @Test
@@ -97,10 +101,11 @@ class DefaultUserSetupTest {
         verify(passwordEncoder, never()).encrypt(any());
     }
 
-    @Test
-    void execute_shouldHandleNullUsername() {
+    @ParameterizedTest
+    @NullSource
+    void execute_shouldHandleNullUsername(String username) {
         // Arrange
-        String username = null;
+//        String username = null;
         String password = "SecurePass123!";
 
         // Act & Assert
@@ -125,11 +130,12 @@ class DefaultUserSetupTest {
         verify(passwordEncoder, never()).encrypt(any());
     }
 
-    @Test
-    void execute_shouldHandleNullPassword() {
+    @ParameterizedTest
+    @NullSource
+    void execute_shouldHandleNullPassword(String password) {
         // Arrange
         String username = "defaultAdmin";
-        String password = null;
+//        String password = null;
 
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> service.ensureDefaultUserExists(username, password));
