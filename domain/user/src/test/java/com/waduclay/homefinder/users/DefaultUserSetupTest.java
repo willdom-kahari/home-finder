@@ -33,11 +33,11 @@ class DefaultUserSetupTest {
     @Mock
     private UserRepositoryPort userRepository;
 
-    private RegisterUser service;
+    private UserRegistrationCommand service;
 
     @BeforeEach
     void setUp() {
-        service = new RegisterUser(passwordEncoder, repository, query,passwordGenerator, userRepository);
+        service = new UserRegistrationCommand(passwordEncoder, repository, query,passwordGenerator, userRepository);
     }
 
     @Test

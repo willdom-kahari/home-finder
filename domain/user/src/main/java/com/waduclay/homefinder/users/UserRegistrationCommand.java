@@ -13,31 +13,31 @@ import java.util.logging.Logger;
  *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class RegisterUser {
+public class UserRegistrationCommand {
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort baseUserRepository;
     private final BaseUserQueryPort baseUserQueryPort;
     private final PasswordGeneratorPort passwordGenerator;
     private final UserRepositoryPort userRepository;
     private final UsernamePolicy usernamePolicy;
-    private final static Logger log = Logger.getLogger(RegisterUser.class.getName());
+    private final static Logger log = Logger.getLogger(UserRegistrationCommand.class.getName());
 
-    public RegisterUser(PasswordEncoderPort passwordEncoder,
-                        BaseUserRepositoryPort baseUserRepository,
-                        BaseUserQueryPort baseUserQueryPort,
-                        PasswordGeneratorPort passwordGenerator,
-                        UserRepositoryPort userRepository) {
+    public UserRegistrationCommand(PasswordEncoderPort passwordEncoder,
+                                   BaseUserRepositoryPort baseUserRepository,
+                                   BaseUserQueryPort baseUserQueryPort,
+                                   PasswordGeneratorPort passwordGenerator,
+                                   UserRepositoryPort userRepository) {
         this(passwordEncoder, baseUserRepository, baseUserQueryPort,
                 passwordGenerator, userRepository, UsernamePolicy.defaultUsernamePolicy());
     }
 
     // Additional constructor for testability (allows injecting custom username policy)
-    public RegisterUser(PasswordEncoderPort passwordEncoder,
-                        BaseUserRepositoryPort baseUserRepository,
-                        BaseUserQueryPort baseUserQueryPort,
-                        PasswordGeneratorPort passwordGenerator,
-                        UserRepositoryPort userRepository,
-                        UsernamePolicy usernamePolicy) {
+    public UserRegistrationCommand(PasswordEncoderPort passwordEncoder,
+                                   BaseUserRepositoryPort baseUserRepository,
+                                   BaseUserQueryPort baseUserQueryPort,
+                                   PasswordGeneratorPort passwordGenerator,
+                                   UserRepositoryPort userRepository,
+                                   UsernamePolicy usernamePolicy) {
         this.passwordEncoder = passwordEncoder;
         this.baseUserRepository = baseUserRepository;
         this.baseUserQueryPort = baseUserQueryPort;
@@ -46,7 +46,7 @@ public class RegisterUser {
         this.usernamePolicy = usernamePolicy;
     }
 
-    public void execute(String username, String name, String surname,
+    public void registerUser(String username, String name, String surname,
                         String nationalId, String mobileNumber, String email,
                         Role role, AuthenticationProvider authenticationProvider) {
         validateUsernameNotExists(username);

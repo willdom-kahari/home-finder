@@ -21,7 +21,7 @@ class DefaultUserSetupIntegrationTest {
     private final Map<String, User> userMap = new HashMap<>();
     private BaseUserRepositoryPort mapRepository;
     private PasswordEncoderPort base64Encoder;
-    private RegisterUser service;
+    private UserRegistrationCommand service;
     private BaseUserQueryPort queryPort;
 
     @BeforeEach
@@ -31,7 +31,7 @@ class DefaultUserSetupIntegrationTest {
         queryPort = new InMemoryMapUserQuery(baseUserMap);
         PasswordGeneratorPort passwordGenerator = new PasswordGenerator();
         UserRepositoryPort userRepository = new InMemoryUserRepository(userMap);
-        service = new RegisterUser(base64Encoder, mapRepository, queryPort, passwordGenerator, userRepository);
+        service = new UserRegistrationCommand(base64Encoder, mapRepository, queryPort, passwordGenerator, userRepository);
     }
 
     @Test

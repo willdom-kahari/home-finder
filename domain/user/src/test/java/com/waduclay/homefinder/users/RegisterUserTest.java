@@ -34,11 +34,11 @@ class RegisterUserTest {
     private UserRepositoryPort userRepository;
     @Mock
     private UsernamePolicy usernamePolicy;
-    private RegisterUser service;
+    private UserRegistrationCommand service;
 
     @BeforeEach
     void setUp() {
-        service = new RegisterUser(
+        service = new UserRegistrationCommand(
                 passwordEncoder,
                 baseUserRepository,
                 baseUserQueryPort,
@@ -49,14 +49,14 @@ class RegisterUserTest {
     }
 
     @Test
-    void execute_WithNewUsername_CreatesAndSavesUser() {
+    void registerUser_WithNewUsername_CreatesAndSavesUser() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(TEST_PASSWORD);
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.registerUser(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                 Role.USER, AuthenticationProvider.APP);
 
@@ -69,40 +69,40 @@ class RegisterUserTest {
     }
 
     @Test
-    void execute_WithExistingUsername_ThrowsException() {
+    void registerUser_WithExistingUsername_ThrowsException() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(true);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () ->
-                service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+                service.registerUser(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                         TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                         Role.USER, AuthenticationProvider.GOOGLE)
         );
     }
 
     @Test
-    void execute_WithDefaultRole_ThrowsException() {
+    void registerUser_WithDefaultRole_ThrowsException() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(true);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () ->
-                service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+                service.registerUser(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                         TEST_NATIONAL_ID, TEST_MOBILE, TEST_EMAIL,
                         Role.DEFAULT, AuthenticationProvider.APP)
         );
     }
 
     @Test
-    void execute_WithNullEmail_CreatesUserWithoutEmail() {
+    void registerUser_WithNullEmail_CreatesUserWithoutEmail() {
         // Arrange
         when(baseUserQueryPort.existsByUsername(TEST_USERNAME)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(TEST_PASSWORD);
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.registerUser(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, null,
                 Role.USER, AuthenticationProvider.GITHUB);
 
@@ -117,7 +117,7 @@ class RegisterUserTest {
         when(passwordEncoder.encrypt(TEST_PASSWORD)).thenReturn("encodedPassword");
 
         // Act
-        service.execute(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
+        service.registerUser(TEST_USERNAME, TEST_NAME, TEST_SURNAME,
                 TEST_NATIONAL_ID, TEST_MOBILE, null,
                 Role.ADMIN, AuthenticationProvider.GITHUB);
 
