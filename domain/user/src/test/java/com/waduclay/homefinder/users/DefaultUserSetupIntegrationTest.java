@@ -1,12 +1,9 @@
-package com.waduclay.homefinder.user;
+package com.waduclay.homefinder.users;
 
 import com.waduclay.homefinder.enums.Role;
 import com.waduclay.homefinder.ports.*;
 import com.waduclay.homefinder.shared.Password;
 import com.waduclay.homefinder.shared.Username;
-import com.waduclay.homefinder.users.BaseUser;
-import com.waduclay.homefinder.users.RegisterUser;
-import com.waduclay.homefinder.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

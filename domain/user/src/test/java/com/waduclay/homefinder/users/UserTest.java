@@ -1,7 +1,6 @@
-package com.waduclay.homefinder.genericuser;
+package com.waduclay.homefinder.users;
 
 import com.waduclay.homefinder.shared.*;
-import com.waduclay.homefinder.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
