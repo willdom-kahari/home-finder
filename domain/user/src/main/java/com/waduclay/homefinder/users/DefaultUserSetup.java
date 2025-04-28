@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class DefaultUserSetup {
-    private final static Logger log = Logger.getLogger(DefaultUserSetup.class.getName());
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort repositoryPort;
     private final BaseUserQueryPort queryPort;

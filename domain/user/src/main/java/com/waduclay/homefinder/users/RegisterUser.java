@@ -6,6 +6,7 @@ import com.waduclay.homefinder.ports.*;
 import com.waduclay.homefinder.shared.*;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Service handling user registration process
@@ -19,6 +20,7 @@ public class RegisterUser {
     private final PasswordGeneratorPort passwordGenerator;
     private final UserRepositoryPort userRepository;
     private final UsernamePolicy usernamePolicy;
+    private final static Logger log = Logger.getLogger(RegisterUser.class.getName());
 
     public RegisterUser(PasswordEncoderPort passwordEncoder,
                         BaseUserRepositoryPort baseUserRepository,
@@ -84,5 +86,24 @@ public class RegisterUser {
     private void saveUserData(BaseUser baseUser, User userDetails) {
         baseUserRepository.save(baseUser);
         userRepository.save(userDetails);
+    }
+
+    public void ensureDefaultUserExists(String username, String password) {
+        if (baseUserQueryPort.existsByRole(Role.DEFAULT)) {
+            log.info("Default user already exists");
+            return;
+        }
+        UsernamePolicy usernamePolicy = UsernamePolicy.configurableUsernamePolicy()
+                .withAllowedCharacters("^[a-zA-Z0-9_.-]+$")
+                .withLengthRange(4, 10)
+                .build();
+
+        Username defaultUsername = Username.of(username, usernamePolicy);
+        Password defaultUserPassword = Password.of(password, passwordEncoder);
+
+        BaseUser defaultUser = BaseUser.createDefaultUser(defaultUsername, defaultUserPassword);
+        baseUserRepository.save(defaultUser);
+
+
     }
 }
