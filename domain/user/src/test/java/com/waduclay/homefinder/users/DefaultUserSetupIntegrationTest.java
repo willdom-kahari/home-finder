@@ -160,7 +160,8 @@ class DefaultUserSetupIntegrationTest {
             return Optional.ofNullable(baseUserMap.get(username)).isPresent();
         }
     }
-    static class PasswordGenerator implements PasswordGeneratorPort{
+
+    static class PasswordGenerator implements PasswordGeneratorPort {
         @Override
         public String generate() {
             return "";

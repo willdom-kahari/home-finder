@@ -37,7 +37,7 @@ class DefaultUserSetupTest {
 
     @BeforeEach
     void setUp() {
-        service = new UserRegistrationCommand(passwordEncoder, repository, query,passwordGenerator, userRepository);
+        service = new UserRegistrationCommand(passwordEncoder, repository, query, passwordGenerator, userRepository);
     }
 
     @Test

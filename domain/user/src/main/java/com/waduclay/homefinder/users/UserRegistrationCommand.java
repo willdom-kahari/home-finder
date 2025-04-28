@@ -14,13 +14,13 @@ import java.util.logging.Logger;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class UserRegistrationCommand {
+    private final static Logger log = Logger.getLogger(UserRegistrationCommand.class.getName());
     private final PasswordEncoderPort passwordEncoder;
     private final BaseUserRepositoryPort baseUserRepository;
     private final BaseUserQueryPort baseUserQueryPort;
     private final PasswordGeneratorPort passwordGenerator;
     private final UserRepositoryPort userRepository;
     private final UsernamePolicy usernamePolicy;
-    private final static Logger log = Logger.getLogger(UserRegistrationCommand.class.getName());
 
     public UserRegistrationCommand(PasswordEncoderPort passwordEncoder,
                                    BaseUserRepositoryPort baseUserRepository,
@@ -47,8 +47,8 @@ public class UserRegistrationCommand {
     }
 
     public void registerUser(String username, String name, String surname,
-                        String nationalId, String mobileNumber, String email,
-                        Role role, AuthenticationProvider authenticationProvider) {
+                             String nationalId, String mobileNumber, String email,
+                             Role role, AuthenticationProvider authenticationProvider) {
         validateUsernameNotExists(username);
         BaseUser baseUser = createBaseUser(username, role, authenticationProvider);
         User userDetails = createUserDetails(baseUser.getId(), name, surname, nationalId, mobileNumber, email);
