@@ -1,4 +1,4 @@
-package com.waduclay.application.config;
+package com.waduclay.application.adapter;
 
 
 import com.waduclay.homefinder.ports.EventPublisher;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ApplicationEventPublisherAdapter implements EventPublisher {
+public class EventPublisherAdapter implements EventPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override

@@ -1,4 +1,4 @@
-package com.waduclay.application.config;
+package com.waduclay.application.security;
 
 
 import io.github.willdomkahari.generator.CharacterGenerator;
