@@ -5,6 +5,7 @@ package com.waduclay.homefinder.shared;
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public final class InputGuard {
+
     private InputGuard() {
     }
 
@@ -14,9 +15,14 @@ public final class InputGuard {
         }
     }
 
-    public static void againstNull(Object object, String name) {
+    public static <T> void againstNull(T object, String name) {
         if (object == null) {
             throw new IllegalArgumentException("%s must not be null".formatted(name));
         }
+    }
+
+    public static <T> T requireNonNull(T object, String message) {
+        againstNull(object, message);
+        return object;
     }
 }
