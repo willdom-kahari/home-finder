@@ -2,33 +2,51 @@ package com.waduclay.application.db;
 
 
 import com.waduclay.homefinder.enums.Role;
-import com.waduclay.homefinder.ports.BaseUserQueryPort;
-import com.waduclay.homefinder.users.BaseUser;
+import com.waduclay.homefinder.ports.UserAggregateQuery;
+import com.waduclay.homefinder.users.UserAggregate;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 
-public class InMemoryBaseUserQuery implements BaseUserQueryPort {
-    private final Map<String, BaseUser> userMap;
+public class InMemoryBaseUserQuery implements UserAggregateQuery {
+    private final Map<String, UserAggregate> userMap;
 
-    public InMemoryBaseUserQuery(Map<String, BaseUser> userMap) {
+    public InMemoryBaseUserQuery(Map<String, UserAggregate> userMap) {
         this.userMap = userMap;
     }
 
     @Override
     public boolean existsByRole(Role role) {
-        Collection<BaseUser> values = userMap.values();
+        Collection<UserAggregate> values = userMap.values();
         return values.stream().anyMatch(user -> user.getRole().contains(role.name()));
     }
 
     @Override
-    public Optional<BaseUser> findByUsername(String username) {
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public List<UserAggregate> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public Optional<UserAggregate> findById(UUID id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UserAggregate> findByUsername(String username) {
         return Optional.ofNullable(userMap.get(username));
+    }
+
+    @Override
+    public List<UserAggregate> findByRole(Role role) {
+        return List.of();
     }
 
     @Override
