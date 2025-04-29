@@ -27,7 +27,6 @@ public class InMemoryBaseUserRepositoryAdapter implements UserAggregateRepositor
     }
 
 
-
     @Override
     public Optional<UserAggregate> findById(UUID id) {
         return Optional.empty();

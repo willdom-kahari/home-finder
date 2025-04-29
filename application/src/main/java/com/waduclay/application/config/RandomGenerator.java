@@ -1,7 +1,6 @@
 package com.waduclay.application.config;
 
 
-
 import io.github.willdomkahari.generator.CharacterGenerator;
 import io.github.willdomkahari.generator.Characters;
 import io.github.willdomkahari.generator.GeneratorRule;
@@ -14,6 +13,7 @@ public final class RandomGenerator {
 
     private RandomGenerator() {
     }
+
     public static String characters(int length) {
         return characterGenerator.generateCharacters(
                 length, new GeneratorRule(Characters.CAPITAL),
