@@ -1,11 +1,10 @@
 package com.waduclay.application.config;
 
-
-import com.waduclay.homefinder.users.BaseUser;
-import com.waduclay.homefinder.users.DefaultUserSetup;
 import com.waduclay.application.db.InMemoryBaseUserQuery;
 import com.waduclay.application.db.InMemoryBaseUserRepositoryAdapter;
 import com.waduclay.application.security.PasswordEncoderAdapter;
+import com.waduclay.homefinder.users.UserAggregate;
+import com.waduclay.homefinder.users.services.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,15 +15,15 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
- */
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class ApplicationSetup implements ApplicationRunner {
-    private final Map<String, BaseUser> userMap = new HashMap<>();
+    private final ApplicationEventPublisherAdapter applicationEventPublisherAdapter;
+    private final Map<String, UserAggregate> userMap = new HashMap<>();
     private final PasswordEncoderAdapter passwordEncoderAdapter;
+    private final PasswordGeneratorAdapter passwordGeneratorAdapter;
     private final InMemoryBaseUserRepositoryAdapter baseUserRepository = new InMemoryBaseUserRepositoryAdapter(userMap);
     private final InMemoryBaseUserQuery baseUserQuery = new InMemoryBaseUserQuery(userMap);
     @Value("${default.user}")
@@ -34,10 +33,15 @@ public class ApplicationSetup implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        DefaultUserSetup defaultUserSetup = new DefaultUserSetup(
-                passwordEncoderAdapter, baseUserRepository, baseUserQuery
+        UserRegistrationService defaultUserSetup = new UserRegistrationService(
+                passwordEncoderAdapter,
+                baseUserRepository,
+                baseUserQuery,
+                passwordGeneratorAdapter,
+                applicationEventPublisherAdapter
         );
         defaultUserSetup.ensureDefaultUserExists(username, password);
-
+        defaultUserSetup.ensureDefaultUserExists(username, password);
+        System.out.println("userMap = " + userMap.get(username));
     }
 }
