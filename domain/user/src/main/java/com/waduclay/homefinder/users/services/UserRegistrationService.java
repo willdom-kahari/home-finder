@@ -80,7 +80,7 @@ public class UserRegistrationService {
 
     public void ensureDefaultUserExists(String username, String password) {
         if (userQuery.existsByRole(Role.DEFAULT)) {
-            logger.info("Default user already exists");
+            logger.fine("Default user already exists");
             return;
         }
 
@@ -92,7 +92,7 @@ public class UserRegistrationService {
 
         User defaultUser = User.createDefaultUser(usernameObj, passwordObj);
         saveAndPublishEvents(defaultUser);
-        logger.info("Default user created successfully");
+        logger.config("Default user created successfully");
     }
 
     public User createAdminUser(
@@ -142,7 +142,7 @@ public class UserRegistrationService {
             User user = createUserAggregate(usernameObj, passwordObj, authenticationProvider, role, personalInfo, isAdmin);
             saveAndPublishEvents(user);
 
-            logger.log(Level.INFO, "{0} user created successfully: {1}", new Object[]{role.name(), username});
+            logger.log(Level.FINE, "{0} user created successfully: {1}", new Object[]{role.name(), username});
             return user;
         } catch (Exception e) {
             handleException(e, username);
