@@ -1,6 +1,7 @@
 package com.waduclay.application.db;
 
 
+import com.waduclay.homefinder.users.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,15 @@ public class AppUser {
     private String mobileNumber;
     private String nationalIdUrl;
     private String currentPayslipUrl;
+
+    public static AppUser of(User user) {
+        return AppUser.builder()
+                .baseUser(BaseUser.of(user))
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .nationalId(user.getNationalIdNumber())
+                .email(user.getEmail())
+                .mobileNumber(user.getMobileNumber())
+                .build();
+    }
 }

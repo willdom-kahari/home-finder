@@ -1,33 +1,35 @@
 package com.waduclay.application.db;
 
 
-
-
 import com.waduclay.homefinder.ports.UserRepository;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public class InMemoryBaseUserRepositoryAdapter implements UserRepository {
-    private final Map<String, User> userMap;
-
-    public InMemoryBaseUserRepositoryAdapter(Map<String, User> userMap) {
-        this.userMap = userMap;
-    }
-
-
+@Component
+@RequiredArgsConstructor
+public class UserRepositoryAdapter implements UserRepository {
+    private final BaseUserRepository baseUserRepository;
+    private final AppUserRepository appUserRepository;
     @Override
     public User save(User user) {
-        userMap.put(user.getUsername(), user);
+        if (user.getRole().equals(Role.DEFAULT)){
+            BaseUser baseUser = BaseUser.of(user);
+            baseUserRepository.save(baseUser);
+            return user;
+        }
+
+        AppUser appUser = AppUser.of(user);
+        appUserRepository.save(appUser);
         return user;
     }
-
 
     @Override
     public Optional<User> findById(UUID id) {
@@ -41,16 +43,16 @@ public class InMemoryBaseUserRepositoryAdapter implements UserRepository {
 
     @Override
     public boolean existsByUsername(String username) {
-        return false;
+        return baseUserRepository.existsByUsername(username);
     }
 
     @Override
     public boolean existsByRole(Role role) {
-        return false;
+        return baseUserRepository.existsByRole(role);
     }
 
     @Override
-    public void delete(User User) {
+    public void delete(User user) {
 
     }
 }
