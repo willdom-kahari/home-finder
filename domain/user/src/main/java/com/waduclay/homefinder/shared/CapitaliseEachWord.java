@@ -12,7 +12,7 @@ public final class CapitaliseEachWord {
         this.value = value;
     }
 
-    static String from(String value) {
+    public static String from(String value) {
         CapitaliseEachWord normaliser = new CapitaliseEachWord(value.toLowerCase());
         normaliser.capitalise();
         return normaliser.value;

@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.users.exceptions;
+package com.waduclay.homefinder.shared.exceptions;
 
 /**
  * Exception thrown when attempting to create a user with a username that already exists.

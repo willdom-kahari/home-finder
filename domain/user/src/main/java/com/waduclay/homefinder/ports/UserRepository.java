@@ -1,20 +1,28 @@
 package com.waduclay.homefinder.ports;
 
-import com.waduclay.homefinder.enums.Role;
-import com.waduclay.homefinder.users.UserAggregate;
+import com.waduclay.homefinder.shared.auth.enums.Role;
+import com.waduclay.homefinder.users.User;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Query interface for the UserAggregate.
- * This interface follows the CQRS pattern by separating read operations from write operations.
- * It provides methods to query UserAggregate instances without modifying them.
+ * Repository interface for the UserAggregate.
+ * This interface follows the repository pattern and provides methods to
+ * save, find, and delete UserAggregate instances.
  * 
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public interface UserAggregateQuery {
+public interface UserRepository {
+    
+    /**
+     * Saves a UserAggregate to the repository.
+     * 
+     * @param user the UserAggregate to save
+     * @return the saved UserAggregate
+     */
+    User save(User user);
     
     /**
      * Finds a UserAggregate by its ID.
@@ -22,7 +30,7 @@ public interface UserAggregateQuery {
      * @param id the ID of the UserAggregate to find
      * @return an Optional containing the UserAggregate if found, or empty if not found
      */
-    Optional<UserAggregate> findById(UUID id);
+    Optional<User> findById(UUID id);
     
     /**
      * Finds a UserAggregate by its username.
@@ -30,15 +38,7 @@ public interface UserAggregateQuery {
      * @param username the username of the UserAggregate to find
      * @return an Optional containing the UserAggregate if found, or empty if not found
      */
-    Optional<UserAggregate> findByUsername(String username);
-    
-    /**
-     * Finds all UserAggregates with the given role.
-     * 
-     * @param role the role to search for
-     * @return a list of UserAggregates with the given role
-     */
-    List<UserAggregate> findByRole(Role role);
+    Optional<User> findByUsername(String username);
     
     /**
      * Checks if a UserAggregate with the given username exists.
@@ -57,16 +57,9 @@ public interface UserAggregateQuery {
     boolean existsByRole(Role role);
     
     /**
-     * Counts the number of UserAggregates.
+     * Deletes a UserAggregate from the repository.
      * 
-     * @return the number of UserAggregates
+     * @param user the UserAggregate to delete
      */
-    long count();
-    
-    /**
-     * Finds all UserAggregates.
-     * 
-     * @return a list of all UserAggregates
-     */
-    List<UserAggregate> findAll();
+    void delete(User user);
 }

@@ -1,22 +1,24 @@
-package com.waduclay.homefinder.shared;
+package com.waduclay.homefinder.shared.personal;
 
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public final class Url {
+public final class Email {
     private final String value;
 
-    public Url(String value) {
+    public Email(String value) {
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("URL cannot be null or empty");
+            throw new IllegalArgumentException("Email cannot be null or empty");
         }
-        // Add URL format validation
+        if (!value.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
         this.value = value;
     }
 
-    public static Url from(String value) {
-        return new Url(value);
+    public static Email from(String value) {
+        return new Email(value);
     }
 
     public String getValue() {
@@ -27,8 +29,8 @@ public final class Url {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Url url = (Url) o;
-        return value.equals(url.value);
+        Email email = (Email) o;
+        return value.equals(email.value);
     }
 
     @Override
@@ -38,6 +40,6 @@ public final class Url {
 
     @Override
     public String toString() {
-        return "Url{" + "value='" + value + '\'' + '}';
+        return "Email{" + "value='" + value + '\'' + '}';
     }
 }

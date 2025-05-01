@@ -1,6 +1,7 @@
-package com.waduclay.homefinder.shared;
+package com.waduclay.homefinder.shared.auth;
 
-import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.PasswordEncoder;
+import com.waduclay.homefinder.shared.InputGuard;
 
 import java.util.regex.Pattern;
 
@@ -14,14 +15,14 @@ public final class Password {
         this.value = value;
     }
 
-    public static Password of(String value, PasswordEncoderPort encoder) {
+    public static Password of(String value, PasswordEncoder encoder) {
         return of(value, PasswordValidator.defaultValidator(), encoder);
     }
 
-    public static Password of(String value, PasswordValidator validator, PasswordEncoderPort encoder) {
+    public static Password of(String value, PasswordValidator validator, PasswordEncoder encoder) {
         InputGuard.againstEmptiness(value, "password");
         validator.validate(value);
-        String encryptedPassword = encoder.encrypt(value);
+        String encryptedPassword = encoder.encode(value);
         return new Password(encryptedPassword);
     }
 

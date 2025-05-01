@@ -1,6 +1,7 @@
 package com.waduclay.homefinder.shared;
 
 import com.waduclay.homefinder.ports.UsernamePolicy;
+import com.waduclay.homefinder.shared.auth.Username;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

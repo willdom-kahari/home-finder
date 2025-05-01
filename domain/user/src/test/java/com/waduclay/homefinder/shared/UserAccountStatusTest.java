@@ -1,5 +1,6 @@
 package com.waduclay.homefinder.shared;
 
+import com.waduclay.homefinder.shared.auth.UserAccountStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

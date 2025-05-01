@@ -1,5 +1,6 @@
 package com.waduclay.homefinder.shared;
 
+import com.waduclay.homefinder.shared.personal.NationalIdNumber;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;

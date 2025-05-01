@@ -1,12 +1,13 @@
 package com.waduclay.homefinder.users.services;
 
-import com.waduclay.homefinder.enums.AuthenticationProvider;
-import com.waduclay.homefinder.enums.Role;
+
+import com.waduclay.homefinder.shared.DomainEvent;
 import com.waduclay.homefinder.ports.*;
-import com.waduclay.homefinder.shared.*;
-import com.waduclay.homefinder.users.UserAggregate;
-import com.waduclay.homefinder.users.exceptions.UserAlreadyExistsException;
-import com.waduclay.homefinder.users.exceptions.ValidationException;
+import com.waduclay.homefinder.shared.auth.enums.AuthenticationProvider;
+import com.waduclay.homefinder.shared.auth.enums.Role;
+import com.waduclay.homefinder.shared.exceptions.UserAlreadyExistsException;
+import com.waduclay.homefinder.shared.exceptions.ValidationException;
+import com.waduclay.homefinder.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,16 +30,16 @@ import static org.mockito.Mockito.*;
 class UserRegistrationServiceTest {
 
     @Mock
-    private PasswordEncoderPort passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Mock
-    private UserAggregateRepository userRepository;
+    private UserRepository userRepository;
 
     @Mock
-    private UserAggregateQuery userQuery;
+    private UserQuery userQuery;
 
     @Mock
-    private PasswordGeneratorPort passwordGenerator;
+    private PasswordGenerator passwordGenerator;
 
     @Mock
     private EventPublisher eventPublisher;
@@ -81,19 +82,19 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(generatedPassword);
         // Return the actual UserAggregate that's passed to save
-        when(userRepository.save(any(UserAggregate.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         // Mock the domain events for any UserAggregate
 //        doReturn(events).when(eventPublisher).publishAll(any());
 
         // Act
-        UserAggregate result = service.registerUser(
+        User result = service.registerUser(
                 username, firstName, lastName, nationalId, mobileNumber, email, provider
         );
 
         // Assert
         verify(userQuery).existsByUsername(username);
         verify(passwordGenerator).generate();
-        verify(userRepository).save(any(UserAggregate.class));
+        verify(userRepository).save(any(User.class));
         verify(eventPublisher).publishAll(any());
 
         // Verify the result is not null and has the expected properties
@@ -115,7 +116,7 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(true);
 
         // Act & Assert
-        assertThrows(UserAlreadyExistsException.class, () -> 
+        assertThrows(UserAlreadyExistsException.class, () ->
             service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
@@ -197,7 +198,7 @@ class UserRegistrationServiceTest {
         AuthenticationProvider provider = AuthenticationProvider.APP;
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
+        assertThrows(ValidationException.class, () ->
             service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
@@ -232,19 +233,19 @@ class UserRegistrationServiceTest {
         String username = "dadmin"; // Shorter username (within 4-10 chars)
         String password = "SecurePass123!";
 
-        UserAggregate userAggregate = mock(UserAggregate.class);
+        User user = mock(User.class);
         List<DomainEvent> events = List.of(mock(DomainEvent.class));
 
         when(userQuery.existsByRole(Role.DEFAULT)).thenReturn(false);
-        when(userRepository.save(any(UserAggregate.class))).thenReturn(userAggregate);
-        when(userAggregate.getDomainEvents()).thenReturn(events);
+        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(user.getDomainEvents()).thenReturn(events);
 
         // Act
         service.ensureDefaultUserExists(username, password);
 
         // Assert
         verify(userQuery).existsByRole(Role.DEFAULT);
-        verify(userRepository).save(any(UserAggregate.class));
+        verify(userRepository).save(any(User.class));
         verify(eventPublisher).publishAll(events);
     }
 
@@ -315,17 +316,17 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(generatedPassword);
         // Return the actual UserAggregate that's passed to save
-        when(userRepository.save(any(UserAggregate.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        UserAggregate result = service.createAdminUser(
+        User result = service.createAdminUser(
                 username, firstName, lastName, nationalId, mobileNumber, email
         );
 
         // Assert
         verify(userQuery).existsByUsername(username);
         verify(passwordGenerator).generate();
-        verify(userRepository).save(any(UserAggregate.class));
+        verify(userRepository).save(any(User.class));
         verify(eventPublisher).publishAll(any());
 
         // Verify the result is not null and has the expected properties

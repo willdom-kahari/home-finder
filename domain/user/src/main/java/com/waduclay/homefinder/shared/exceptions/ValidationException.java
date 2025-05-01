@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.users.exceptions;
+package com.waduclay.homefinder.shared.exceptions;
 
 /**
  * Exception thrown when validation of input data fails.

@@ -1,8 +1,14 @@
 package com.waduclay.homefinder.users;
 
-import com.waduclay.homefinder.enums.AuthenticationProvider;
-import com.waduclay.homefinder.enums.Role;
+
+import com.waduclay.homefinder.shared.DomainEvent;
 import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.auth.Password;
+import com.waduclay.homefinder.shared.auth.UserAccountStatus;
+import com.waduclay.homefinder.shared.auth.Username;
+import com.waduclay.homefinder.shared.auth.enums.AuthenticationProvider;
+import com.waduclay.homefinder.shared.auth.enums.Role;
+import com.waduclay.homefinder.shared.personal.*;
 import com.waduclay.homefinder.users.events.*;
 
 import java.util.UUID;
@@ -15,7 +21,7 @@ import java.util.Collections;
  * It combines authentication information (previously in BaseUser) with
  * personal information (previously in User) to create a cohesive entity.
  */
-public class UserAggregate extends Entity<UUID> {
+public class User extends Entity<UUID> {
     // Core fields
     private final Username username;
     private final Role role;
@@ -38,7 +44,7 @@ public class UserAggregate extends Entity<UUID> {
     // Domain events
     private final List<DomainEvent> domainEvents = new ArrayList<>();
 
-    private UserAggregate(
+    private User(
             UUID id,
             Username username,
             Role role,
@@ -66,14 +72,14 @@ public class UserAggregate extends Entity<UUID> {
     /**
      * Centralised factory method for creating users.
      */
-    private static UserAggregate create(
+    private static User create(
             Username username,
             Role role,
             Password password,
             UserAccountStatus accountStatus,
             AuthenticationProvider authenticationProvider,
             PersonalInformation personalInfo) {
-        UserAggregate user = new UserAggregate(
+        User user = new User(
                 UUID.randomUUID(),
                 username,
                 role,
@@ -89,21 +95,21 @@ public class UserAggregate extends Entity<UUID> {
     /**
      * Factory method to create a default user.
      */
-    public static UserAggregate createDefaultUser(Username username, Password password) {
+    public static User createDefaultUser(Username username, Password password) {
         return create(username, Role.DEFAULT, password, UserAccountStatus.active(), AuthenticationProvider.APP, null);
     }
 
     /**
      * Factory method to create an admin user.
      */
-    public static UserAggregate createAdmin(Username username, Password password) {
+    public static User createAdmin(Username username, Password password) {
         return create(username, Role.ADMIN, password, UserAccountStatus.active(), AuthenticationProvider.APP, null);
     }
 
     /**
      * Factory method to create a regular user.
      */
-    public static UserAggregate createUser(
+    public static User createUser(
             Username username,
             Password password,
             AuthenticationProvider authenticationProvider,

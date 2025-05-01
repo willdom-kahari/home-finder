@@ -1,7 +1,6 @@
 package com.waduclay.application.security;
 
-
-import com.waduclay.homefinder.ports.PasswordGeneratorPort;
+import com.waduclay.homefinder.ports.PasswordGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class PasswordGeneratorAdapter implements PasswordGeneratorPort {
+public class PasswordGeneratorAdapter implements PasswordGenerator {
     @Override
     public String generate() {
         return RandomGenerator.characters(8);

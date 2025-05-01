@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class UserRegistrationServiceConfig {
     private final EventPublisher eventPublisherAdapter;
-    private final PasswordEncoderPort passwordEncoderAdapter;
-    private final PasswordGeneratorPort passwordGeneratorAdapter;
-    private final UserAggregateRepository baseUserRepository;
-    private final UserAggregateQuery baseUserQuery;
+    private final PasswordEncoder passwordEncoderAdapter;
+    private final PasswordGenerator passwordGeneratorAdapter;
+    private final UserRepository baseUserRepository;
+    private final UserQuery baseUserQuery;
 
     @Bean
     public UserRegistrationService userRegistrationService() {

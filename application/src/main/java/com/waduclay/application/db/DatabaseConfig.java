@@ -1,9 +1,8 @@
 package com.waduclay.application.db;
 
-
-import com.waduclay.homefinder.ports.UserAggregateQuery;
-import com.waduclay.homefinder.ports.UserAggregateRepository;
-import com.waduclay.homefinder.users.UserAggregate;
+import com.waduclay.homefinder.ports.UserQuery;
+import com.waduclay.homefinder.ports.UserRepository;
+import com.waduclay.homefinder.users.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,15 +14,15 @@ import java.util.Map;
  */
 @Configuration
 public class DatabaseConfig {
-    private final Map<String, UserAggregate> userMap = new HashMap<>();
+    private final Map<String, User> userMap = new HashMap<>();
 
     @Bean
-    public UserAggregateQuery baseUserQuery(){
+    public UserQuery baseUserQuery(){
          return new InMemoryBaseUserQuery(userMap);
     }
 
     @Bean
-    public UserAggregateRepository baseUserRepository(){
+    public UserRepository baseUserRepository(){
         return new InMemoryBaseUserRepositoryAdapter(userMap);
     }
 }

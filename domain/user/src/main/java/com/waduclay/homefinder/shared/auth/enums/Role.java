@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.enums;
+package com.waduclay.homefinder.shared.auth.enums;
 
 
 /**

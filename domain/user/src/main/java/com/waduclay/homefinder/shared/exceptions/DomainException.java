@@ -1,4 +1,4 @@
-package com.waduclay.homefinder.users.exceptions;
+package com.waduclay.homefinder.shared.exceptions;
 
 /**
  * Base exception class for all domain-specific exceptions.

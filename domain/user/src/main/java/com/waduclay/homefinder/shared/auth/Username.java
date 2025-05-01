@@ -1,6 +1,7 @@
-package com.waduclay.homefinder.shared;
+package com.waduclay.homefinder.shared.auth;
 
 import com.waduclay.homefinder.ports.UsernamePolicy;
+import com.waduclay.homefinder.shared.InputGuard;
 
 import java.util.Objects;
 

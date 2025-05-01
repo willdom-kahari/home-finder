@@ -1,13 +1,19 @@
 package com.waduclay.homefinder.users.services;
 
-import com.waduclay.homefinder.enums.AuthenticationProvider;
-import com.waduclay.homefinder.enums.Role;
+
 import com.waduclay.homefinder.ports.*;
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.auth.Password;
+import com.waduclay.homefinder.shared.auth.Username;
+import com.waduclay.homefinder.shared.auth.enums.AuthenticationProvider;
+import com.waduclay.homefinder.shared.auth.enums.Role;
+import com.waduclay.homefinder.shared.exceptions.UserAlreadyExistsException;
+import com.waduclay.homefinder.shared.exceptions.ValidationException;
+import com.waduclay.homefinder.shared.personal.Email;
+import com.waduclay.homefinder.shared.personal.MobileNumber;
+import com.waduclay.homefinder.shared.personal.Name;
+import com.waduclay.homefinder.shared.personal.NationalIdNumber;
 import com.waduclay.homefinder.users.PersonalInformation;
-import com.waduclay.homefinder.users.UserAggregate;
-import com.waduclay.homefinder.users.exceptions.UserAlreadyExistsException;
-import com.waduclay.homefinder.users.exceptions.ValidationException;
+import com.waduclay.homefinder.users.User;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,18 +21,18 @@ import java.util.logging.Logger;
 public class UserRegistrationService {
     private static final Logger logger = Logger.getLogger(UserRegistrationService.class.getName());
 
-    private final PasswordEncoderPort passwordEncoder;
-    private final UserAggregateRepository userRepository;
-    private final UserAggregateQuery userQuery;
-    private final PasswordGeneratorPort passwordGenerator;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserQuery userQuery;
+    private final PasswordGenerator passwordGenerator;
     private final UsernamePolicy usernamePolicy;
     private final EventPublisher eventPublisher;
 
     public UserRegistrationService(
-            PasswordEncoderPort passwordEncoder,
-            UserAggregateRepository userRepository,
-            UserAggregateQuery userQuery,
-            PasswordGeneratorPort passwordGenerator,
+            PasswordEncoder passwordEncoder,
+            UserRepository userRepository,
+            UserQuery userQuery,
+            PasswordGenerator passwordGenerator,
             EventPublisher eventPublisher) {
         this(
                 passwordEncoder,
@@ -38,10 +44,10 @@ public class UserRegistrationService {
     }
 
     public UserRegistrationService(
-            PasswordEncoderPort passwordEncoder,
-            UserAggregateRepository userRepository,
-            UserAggregateQuery userQuery,
-            PasswordGeneratorPort passwordGenerator,
+            PasswordEncoder passwordEncoder,
+            UserRepository userRepository,
+            UserQuery userQuery,
+            PasswordGenerator passwordGenerator,
             UsernamePolicy usernamePolicy,
             EventPublisher eventPublisher) {
         this.passwordEncoder = passwordEncoder;
@@ -52,7 +58,7 @@ public class UserRegistrationService {
         this.eventPublisher = eventPublisher;
     }
 
-    public UserAggregate registerUser(
+    public User registerUser(
             String username,
             String firstName,
             String lastName,
@@ -84,12 +90,12 @@ public class UserRegistrationService {
                 .build());
         Password passwordObj = Password.of(password, passwordEncoder);
 
-        UserAggregate defaultUser = UserAggregate.createDefaultUser(usernameObj, passwordObj);
+        User defaultUser = User.createDefaultUser(usernameObj, passwordObj);
         saveAndPublishEvents(defaultUser);
         logger.info("Default user created successfully");
     }
 
-    public UserAggregate createAdminUser(
+    public User createAdminUser(
             String username,
             String firstName,
             String lastName,
@@ -108,7 +114,7 @@ public class UserRegistrationService {
                 true);
     }
 
-    private UserAggregate processUserCreation(
+    private User processUserCreation(
             String username,
             String firstName,
             String lastName,
@@ -133,18 +139,18 @@ public class UserRegistrationService {
                     email == null ? null : Email.from(email)
             );
 
-            UserAggregate userAggregate = createUserAggregate(usernameObj, passwordObj, authenticationProvider, role, personalInfo, isAdmin);
-            saveAndPublishEvents(userAggregate);
+            User user = createUserAggregate(usernameObj, passwordObj, authenticationProvider, role, personalInfo, isAdmin);
+            saveAndPublishEvents(user);
 
             logger.log(Level.INFO, "{0} user created successfully: {1}", new Object[]{role.name(), username});
-            return userAggregate;
+            return user;
         } catch (Exception e) {
             handleException(e, username);
             throw e;
         }
     }
 
-    private UserAggregate createUserAggregate(
+    private User createUserAggregate(
             Username username,
             Password password,
             AuthenticationProvider authenticationProvider,
@@ -152,7 +158,7 @@ public class UserRegistrationService {
             PersonalInformation personalInfo,
             boolean isAdmin) {
         if (isAdmin) {
-            UserAggregate adminUser = UserAggregate.createAdmin(username, password);
+            User adminUser = User.createAdmin(username, password);
             adminUser.updatePersonalInformation(
                     personalInfo.nationalIdNumber(),
                     personalInfo.firstName(),
@@ -161,7 +167,7 @@ public class UserRegistrationService {
                     personalInfo.email());
             return adminUser;
         } else {
-            return UserAggregate.createUser(
+            return User.createUser(
                     username,
                     password,
                     authenticationProvider,
@@ -188,8 +194,8 @@ public class UserRegistrationService {
         }
     }
 
-    private void saveAndPublishEvents(UserAggregate userAggregate) {
-        UserAggregate savedUser = userRepository.save(userAggregate);
+    private void saveAndPublishEvents(User user) {
+        User savedUser = userRepository.save(user);
         eventPublisher.publishAll(savedUser.getDomainEvents());
     }
 

@@ -1,7 +1,6 @@
 package com.waduclay.application.security;
 
 
-import com.waduclay.homefinder.ports.PasswordEncoderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -11,11 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class PasswordEncoderAdapter implements PasswordEncoderPort {
+public class PasswordEncoderAdapter implements com.waduclay.homefinder.ports.PasswordEncoder {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public String encrypt(String password) {
+    public String encode(String password) {
         return passwordEncoder.encode(password);
     }
 }

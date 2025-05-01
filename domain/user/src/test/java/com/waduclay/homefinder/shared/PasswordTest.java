@@ -1,6 +1,7 @@
 package com.waduclay.homefinder.shared;
 
-import com.waduclay.homefinder.ports.PasswordEncoderPort;
+import com.waduclay.homefinder.ports.PasswordEncoder;
+import com.waduclay.homefinder.shared.auth.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,22 +18,22 @@ import static org.mockito.Mockito.when;
 class PasswordTest {
 
     @Mock
-    private PasswordEncoderPort mockEncoder;
+    private PasswordEncoder mockEncoder;
 
     // Password class tests
     @Test
     void of_createsPasswordWithEncryptedValue() {
-        when(mockEncoder.encrypt("ValidPass123!")).thenReturn("encryptedValue");
+        when(mockEncoder.encode("ValidPass123!")).thenReturn("encryptedValue");
 
         Password password = Password.of("ValidPass123!", mockEncoder);
 
         assertEquals("encryptedValue", password.getValue());
-        verify(mockEncoder).encrypt("ValidPass123!");
+        verify(mockEncoder).encode("ValidPass123!");
     }
 
     @Test
     void of_usesDefaultValidatorWhenNotSpecified() {
-        when(mockEncoder.encrypt("ValidPass123!")).thenReturn("encryptedValue");
+        when(mockEncoder.encode("ValidPass123!")).thenReturn("encryptedValue");
 
         Password password = Password.of("ValidPass123!", mockEncoder);
 
@@ -123,7 +124,7 @@ class PasswordTest {
 
     @Test
     void password_isImmutable() {
-        when(mockEncoder.encrypt("ValidPass123!")).thenReturn("encrypted");
+        when(mockEncoder.encode("ValidPass123!")).thenReturn("encrypted");
         Password password = Password.of("ValidPass123!", mockEncoder);
         String value = password.getValue();
         value = "modified";
