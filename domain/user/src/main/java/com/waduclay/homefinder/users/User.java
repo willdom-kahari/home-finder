@@ -230,8 +230,8 @@ public class User extends Entity<UUID> {
         return username.getValue();
     }
 
-    public String getRole() {
-        return role.name();
+    public Role getRole() {
+        return role;
     }
 
     public int getFailedLoginAttempts() {
@@ -271,12 +271,12 @@ public class User extends Entity<UUID> {
         return authenticationProvider;
     }
 
-    public NationalIdNumber getNationalIdNumber() {
-        return nationalIdNumber;
+    public String getNationalIdNumber() {
+        return nationalIdNumber.getValue();
     }
 
-    public Password getPassword() {
-        return password;
+    public String getPassword() {
+        return password.getValue();
     }
 }
 
