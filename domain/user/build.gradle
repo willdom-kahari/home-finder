@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 group = 'com.waduclay'
@@ -24,9 +25,40 @@ dependencies {
 }
 
 test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
     useJUnitPlatform()
-}
 
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+    }
+}
 jar {
     archiveFileName = "user.jar"
 }
+
+jacoco {
+    toolVersion = "0.8.13"
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+
+
+        rule {
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.9
+            }
+        }
+    }
+}
+
+check.dependsOn(jacocoTestCoverageVerification)
