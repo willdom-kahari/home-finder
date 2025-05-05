@@ -21,6 +21,7 @@ dependencies {
     implementation project(':user')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     compileOnly 'org.projectlombok:lombok'
+    implementation 'org.jetbrains:annotations:26.0.2'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'io.github.willdom-kahari:characters-generator:0.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
