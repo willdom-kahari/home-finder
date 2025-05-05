@@ -1,7 +1,7 @@
 package com.waduclay.homefinder.users;
 
 
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.InputGuard;
 import com.waduclay.homefinder.shared.personal.Email;
 import com.waduclay.homefinder.shared.personal.MobileNumber;
 import com.waduclay.homefinder.shared.personal.Name;

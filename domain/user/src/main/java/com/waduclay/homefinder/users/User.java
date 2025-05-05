@@ -2,7 +2,8 @@ package com.waduclay.homefinder.users;
 
 
 import com.waduclay.homefinder.shared.DomainEvent;
-import com.waduclay.homefinder.shared.*;
+import com.waduclay.homefinder.shared.Entity;
+import com.waduclay.homefinder.shared.InputGuard;
 import com.waduclay.homefinder.shared.auth.Password;
 import com.waduclay.homefinder.shared.auth.UserAccountStatus;
 import com.waduclay.homefinder.shared.auth.Username;
@@ -11,10 +12,10 @@ import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.shared.personal.*;
 import com.waduclay.homefinder.users.events.*;
 
-import java.util.UUID;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * UserAggregate serves as the aggregate root for the User domain.
@@ -26,12 +27,12 @@ public class User extends Entity<UUID> {
     private final Username username;
     private final Role role;
     private final AuthenticationProvider authenticationProvider;
-
+    // Domain events
+    private final List<DomainEvent> domainEvents = new ArrayList<>();
     // Mutable fields
     private Password password;
     private UserAccountStatus userAccountStatus;
     private int failedLoginAttempts;
-
     // Personal information
     private NationalIdNumber nationalIdNumber;
     private Name firstName;
@@ -40,9 +41,6 @@ public class User extends Entity<UUID> {
     private Email email;
     private Url nationalIdUrl;
     private Url currentPayslipUrl;
-
-    // Domain events
-    private final List<DomainEvent> domainEvents = new ArrayList<>();
 
     private User(
             UUID id,
@@ -67,6 +65,23 @@ public class User extends Entity<UUID> {
             this.mobileNumber = personalInfo.mobileNumber();
             this.email = personalInfo.email();
         }
+    }
+
+    private User(
+            UUID id,
+            Username username,
+            Role role,
+            Password password,
+            UserAccountStatus userAccountStatus,
+            AuthenticationProvider authenticationProvider,
+            int failedLoginAttempts) {
+        super(id);
+        this.username = InputGuard.requireNonNull(username, "username");
+        this.role = InputGuard.requireNonNull(role, "role");
+        this.password = InputGuard.requireNonNull(password, "password");
+        this.userAccountStatus = userAccountStatus != null ? userAccountStatus : UserAccountStatus.inactive();
+        this.authenticationProvider = InputGuard.requireNonNull(authenticationProvider, "authentication provider");
+        this.failedLoginAttempts = failedLoginAttempts;
     }
 
     /**
@@ -135,6 +150,10 @@ public class User extends Entity<UUID> {
                 authenticationProvider,
                 personalInfo
         );
+    }
+
+    public static User of(UUID id, String username, String password, Role role, AuthenticationProvider provider, boolean active, boolean accountLocked, boolean credentialsExpired, int failedLoginAttempts) {
+        return new User(id, Username.from(username), role, Password.from(password), UserAccountStatus.of(active, accountLocked, credentialsExpired), provider, failedLoginAttempts);
     }
 
     /**
