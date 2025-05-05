@@ -1,6 +1,6 @@
 package com.waduclay.application.security;
 
-import com.waduclay.application.db.BaseUser;
+import com.waduclay.homefinder.users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public record SecurityUser(BaseUser user) implements UserDetails {
+public record SecurityUser(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -37,6 +37,6 @@ public record SecurityUser(BaseUser user) implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isActive();
+        return user.isAccountActive();
     }
 }
