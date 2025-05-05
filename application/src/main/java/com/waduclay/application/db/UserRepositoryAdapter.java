@@ -18,9 +18,10 @@ import java.util.UUID;
 public class UserRepositoryAdapter implements UserRepository {
     private final BaseUserRepository baseUserRepository;
     private final AppUserRepository appUserRepository;
+
     @Override
     public User save(User user) {
-        if (user.getRole().equals(Role.DEFAULT)){
+        if (user.getRole().equals(Role.DEFAULT)) {
             BaseUser baseUser = BaseUser.of(user);
             baseUserRepository.save(baseUser);
             return user;
