@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Event that is raised when a new user is created.
- * 
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class UserCreatedEvent extends AbstractDomainEvent {
@@ -15,8 +15,8 @@ public class UserCreatedEvent extends AbstractDomainEvent {
 
     /**
      * Creates a new UserCreatedEvent.
-     * 
-     * @param userId the ID of the user that was created
+     *
+     * @param userId   the ID of the user that was created
      * @param username the username of the user that was created
      */
     public UserCreatedEvent(UUID userId, String username) {
@@ -27,7 +27,7 @@ public class UserCreatedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the ID of the user that was created.
-     * 
+     *
      * @return the user ID
      */
     public UUID getUserId() {
@@ -36,7 +36,7 @@ public class UserCreatedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the username of the user that was created.
-     * 
+     *
      * @return the username
      */
     public String getUsername() {

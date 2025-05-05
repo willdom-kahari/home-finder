@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ApplicationStartUpSetup implements ApplicationRunner {
 
+    private final UserRegistrationService userRegistrationService;
     @Value("${default.user}")
     private String username;
     @Value("${default.password}")
     private String password;
-    private final UserRegistrationService userRegistrationService;
 
     @Override
     public void run(ApplicationArguments args) {

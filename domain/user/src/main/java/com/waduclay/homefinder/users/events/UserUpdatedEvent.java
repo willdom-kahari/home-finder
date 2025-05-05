@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Event that is raised when a user's information is updated.
- * 
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class UserUpdatedEvent extends AbstractDomainEvent {
@@ -15,8 +15,8 @@ public class UserUpdatedEvent extends AbstractDomainEvent {
 
     /**
      * Creates a new UserUpdatedEvent.
-     * 
-     * @param userId the ID of the user that was updated
+     *
+     * @param userId   the ID of the user that was updated
      * @param username the username of the user that was updated
      */
     public UserUpdatedEvent(UUID userId, String username) {
@@ -27,7 +27,7 @@ public class UserUpdatedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the ID of the user that was updated.
-     * 
+     *
      * @return the user ID
      */
     public UUID getUserId() {
@@ -36,7 +36,7 @@ public class UserUpdatedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the username of the user that was updated.
-     * 
+     *
      * @return the username
      */
     public String getUsername() {

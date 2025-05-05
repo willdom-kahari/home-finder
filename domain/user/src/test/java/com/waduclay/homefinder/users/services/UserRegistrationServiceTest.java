@@ -1,8 +1,8 @@
 package com.waduclay.homefinder.users.services;
 
 
-import com.waduclay.homefinder.shared.DomainEvent;
 import com.waduclay.homefinder.ports.*;
+import com.waduclay.homefinder.shared.DomainEvent;
 import com.waduclay.homefinder.shared.auth.enums.AuthenticationProvider;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.shared.exceptions.UserAlreadyExistsException;
@@ -19,7 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -117,7 +118,7 @@ class UserRegistrationServiceTest {
 
         // Act & Assert
         assertThrows(UserAlreadyExistsException.class, () ->
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userQuery).existsByUsername(username);
@@ -138,8 +139,8 @@ class UserRegistrationServiceTest {
         AuthenticationProvider provider = AuthenticationProvider.APP;
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+        assertThrows(ValidationException.class, () ->
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userRepository, never()).save(any());
@@ -158,8 +159,8 @@ class UserRegistrationServiceTest {
         AuthenticationProvider provider = AuthenticationProvider.APP;
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+        assertThrows(ValidationException.class, () ->
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userRepository, never()).save(any());
@@ -178,8 +179,8 @@ class UserRegistrationServiceTest {
         AuthenticationProvider provider = AuthenticationProvider.APP;
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+        assertThrows(ValidationException.class, () ->
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userRepository, never()).save(any());
@@ -199,7 +200,7 @@ class UserRegistrationServiceTest {
 
         // Act & Assert
         assertThrows(ValidationException.class, () ->
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userRepository, never()).save(any());
@@ -218,8 +219,8 @@ class UserRegistrationServiceTest {
         AuthenticationProvider provider = AuthenticationProvider.APP;
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
+        assertThrows(ValidationException.class, () ->
+                service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
         verify(userRepository, never()).save(any());
@@ -274,8 +275,8 @@ class UserRegistrationServiceTest {
         String password = "SecurePass123!";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> 
-            service.ensureDefaultUserExists(username, password)
+        assertThrows(IllegalArgumentException.class, () ->
+                service.ensureDefaultUserExists(username, password)
         );
 
         verify(userRepository, never()).save(any());
@@ -289,8 +290,8 @@ class UserRegistrationServiceTest {
         String username = "defaultadmin";
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> 
-            service.ensureDefaultUserExists(username, password)
+        assertThrows(IllegalArgumentException.class, () ->
+                service.ensureDefaultUserExists(username, password)
         );
 
         verify(userRepository, never()).save(any());
@@ -347,8 +348,8 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(true);
 
         // Act & Assert
-        assertThrows(UserAlreadyExistsException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(UserAlreadyExistsException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userQuery).existsByUsername(username);
@@ -368,8 +369,8 @@ class UserRegistrationServiceTest {
         String email = "admin@example.com";
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(ValidationException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userRepository, never()).save(any());
@@ -387,8 +388,8 @@ class UserRegistrationServiceTest {
         String email = "admin@example.com";
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(ValidationException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userRepository, never()).save(any());
@@ -406,8 +407,8 @@ class UserRegistrationServiceTest {
         String email = "admin@example.com";
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(ValidationException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userRepository, never()).save(any());
@@ -425,8 +426,8 @@ class UserRegistrationServiceTest {
         String email = "admin@example.com";
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(ValidationException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userRepository, never()).save(any());
@@ -444,8 +445,8 @@ class UserRegistrationServiceTest {
         String email = "admin@example.com";
 
         // Act & Assert
-        assertThrows(ValidationException.class, () -> 
-            service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
+        assertThrows(ValidationException.class, () ->
+                service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
         verify(userRepository, never()).save(any());

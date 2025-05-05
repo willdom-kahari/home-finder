@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Event that is raised when a user's password is changed.
- * 
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class PasswordChangedEvent extends AbstractDomainEvent {
@@ -15,8 +15,8 @@ public class PasswordChangedEvent extends AbstractDomainEvent {
 
     /**
      * Creates a new PasswordChangedEvent.
-     * 
-     * @param userId the ID of the user whose password was changed
+     *
+     * @param userId   the ID of the user whose password was changed
      * @param username the username of the user whose password was changed
      */
     public PasswordChangedEvent(UUID userId, String username) {
@@ -27,7 +27,7 @@ public class PasswordChangedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the ID of the user whose password was changed.
-     * 
+     *
      * @return the user ID
      */
     public UUID getUserId() {
@@ -36,7 +36,7 @@ public class PasswordChangedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the username of the user whose password was changed.
-     * 
+     *
      * @return the username
      */
     public String getUsername() {

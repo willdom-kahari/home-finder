@@ -34,6 +34,18 @@ public final class UserAccountStatus {
         return new UserAccountStatus(true, false, false);
     }
 
+    public static UserAccountStatus of(boolean active, boolean accountLocked, boolean credentialsExpired) {
+        if (active) {
+            return active();
+        } else if (accountLocked) {
+            return locked();
+        } else if (credentialsExpired) {
+            return expired();
+        } else {
+            return inactive();
+        }
+    }
+
     public boolean isCredentialsExpired() {
         return this.credentialsExpired;
     }

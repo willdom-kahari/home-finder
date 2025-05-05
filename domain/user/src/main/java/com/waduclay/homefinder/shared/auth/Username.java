@@ -26,6 +26,10 @@ public final class Username {
         return new Username(value);
     }
 
+    public static Username from(String username) {
+        return new Username(username);
+    }
+
     public String getValue() {
         return this.value;
     }

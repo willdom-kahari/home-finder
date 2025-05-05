@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Event that is raised when a user account is unlocked.
- * 
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public class AccountUnlockedEvent extends AbstractDomainEvent {
@@ -15,8 +15,8 @@ public class AccountUnlockedEvent extends AbstractDomainEvent {
 
     /**
      * Creates a new AccountUnlockedEvent.
-     * 
-     * @param userId the ID of the user whose account was unlocked
+     *
+     * @param userId   the ID of the user whose account was unlocked
      * @param username the username of the user whose account was unlocked
      */
     public AccountUnlockedEvent(UUID userId, String username) {
@@ -27,7 +27,7 @@ public class AccountUnlockedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the ID of the user whose account was unlocked.
-     * 
+     *
      * @return the user ID
      */
     public UUID getUserId() {
@@ -36,7 +36,7 @@ public class AccountUnlockedEvent extends AbstractDomainEvent {
 
     /**
      * Gets the username of the user whose account was unlocked.
-     * 
+     *
      * @return the username
      */
     public String getUsername() {

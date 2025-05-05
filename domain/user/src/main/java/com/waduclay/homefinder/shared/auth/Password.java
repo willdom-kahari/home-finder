@@ -26,6 +26,10 @@ public final class Password {
         return new Password(encryptedPassword);
     }
 
+    public static Password from(String password) {
+        return new Password(password);
+    }
+
     public String getValue() {
         return this.value;
     }

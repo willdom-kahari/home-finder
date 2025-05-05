@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * Abstract base class for all domain events.
  * Provides common implementation for the DomainEvent interface.
- * 
+ *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public abstract class AbstractDomainEvent implements DomainEvent {
@@ -16,7 +16,7 @@ public abstract class AbstractDomainEvent implements DomainEvent {
 
     /**
      * Creates a new domain event with the specified event type.
-     * 
+     *
      * @param eventType the type of the event
      */
     protected AbstractDomainEvent(String eventType) {
