@@ -114,6 +114,7 @@ public class UserRegistrationService {
                 true);
     }
 
+
     private User processUserCreation(
             String username,
             String firstName,
