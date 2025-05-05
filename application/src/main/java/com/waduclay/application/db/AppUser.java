@@ -44,4 +44,18 @@ public class AppUser {
                 .mobileNumber(user.getMobileNumber())
                 .build();
     }
+
+    public User toUser() {
+        return User.of(
+                this.id,
+                this.baseUser.getUsername(),
+                this.baseUser.getPassword(),
+                this.baseUser.getRole(),
+                this.baseUser.getProvider(),
+                this.baseUser.isActive(),
+                this.baseUser.isAccountLocked(),
+                this.baseUser.isCredentialsExpired(),
+                this.baseUser.getFailedLoginAttempts()
+        );
+    }
 }

@@ -1,7 +1,6 @@
 package com.waduclay.application.db;
 
 
-import com.waduclay.homefinder.ports.UserRepository;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,7 @@ import java.util.UUID;
 public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery {
     private final AppUserRepository userRepository;
     private final BaseUserRepository baseUserRepository;
+
     @Override
     public Optional<User> findById(UUID id) {
         return Optional.empty();
@@ -26,7 +26,8 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return userRepository.findByBaseUser_Username(username)
+                .map(AppUser::toUser);
     }
 
     @Override
