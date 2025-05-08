@@ -1,9 +1,6 @@
 package com.waduclay.application.security.events;
 
 
-
-import com.waduclay.application.db.UserCommandAdapter;
-import com.waduclay.application.db.UserQueryAdapter;
 import com.waduclay.homefinder.ports.UserCommand;
 import com.waduclay.homefinder.ports.UserQuery;
 import lombok.RequiredArgsConstructor;
