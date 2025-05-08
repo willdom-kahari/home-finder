@@ -16,15 +16,15 @@ public class UserRegistrationServiceConfig {
     private final EventPublisher eventPublisherAdapter;
     private final PasswordEncoder passwordEncoderAdapter;
     private final PasswordGenerator passwordGeneratorAdapter;
-    private final UserRepository baseUserRepository;
-    private final UserQuery baseUserQuery;
+    private final UserCommand userCommand;
+    private final UserQuery userQuery;
 
     @Bean
     public UserRegistrationService userRegistrationService() {
         return new UserRegistrationService(
                 passwordEncoderAdapter,
-                baseUserRepository,
-                baseUserQuery,
+                userCommand,
+                userQuery,
                 passwordGeneratorAdapter,
                 eventPublisherAdapter
         );
