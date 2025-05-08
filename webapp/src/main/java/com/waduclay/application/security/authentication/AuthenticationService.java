@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static com.waduclay.application.notification.Notifier.sendSingleAlert;
+import static com.waduclay.application.notification.FlashNotification.sendSingleAlert;
 
 @Slf4j
 @Service
@@ -86,7 +86,7 @@ public class AuthenticationService {
     private void handleAuthenticationFailure(AuthenticationException e,
                                              HttpServletRequest request,
                                              HttpServletResponse response) {
-        log.error("Authentication failed: {}", e.getMessage());
+        log.warn("Authentication failed: {}", e.getMessage());
         sendSingleAlert(NotificationCategory.ERROR, e.getMessage(), request, response);
     }
 }

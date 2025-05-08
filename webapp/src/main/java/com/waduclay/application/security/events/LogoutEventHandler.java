@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.waduclay.application.notification.Notifier.sendSingleAlert;
+import static com.waduclay.application.notification.FlashNotification.sendSingleAlert;
 
 @Slf4j
 @Component

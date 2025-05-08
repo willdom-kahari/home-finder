@@ -10,7 +10,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
 
-import static com.waduclay.application.notification.Notifier.sendSingleAlert;
+import static com.waduclay.application.notification.FlashNotification.sendSingleAlert;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>

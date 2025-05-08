@@ -27,9 +27,9 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
 
     @Override
     public Optional<User> findAuthUserByName(String name) {
-        BaseUser baseUser = baseUserRepository.findByUsername(name)
+        final BaseUser baseUser = baseUserRepository.findByUsername(name)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        AppUser appUser = AppUser.builder()
+        final AppUser appUser = AppUser.builder()
                 .id(baseUser.getId())
                 .baseUser(baseUser)
                 .build();
@@ -45,7 +45,13 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
 
     @Override
     public List<User> findByRole(Role role) {
-        return List.of();
+        if (role.equals(Role.DEFAULT)) {
+            return List.of();
+        }
+        return userRepository.findAppUsersByBaseUser_Role(role)
+                .stream()
+                .map(AppUser::toUser)
+                .toList();
     }
 
     @Override
@@ -65,6 +71,8 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
 
     @Override
     public List<User> findAll() {
-        return List.of();
+        return userRepository.findAll().stream()
+                .map(AppUser::toUser)
+                .toList();
     }
 }
