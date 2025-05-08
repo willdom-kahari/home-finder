@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <title>
+        Smart Housing List
+    </title>
+    <link id="pagestyle" href="/css/material-dashboard.min.css" rel="stylesheet"/>
+    <link  th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+
+</head>
+
+<body style=" height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('/img/login-min.jpg');">
+
+<span class="mask bg-gradient-dark opacity-6"></span>
+<div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg blur border-radius-lg  shadow mt-4 py-2 start-0 end-0 mx-4">
+                <div class="container-fluid ps-2 pe-0">
+                    <img class="rounded-3 mx-1" src="/img/mrdc-2.png" alt="logo">
+                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " th:href="@{/}">
+                        Smart Housing List
+                    </a>
+                    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+                            aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon mt-2">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
+                                   th:href="@{/}">
+                                    <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
+                                    All Posts
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-2" th:href="@{/register}">
+                                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                                    Sign Up
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-2" th:href="@{/login}">
+                                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                                    Sign In
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+</div>
+<main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-100">
+
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                    <div class="card z-index-0 fadeIn3 fadeInBottom">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                                <div class="row mt-3 " th:each="authClient: ${urls}">
+                                    <div class="col-2 text-center m-auto">
+
+                                        <a class="btn btn-link px-3 text-white" th:text="${authClient.key}" th:href="${authClient.value}">Client</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="text-start" method="post"
+                                  th:action="@{/login}" th:object="${auth}">
+                                <div th:if="${error}" class="alert alert-danger alert-dismissible text-white fade show" role="alert">
+                                    <span class="alert-text" th:text="${error}"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div th:if="${info}" class="alert alert-info alert-dismissible text-white fade show" role="alert">
+                                    <span class="alert-text" th:text="${info}"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="input-group input-group-outline my-3">
+                                    <label for="username"></label>
+                                    <input type="text"
+                                           placeholder="email or username"
+                                           id="username"
+                                           name="username"
+                                           class="form-control"
+                                           th:field="*{username}"
+                                    >
+                                </div>
+
+                                <div class="input-group input-group-outline mb-3">
+                                    <label for="password"></label>
+                                    <input placeholder="Password" type="password" id="password"
+                                           name="password" class="form-control" th:field="*{password}"
+                                    >
+                                </div>
+
+                                <div class="form-check form-switch d-flex align-items-center mb-3">
+                                    <input class="form-check-input" name="remember-me" type="checkbox" id="remember-me" checked="" >
+                                    <label class="form-check-label mb-0 ms-3" for="remember-me">Remember me</label>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in
+                                    </button>
+                                </div>
+                                <hr />
+
+                                <p class="mt-4 text-sm text-center">
+                                    Don't have an account?
+                                    <a th:href="@{/register}" class="text-primary text-gradient font-weight-bold">Sign
+                                        up</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--      <footer class="footer position-absolute bottom-2 py-2 w-100">-->
+        <!--        <div class="container">-->
+        <!--          <div class="row align-items-center justify-content-lg-between">-->
+        <!--            <div class="col-12 col-md-6 my-auto">-->
+        <!--              <div class="copyright text-center text-sm text-white text-lg-start">-->
+        <!--                © <script>-->
+        <!--                  document.write(new Date().getFullYear())-->
+        <!--                </script>-->
+        <!--                <a th:href="@{/}" class="font-weight-bold text-white">Wadu Clay</a>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--      </footer>-->
+    </div>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
