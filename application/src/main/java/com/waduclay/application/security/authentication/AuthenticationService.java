@@ -45,7 +45,7 @@ public class AuthenticationService {
     private final SecurityContextRepository securityContextRepository =
             new HttpSessionSecurityContextRepository();
 
-    public String authenticate(AuthenticationRequestDTO authenticationRequest,
+    public String authenticate(AuthenticationRequest authenticationRequest,
                                HttpServletRequest request,
                                HttpServletResponse response) {
         try {
@@ -58,7 +58,7 @@ public class AuthenticationService {
         }
     }
 
-    private Authentication attemptAuthentication(AuthenticationRequestDTO authenticationRequest)
+    private Authentication attemptAuthentication(AuthenticationRequest authenticationRequest)
             throws AuthenticationException {
         return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
