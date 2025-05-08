@@ -22,7 +22,7 @@ public class UserRegistrationService {
     private static final Logger logger = Logger.getLogger(UserRegistrationService.class.getName());
 
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserCommand userCommand;
     private final UserQuery userQuery;
     private final PasswordGenerator passwordGenerator;
     private final UsernamePolicy usernamePolicy;
@@ -30,13 +30,13 @@ public class UserRegistrationService {
 
     public UserRegistrationService(
             PasswordEncoder passwordEncoder,
-            UserRepository userRepository,
+            UserCommand userCommand,
             UserQuery userQuery,
             PasswordGenerator passwordGenerator,
             EventPublisher eventPublisher) {
         this(
                 passwordEncoder,
-                userRepository,
+                userCommand,
                 userQuery,
                 passwordGenerator,
                 UsernamePolicy.defaultUsernamePolicy(),
@@ -45,13 +45,13 @@ public class UserRegistrationService {
 
     public UserRegistrationService(
             PasswordEncoder passwordEncoder,
-            UserRepository userRepository,
+            UserCommand userCommand,
             UserQuery userQuery,
             PasswordGenerator passwordGenerator,
             UsernamePolicy usernamePolicy,
             EventPublisher eventPublisher) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+        this.userCommand = userCommand;
         this.userQuery = userQuery;
         this.passwordGenerator = passwordGenerator;
         this.usernamePolicy = usernamePolicy;
@@ -196,7 +196,7 @@ public class UserRegistrationService {
     }
 
     private void saveAndPublishEvents(User user) {
-        User savedUser = userRepository.save(user);
+        User savedUser = userCommand.save(user);
         eventPublisher.publishAll(savedUser.getDomainEvents());
     }
 

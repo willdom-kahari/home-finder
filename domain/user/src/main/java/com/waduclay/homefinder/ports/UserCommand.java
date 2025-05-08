@@ -9,7 +9,7 @@ import com.waduclay.homefinder.users.User;
  *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
-public interface UserRepository {
+public interface UserCommand {
 
     /**
      * Saves a UserAggregate to the repository.

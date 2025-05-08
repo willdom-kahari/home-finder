@@ -34,7 +34,7 @@ class UserRegistrationServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private UserRepository userRepository;
+    private UserCommand userCommand;
 
     @Mock
     private UserQuery userQuery;
@@ -54,7 +54,7 @@ class UserRegistrationServiceTest {
 
         service = new UserRegistrationService(
                 passwordEncoder,
-                userRepository,
+                userCommand,
                 userQuery,
                 passwordGenerator,
                 usernamePolicy,
@@ -83,7 +83,7 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(generatedPassword);
         // Return the actual UserAggregate that's passed to save
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userCommand.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         // Mock the domain events for any UserAggregate
 //        doReturn(events).when(eventPublisher).publishAll(any());
 
@@ -95,7 +95,7 @@ class UserRegistrationServiceTest {
         // Assert
         verify(userQuery).existsByUsername(username);
         verify(passwordGenerator).generate();
-        verify(userRepository).save(any(User.class));
+        verify(userCommand).save(any(User.class));
         verify(eventPublisher).publishAll(any());
 
         // Verify the result is not null and has the expected properties
@@ -122,7 +122,7 @@ class UserRegistrationServiceTest {
         );
 
         verify(userQuery).existsByUsername(username);
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
         verify(eventPublisher, never()).publishAll(any());
     }
 
@@ -143,7 +143,7 @@ class UserRegistrationServiceTest {
                 service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -163,7 +163,7 @@ class UserRegistrationServiceTest {
                 service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -183,7 +183,7 @@ class UserRegistrationServiceTest {
                 service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -203,7 +203,7 @@ class UserRegistrationServiceTest {
                 service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -223,7 +223,7 @@ class UserRegistrationServiceTest {
                 service.registerUser(username, firstName, lastName, nationalId, mobileNumber, email, provider)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     // Tests for ensureDefaultUserExists method
@@ -238,7 +238,7 @@ class UserRegistrationServiceTest {
         List<DomainEvent> events = List.of(mock(DomainEvent.class));
 
         when(userQuery.existsByRole(Role.DEFAULT)).thenReturn(false);
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(userCommand.save(any(User.class))).thenReturn(user);
         when(user.getDomainEvents()).thenReturn(events);
 
         // Act
@@ -246,7 +246,7 @@ class UserRegistrationServiceTest {
 
         // Assert
         verify(userQuery).existsByRole(Role.DEFAULT);
-        verify(userRepository).save(any(User.class));
+        verify(userCommand).save(any(User.class));
         verify(eventPublisher).publishAll(events);
     }
 
@@ -263,7 +263,7 @@ class UserRegistrationServiceTest {
 
         // Assert
         verify(userQuery).existsByRole(Role.DEFAULT);
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
         verify(eventPublisher, never()).publishAll(any());
     }
 
@@ -279,7 +279,7 @@ class UserRegistrationServiceTest {
                 service.ensureDefaultUserExists(username, password)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -294,7 +294,7 @@ class UserRegistrationServiceTest {
                 service.ensureDefaultUserExists(username, password)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     // Tests for createAdminUser method
@@ -317,7 +317,7 @@ class UserRegistrationServiceTest {
         when(userQuery.existsByUsername(username)).thenReturn(false);
         when(passwordGenerator.generate()).thenReturn(generatedPassword);
         // Return the actual UserAggregate that's passed to save
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userCommand.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
         User result = service.createAdminUser(
@@ -327,7 +327,7 @@ class UserRegistrationServiceTest {
         // Assert
         verify(userQuery).existsByUsername(username);
         verify(passwordGenerator).generate();
-        verify(userRepository).save(any(User.class));
+        verify(userCommand).save(any(User.class));
         verify(eventPublisher).publishAll(any());
 
         // Verify the result is not null and has the expected properties
@@ -353,7 +353,7 @@ class UserRegistrationServiceTest {
         );
 
         verify(userQuery).existsByUsername(username);
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
         verify(eventPublisher, never()).publishAll(any());
     }
 
@@ -373,7 +373,7 @@ class UserRegistrationServiceTest {
                 service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -392,7 +392,7 @@ class UserRegistrationServiceTest {
                 service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -411,7 +411,7 @@ class UserRegistrationServiceTest {
                 service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -430,7 +430,7 @@ class UserRegistrationServiceTest {
                 service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 
     @ParameterizedTest
@@ -449,6 +449,6 @@ class UserRegistrationServiceTest {
                 service.createAdminUser(username, firstName, lastName, nationalId, mobileNumber, email)
         );
 
-        verify(userRepository, never()).save(any());
+        verify(userCommand, never()).save(any());
     }
 }
