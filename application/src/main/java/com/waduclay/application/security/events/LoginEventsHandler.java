@@ -2,6 +2,8 @@ package com.waduclay.application.security.events;
 
 
 
+import com.waduclay.application.db.UserCommandAdapter;
+import com.waduclay.application.db.UserQueryAdapter;
 import com.waduclay.homefinder.ports.UserCommand;
 import com.waduclay.homefinder.ports.UserQuery;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class LoginEventsHandler {
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {
         String username = success.getAuthentication().getName();
-        userQuery.findByUsername(username).ifPresent(user -> {
+        userQuery.findAuthUserByName(username).ifPresent(user -> {
             user.resetLoginAttempt();
             userCommand.save(user);
         });
@@ -35,11 +37,10 @@ public class LoginEventsHandler {
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent failures) {
         String username = failures.getAuthentication().getName();
-        userQuery.findByUsername(username).ifPresent(user -> {
+        userQuery.findAuthUserByName(username).ifPresent(user -> {
             user.recordFailedLoginAttempt();
             userCommand.save(user);
         });
 
-        log.warn("Failed to authenticate user: {}. {}", username, failures.getException().getMessage());
     }
 }

@@ -1,5 +1,6 @@
 package com.waduclay.application.security;
 
+import com.waduclay.application.db.UserQueryAdapter;
 import com.waduclay.homefinder.ports.UserQuery;
 import com.waduclay.homefinder.users.User;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class JpaUserDetailsService implements UserDetailsService {
-    private final UserQuery userQuery;
+    private final UserQueryAdapter userQuery;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userQuery.findByUsername(username)
+        User user = userQuery.findAuthUserByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Invalid username and password"));
         return new SecurityUser(user);
     }

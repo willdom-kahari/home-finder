@@ -4,6 +4,7 @@ package com.waduclay.application.db;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,6 +23,18 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
     @Override
     public Optional<User> findById(UUID id) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findAuthUserByName(String name) {
+        BaseUser baseUser = baseUserRepository.findByUsername(name)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        AppUser appUser = AppUser.builder()
+                .id(baseUser.getId())
+                .baseUser(baseUser)
+                .build();
+        return Optional.ofNullable(appUser)
+                .map(AppUser::toUser);
     }
 
     @Override
