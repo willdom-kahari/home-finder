@@ -3,6 +3,7 @@ package com.waduclay.application.db;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface BaseUserRepository extends JpaRepository<BaseUser, UUID> {
@@ -10,5 +11,5 @@ public interface BaseUserRepository extends JpaRepository<BaseUser, UUID> {
 
     boolean existsByUsername(String username);
 
-    BaseUser findByUsername(String username);
+    Optional<BaseUser> findByUsername(String username);
 }
