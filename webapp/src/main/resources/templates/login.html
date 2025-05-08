@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="/img/favicon.png" rel="icon" type="image/png">
     <title>
         Smart Housing List
     </title>
-    <link id="pagestyle" href="/css/material-dashboard.min.css" rel="stylesheet"/>
-    <link  th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="/css/material-dashboard.min.css" id="pagestyle" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}"/>
 
 </head>
 
@@ -27,13 +27,13 @@
         <div class="col-12">
             <nav class="navbar navbar-expand-lg blur border-radius-lg  shadow mt-4 py-2 start-0 end-0 mx-4">
                 <div class="container-fluid ps-2 pe-0">
-                    <img class="rounded-3 mx-1" src="/img/mrdc-2.png" alt="logo">
+                    <img alt="logo" class="rounded-3 mx-1" src="/img/mrdc-2.png">
                     <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " th:href="@{/}">
                         Smart Housing List
                     </a>
-                    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
-                            aria-label="Toggle navigation">
+                    <button aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"
+                            class="navbar-toggler shadow-none ms-2" data-bs-target="#navigation" data-bs-toggle="collapse"
+                            type="button">
               <span class="navbar-toggler-icon mt-2">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
@@ -43,7 +43,7 @@
                     <div class="collapse navbar-collapse" id="navigation">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
+                                <a aria-current="page" class="nav-link d-flex align-items-center me-2 active"
                                    th:href="@{/}">
                                     <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
                                     All Posts
@@ -83,60 +83,64 @@
                                 <div class="row mt-3 " th:each="authClient: ${urls}">
                                     <div class="col-2 text-center m-auto">
 
-                                        <a class="btn btn-link px-3 text-white" th:text="${authClient.key}" th:href="${authClient.value}">Client</a>
+                                        <a class="btn btn-link px-3 text-white" th:href="${authClient.value}"
+                                           th:text="${authClient.key}">Client</a>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form role="form" class="text-start" method="post"
+                            <form class="text-start" method="post" role="form"
                                   th:action="@{/login}" th:object="${auth}">
-                                <div th:if="${error}" class="alert alert-danger alert-dismissible text-white fade show" role="alert">
+                                <div class="alert alert-danger alert-dismissible text-white fade show" role="alert"
+                                     th:if="${error}">
                                     <span class="alert-text" th:text="${error}"></span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div th:if="${info}" class="alert alert-info alert-dismissible text-white fade show" role="alert">
+                                <div class="alert alert-info alert-dismissible text-white fade show" role="alert"
+                                     th:if="${info}">
                                     <span class="alert-text" th:text="${info}"></span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
 
                                 <div class="input-group input-group-outline my-3">
                                     <label for="username"></label>
-                                    <input type="text"
-                                           placeholder="email or username"
+                                    <input class="form-control"
                                            id="username"
                                            name="username"
-                                           class="form-control"
+                                           placeholder="email or username"
                                            th:field="*{username}"
+                                           type="text"
                                     >
                                 </div>
 
                                 <div class="input-group input-group-outline mb-3">
                                     <label for="password"></label>
-                                    <input placeholder="Password" type="password" id="password"
-                                           name="password" class="form-control" th:field="*{password}"
+                                    <input class="form-control" id="password" name="password"
+                                           placeholder="Password" th:field="*{password}" type="password"
                                     >
                                 </div>
 
                                 <div class="form-check form-switch d-flex align-items-center mb-3">
-                                    <input class="form-check-input" name="remember-me" type="checkbox" id="remember-me" checked="" >
+                                    <input checked="" class="form-check-input" id="remember-me" name="remember-me"
+                                           type="checkbox">
                                     <label class="form-check-label mb-0 ms-3" for="remember-me">Remember me</label>
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in
+                                    <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit">Sign in
                                     </button>
                                 </div>
-                                <hr />
+                                <hr/>
 
                                 <p class="mt-4 text-sm text-center">
                                     Don't have an account?
-                                    <a th:href="@{/register}" class="text-primary text-gradient font-weight-bold">Sign
+                                    <a class="text-primary text-gradient font-weight-bold" th:href="@{/register}">Sign
                                         up</a>
                                 </p>
                             </form>

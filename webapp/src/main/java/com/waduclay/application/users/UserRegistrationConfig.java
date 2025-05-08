@@ -1,4 +1,4 @@
-package com.waduclay.application.config;
+package com.waduclay.application.users;
 
 
 import com.waduclay.homefinder.ports.*;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @RequiredArgsConstructor
-public class UserRegistrationServiceConfig {
+public class UserRegistrationConfig {
     private final EventPublisher eventPublisher;
     private final PasswordEncoder passwordEncoder;
     private final PasswordGenerator passwordGenerator;

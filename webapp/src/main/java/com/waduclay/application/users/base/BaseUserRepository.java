@@ -1,4 +1,4 @@
-package com.waduclay.application.users;
+package com.waduclay.application.users.base;
 
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

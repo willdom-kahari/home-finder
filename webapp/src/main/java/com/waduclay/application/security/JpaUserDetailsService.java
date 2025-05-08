@@ -1,6 +1,6 @@
 package com.waduclay.application.security;
 
-import com.waduclay.application.users.UserQueryAdapter;
+import com.waduclay.application.users.service.UserQueryAdapter;
 import com.waduclay.homefinder.users.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

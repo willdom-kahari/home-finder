@@ -1,4 +1,4 @@
-package com.waduclay.application.config;
+package com.waduclay.application.users.service;
 
 import com.waduclay.homefinder.users.services.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ApplicationStartUpSetup implements ApplicationRunner {
+public class DefaultUserSetup implements ApplicationRunner {
 
     private final UserRegistrationService userRegistrationService;
     @Value("${default.user}")

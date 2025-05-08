@@ -2,7 +2,7 @@ package com.waduclay.application.security.authentication;
 
 import com.waduclay.application.notification.NotificationCategory;
 import com.waduclay.application.security.SecurityUser;
-import com.waduclay.application.utils.Constants;
+import com.waduclay.application.utils.UrlConstants;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +33,9 @@ public class AuthenticationService {
     private static final Map<Role, String> REDIRECTION_URLS = new EnumMap<>(Role.class);
 
     static {
-        REDIRECTION_URLS.put(Role.DEFAULT, Constants.REDIRECT_TO_DEFAULT_USER_DASHBOARD);
-        REDIRECTION_URLS.put(Role.USER, Constants.REDIRECT_CLIENT_VIEW_POSTS);
-        REDIRECTION_URLS.put(Role.ADMIN, Constants.REDIRECT_TO_ADMIN_POSTS);
+        REDIRECTION_URLS.put(Role.DEFAULT, UrlConstants.REDIRECT_TO_DEFAULT_USER_DASHBOARD);
+        REDIRECTION_URLS.put(Role.USER, UrlConstants.REDIRECT_CLIENT_VIEW_POSTS);
+        REDIRECTION_URLS.put(Role.ADMIN, UrlConstants.REDIRECT_TO_ADMIN_POSTS);
     }
 
     private final AuthenticationManager authenticationManager;
@@ -54,7 +54,7 @@ public class AuthenticationService {
             return determineRedirectUrl(authentication);
         } catch (AuthenticationException e) {
             handleAuthenticationFailure(e, request, response);
-            return Constants.REDIRECT_LOGIN;
+            return UrlConstants.REDIRECT_LOGIN;
         }
     }
 
@@ -80,7 +80,7 @@ public class AuthenticationService {
 
     private String determineRedirectUrl(Authentication authentication) {
         User user = ((SecurityUser) authentication.getPrincipal()).user();
-        return REDIRECTION_URLS.getOrDefault(user.getRole(), Constants.REDIRECT_TO_ADMIN_POSTS);
+        return REDIRECTION_URLS.getOrDefault(user.getRole(), UrlConstants.REDIRECT_TO_ADMIN_POSTS);
     }
 
     private void handleAuthenticationFailure(AuthenticationException e,

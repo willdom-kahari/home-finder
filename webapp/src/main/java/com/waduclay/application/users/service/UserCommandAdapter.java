@@ -1,5 +1,9 @@
-package com.waduclay.application.users;
+package com.waduclay.application.users.service;
 
+import com.waduclay.application.users.app.AppUser;
+import com.waduclay.application.users.app.AppUserRepository;
+import com.waduclay.application.users.base.BaseUser;
+import com.waduclay.application.users.base.BaseUserRepository;
 import com.waduclay.homefinder.ports.UserCommand;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;

@@ -1,6 +1,6 @@
 package com.waduclay.application.utils;
 
-public class Constants {
+public final class UrlConstants {
     public static final String POST_NOT_FOUND_MSG = "Post not found.";
     public static final String USER_NOT_FOUND_MSG = "User not found.";
     public static final String REDIRECT_TO_ADMIN_POSTS = "redirect:/posts/admin";
@@ -14,6 +14,6 @@ public class Constants {
     public static final String REDIRECT_LOGIN = "redirect:/login";
     public static final String REDIRECT_TO_DEFAULT_USER_DASHBOARD = "redirect:/default_user_dashboard";
 
-    private Constants() {
+    private UrlConstants() {
     }
 }

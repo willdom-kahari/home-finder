@@ -20,9 +20,9 @@ public final class FlashNotification {
     /**
      * Sends a single flash alert notification.
      *
-     * @param type The category/type of notification
-     * @param message The message content to display
-     * @param request The HTTP servlet request
+     * @param type     The category/type of notification
+     * @param message  The message content to display
+     * @param request  The HTTP servlet request
      * @param response The HTTP servlet response
      * @throws IllegalArgumentException if any parameter is null
      */

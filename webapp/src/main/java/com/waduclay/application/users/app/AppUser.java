@@ -1,6 +1,7 @@
-package com.waduclay.application.users;
+package com.waduclay.application.users.app;
 
 
+import com.waduclay.application.users.base.BaseUser;
 import com.waduclay.homefinder.users.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
