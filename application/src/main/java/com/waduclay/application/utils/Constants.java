@@ -1,4 +1,4 @@
-package com.waduclay.application.constants;
+package com.waduclay.application.utils;
 
 public class Constants {
     public static final String POST_NOT_FOUND_MSG = "Post not found.";

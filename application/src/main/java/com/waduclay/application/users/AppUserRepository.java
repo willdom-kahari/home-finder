@@ -1,4 +1,4 @@
-package com.waduclay.application.db;
+package com.waduclay.application.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

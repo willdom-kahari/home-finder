@@ -1,8 +1,8 @@
 package com.waduclay.application.security.authentication;
 
-import com.waduclay.application.constants.Constants;
 import com.waduclay.application.notification.NotificationCategory;
 import com.waduclay.application.security.SecurityUser;
+import com.waduclay.application.utils.Constants;
 import com.waduclay.homefinder.shared.auth.enums.Role;
 import com.waduclay.homefinder.users.User;
 import jakarta.servlet.http.HttpServletRequest;

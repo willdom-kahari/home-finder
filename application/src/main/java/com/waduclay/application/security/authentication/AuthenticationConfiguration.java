@@ -35,7 +35,8 @@ public class AuthenticationConfiguration {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         ProviderManager providerManager = new ProviderManager(authProvider, rememberMeAuthenticationProvider);
-        /* The applicationEventPublisher is used to publish events related to authentication.
+        /*
+         *  The applicationEventPublisher is used to publish events related to authentication.
          * It publishes either a AuthenticationSuccessEvent or AuthenticationFailureEvent depending
          * on the authentication. Only set when using a custom authentication manager bean.
          */

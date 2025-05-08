@@ -1,4 +1,4 @@
-package com.waduclay.application.db;
+package com.waduclay.application.users;
 
 
 import com.waduclay.homefinder.shared.auth.enums.AuthenticationProvider;

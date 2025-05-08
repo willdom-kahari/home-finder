@@ -1,4 +1,4 @@
-package com.waduclay.application.adapter;
+package com.waduclay.application.config;
 
 
 import com.waduclay.homefinder.ports.EventPublisher;

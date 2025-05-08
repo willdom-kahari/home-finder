@@ -13,20 +13,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class UserRegistrationServiceConfig {
-    private final EventPublisher eventPublisherAdapter;
-    private final PasswordEncoder passwordEncoderAdapter;
-    private final PasswordGenerator passwordGeneratorAdapter;
+    private final EventPublisher eventPublisher;
+    private final PasswordEncoder passwordEncoder;
+    private final PasswordGenerator passwordGenerator;
     private final UserCommand userCommand;
     private final UserQuery userQuery;
 
     @Bean
     public UserRegistrationService userRegistrationService() {
         return new UserRegistrationService(
-                passwordEncoderAdapter,
+                passwordEncoder,
                 userCommand,
                 userQuery,
-                passwordGeneratorAdapter,
-                eventPublisherAdapter
+                passwordGenerator,
+                eventPublisher
         );
     }
 }
