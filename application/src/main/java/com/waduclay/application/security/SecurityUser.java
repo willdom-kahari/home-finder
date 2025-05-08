@@ -27,7 +27,7 @@ public record SecurityUser(User user) implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return user.isCredentialsExpired();
+        return !user.isCredentialsExpired();
     }
 
     @Override

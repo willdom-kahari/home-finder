@@ -25,6 +25,8 @@ public interface UserQuery {
      */
     Optional<User> findById(UUID id);
 
+    Optional<User> findAuthUserByName(String name);
+
     /**
      * Finds a UserAggregate by its username.
      *
