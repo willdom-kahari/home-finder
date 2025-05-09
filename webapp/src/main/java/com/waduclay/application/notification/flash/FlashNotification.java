@@ -1,4 +1,4 @@
-package com.waduclay.application.notification;
+package com.waduclay.application.notification.flash;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

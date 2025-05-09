@@ -1,4 +1,4 @@
-package com.waduclay.application.notification;
+package com.waduclay.application.notification.flash;
 
 
 /**

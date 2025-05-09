@@ -1,6 +1,6 @@
 package com.waduclay.application.security.events;
 
-import com.waduclay.application.notification.NotificationCategory;
+import com.waduclay.application.notification.flash.NotificationCategory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static com.waduclay.application.notification.FlashNotification.sendSingleAlert;
+import static com.waduclay.application.notification.flash.FlashNotification.sendSingleAlert;
 
 @Slf4j
 @Component

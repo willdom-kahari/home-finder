@@ -1,6 +1,6 @@
 package com.waduclay.application.security.authentication;
 
-import com.waduclay.application.notification.NotificationCategory;
+import com.waduclay.application.notification.flash.NotificationCategory;
 import com.waduclay.application.security.SecurityUser;
 import com.waduclay.application.utils.UrlConstants;
 import com.waduclay.homefinder.shared.auth.enums.Role;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static com.waduclay.application.notification.FlashNotification.sendSingleAlert;
+import static com.waduclay.application.notification.flash.FlashNotification.sendSingleAlert;
 
 @Slf4j
 @Service
