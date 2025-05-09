@@ -1,8 +1,7 @@
 package com.waduclay.application.security.events;
 
 
-import com.waduclay.homefinder.ports.UserCommand;
-import com.waduclay.homefinder.ports.UserQuery;
+import com.waduclay.homefinder.users.services.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -17,27 +16,18 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class LoginEventsHandler {
-    private final UserQuery userQuery;
-    private final UserCommand userCommand;
+    private final UserAccountService accountService;
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {
         String username = success.getAuthentication().getName();
-        userQuery.findAuthUserByName(username).ifPresent(user -> {
-            user.resetLoginAttempt();
-            userCommand.save(user);
-        });
-
+        accountService.resetLogin(username);
         log.info("User {} authenticated successfully.", username);
     }
 
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent failures) {
         String username = failures.getAuthentication().getName();
-        userQuery.findAuthUserByName(username).ifPresent(user -> {
-            user.recordFailedLoginAttempt();
-            userCommand.save(user);
-        });
-
+        accountService.increaseLoginAttempt(username);
     }
 }

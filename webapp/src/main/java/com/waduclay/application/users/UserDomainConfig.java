@@ -2,6 +2,7 @@ package com.waduclay.application.users;
 
 
 import com.waduclay.homefinder.ports.*;
+import com.waduclay.homefinder.users.services.UserAccountService;
 import com.waduclay.homefinder.users.services.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @RequiredArgsConstructor
-public class UserRegistrationConfig {
+public class UserDomainConfig {
     private final EventPublisher eventPublisher;
     private final PasswordEncoder passwordEncoder;
     private final PasswordGenerator passwordGenerator;
@@ -28,5 +29,10 @@ public class UserRegistrationConfig {
                 passwordGenerator,
                 eventPublisher
         );
+    }
+
+    @Bean
+    public UserAccountService userAccountService() {
+        return new UserAccountService(userCommand, userQuery);
     }
 }
