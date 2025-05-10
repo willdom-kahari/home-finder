@@ -16,14 +16,14 @@ public class UserAccountService {
         this.userQuery = userQuery;
     }
 
-    public void resetLogin(String username){
+    public void resetLogin(String username) {
         userQuery.findAuthUserByName(username).ifPresent(user -> {
             user.resetLoginAttempt();
             userCommand.save(user);
         });
     }
 
-    public void increaseLoginAttempt(String username){
+    public void increaseLoginAttempt(String username) {
         userQuery.findAuthUserByName(username).ifPresent(user -> {
             user.recordFailedLoginAttempt();
             userCommand.save(user);

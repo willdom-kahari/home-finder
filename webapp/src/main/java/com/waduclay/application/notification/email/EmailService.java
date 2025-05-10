@@ -13,11 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-
-
-import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -27,10 +23,10 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    @Value("${spring.mail.username}")
-    private String emailSender;
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+    @Value("${spring.mail.username}")
+    private String emailSender;
 
     @Async
     public void sendOtp(
@@ -59,7 +55,7 @@ public class EmailService {
             messageHelper.setTo(destinationEmail);
             mailSender.send(mimeMessage);
             log.info("OTP email sent successfully to: {}", destinationEmail);
-        }catch (MessagingException e){
+        } catch (MessagingException e) {
             log.warn("Cannot send email to: {}", destinationEmail);
         }
     }
