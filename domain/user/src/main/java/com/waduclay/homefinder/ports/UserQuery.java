@@ -9,67 +9,61 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Query interface for the UserAggregate.
+ * Query interface for the User.
  * This interface follows the CQRS pattern by separating read operations from write operations.
- * It provides methods to query UserAggregate instances without modifying them.
+ * It provides methods to query User instances without modifying them.
  *
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
  */
 public interface UserQuery {
 
     /**
-     * Finds a UserAggregate by its ID.
+     * Finds a User by its ID.
      *
-     * @param id the ID of the UserAggregate to find
-     * @return an Optional containing the UserAggregate if found, or empty if not found
+     * @param id the ID of the User to find
+     * @return an Optional containing the User if found, or empty if not found
      */
     Optional<User> findById(UUID id);
 
     Optional<User> findAuthUserByName(String name);
 
     /**
-     * Finds a UserAggregate by its username.
+     * Finds a User by its username.
      *
-     * @param username the username of the UserAggregate to find
-     * @return an Optional containing the UserAggregate if found, or empty if not found
+     * @param username the username of the User to find
+     * @return an Optional containing the User if found, or empty if not found
      */
     Optional<User> findByUsername(String username);
 
     /**
-     * Finds all UserAggregates with the given role.
+     * Finds all Users with the given role.
      *
      * @param role the role to search for
-     * @return a list of UserAggregates with the given role
+     * @return a list of Users with the given role
      */
     List<User> findByRole(Role role);
 
     /**
-     * Checks if a UserAggregate with the given username exists.
+     * Checks if a User with the given username exists.
      *
      * @param username the username to check
-     * @return true if a UserAggregate with the given username exists, false otherwise
+     * @return true if a User with the given username exists, false otherwise
      */
     boolean existsByUsername(String username);
 
     /**
-     * Checks if a UserAggregate with the given role exists.
+     * Checks if a User with the given role exists.
      *
      * @param role the role to check
-     * @return true if a UserAggregate with the given role exists, false otherwise
+     * @return true if a User with the given role exists, false otherwise
      */
     boolean existsByRole(Role role);
 
-    /**
-     * Counts the number of UserAggregates.
-     *
-     * @return the number of UserAggregates
-     */
-    long count();
 
     /**
-     * Finds all UserAggregates.
+     * Finds all Users.
      *
-     * @return a list of all UserAggregates
+     * @return a list of all Users
      */
     List<User> findAll();
 }
