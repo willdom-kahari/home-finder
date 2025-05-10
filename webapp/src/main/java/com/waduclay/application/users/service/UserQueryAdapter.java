@@ -26,7 +26,8 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
 
     @Override
     public Optional<User> findById(UUID id) {
-        return Optional.empty();
+        return userRepository.findById(id)
+                .map(AppUser::toUser);
     }
 
     @Override
@@ -66,11 +67,6 @@ public class UserQueryAdapter implements com.waduclay.homefinder.ports.UserQuery
     @Override
     public boolean existsByRole(Role role) {
         return baseUserRepository.existsByRole(role);
-    }
-
-    @Override
-    public long count() {
-        return 0;
     }
 
     @Override
