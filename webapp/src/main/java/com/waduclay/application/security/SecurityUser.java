@@ -39,4 +39,9 @@ public record SecurityUser(User user) implements UserDetails {
     public boolean isEnabled() {
         return user.isAccountActive();
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Account expiration is not implemented in the User class
+    }
 }

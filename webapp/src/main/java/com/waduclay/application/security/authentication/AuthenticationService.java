@@ -45,16 +45,14 @@ public class AuthenticationService {
     private final SecurityContextRepository securityContextRepository =
             new HttpSessionSecurityContextRepository();
 
-    public String authenticate(AuthenticationRequest authenticationRequest,
-                               HttpServletRequest request,
-                               HttpServletResponse response) {
+    public boolean authenticate(AuthenticationRequest authenticationRequest) {
         try {
             Authentication authentication = attemptAuthentication(authenticationRequest);
-            setupSecurityContext(authentication, request, response);
-            return determineRedirectUrl(authentication);
+//            setupSecurityContext(authentication, request, response);
+            return true;
         } catch (AuthenticationException e) {
-            handleAuthenticationFailure(e, request, response);
-            return UrlConstants.REDIRECT_LOGIN;
+//            handleAuthenticationFailure(e, request, response);
+            return false;
         }
     }
 
