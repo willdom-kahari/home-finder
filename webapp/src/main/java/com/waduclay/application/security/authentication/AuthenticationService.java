@@ -31,6 +31,8 @@ import static com.waduclay.application.notification.flash.FlashNotification.send
 @RequiredArgsConstructor
 public class AuthenticationService {
     private static final Map<Role, String> REDIRECTION_URLS = new EnumMap<>(Role.class);
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
 
     static {
         REDIRECTION_URLS.put(Role.DEFAULT, UrlConstants.REDIRECT_TO_DEFAULT_USER_DASHBOARD);
@@ -48,10 +50,10 @@ public class AuthenticationService {
     public boolean authenticate(AuthenticationRequest authenticationRequest) {
         try {
             Authentication authentication = attemptAuthentication(authenticationRequest);
-//            setupSecurityContext(authentication, request, response);
+            setupSecurityContext(authentication, request, response);
             return true;
         } catch (AuthenticationException e) {
-//            handleAuthenticationFailure(e, request, response);
+            handleAuthenticationFailure(e, request, response);
             return false;
         }
     }

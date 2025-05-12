@@ -3,7 +3,7 @@ package com.waduclay.application.security.authentication.ui.view;
 
 import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinSession;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author <a href="mailto:developer.wadu@gmail.com">Willdom Kahari</a>
@@ -11,8 +11,7 @@ import com.vaadin.flow.server.VaadinSession;
 @Route("/home")
 public class HomePage extends Main {
     public HomePage() {
-        Object user = VaadinSession.getCurrent().getSession().getAttribute("user");
-        System.out.println("user = " + user.toString());
-        setTitle("Home Page for " + user);
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        setText("Home Page for " + name);
     }
 }
